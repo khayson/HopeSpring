@@ -1,4 +1,8 @@
-import { Head } from '@inertiajs/react';
+import { BrushEdge } from '@/components/public/brush-edge';
+import { DonationBand } from '@/components/public/donation-band';
+import { StatsBar } from '@/components/public/stats-bar';
+import { Button } from '@/components/ui/button';
+import { Head, Link } from '@inertiajs/react';
 
 const colors = [
     { label: 'Navy', class: 'bg-navy', hex: '#1a2f5c' },
@@ -181,6 +185,68 @@ export default function Styleguide() {
                             <div className="h-16 w-16 rounded-full border-2 border-primary bg-secondary" />
                             <p className="text-xs text-muted-foreground">full</p>
                         </div>
+                    </div>
+                </section>
+
+                {/* Brush Edge */}
+                <section className="space-y-6">
+                    <h2 className="font-serif text-2xl font-semibold text-foreground">
+                        Brush Edge — Signature Motif
+                    </h2>
+                    <div className="overflow-hidden rounded-xl">
+                        <div className="bg-navy px-6 py-12 text-center">
+                            <p className="font-serif text-2xl font-bold text-white">Hero Section</p>
+                        </div>
+                        <BrushEdge className="h-10 text-background" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                        Used once per screen at the hero-to-stats transition. Never as wallpaper.
+                    </p>
+                </section>
+
+                {/* Stats Bar */}
+                <section className="space-y-6">
+                    <h2 className="font-serif text-2xl font-semibold text-foreground">
+                        Stats Bar
+                    </h2>
+                    <div className="overflow-hidden rounded-xl">
+                        <div className="bg-navy px-6 py-16" />
+                        <StatsBar
+                            stats={[
+                                { value: 25000, label: 'Lives Impacted' },
+                                { value: 50, label: 'Water Projects' },
+                                { value: 3000, label: 'Children Supported' },
+                                { value: 100, label: 'Communities Served' },
+                            ]}
+                        />
+                    </div>
+                </section>
+
+                {/* Buttons */}
+                <section className="space-y-6">
+                    <h2 className="font-serif text-2xl font-semibold text-foreground">
+                        Buttons
+                    </h2>
+                    <div className="flex flex-wrap items-center gap-3">
+                        <Button>Primary (Navy)</Button>
+                        <Button className="bg-brand-green hover:bg-brand-green-dark">Donate Now</Button>
+                        <Button variant="outline">Outline</Button>
+                        <Button variant="secondary">Secondary</Button>
+                        <Button variant="ghost">Ghost</Button>
+                        <Button variant="destructive">Destructive</Button>
+                        <Button asChild variant="outline" className="border-navy font-semibold text-navy hover:bg-navy hover:text-white">
+                            <Link href="#">Get Involved</Link>
+                        </Button>
+                    </div>
+                </section>
+
+                {/* Donation Band */}
+                <section className="space-y-6">
+                    <h2 className="font-serif text-2xl font-semibold text-foreground">
+                        Donation Band
+                    </h2>
+                    <div className="-mx-6 overflow-hidden">
+                        <DonationBand />
                     </div>
                 </section>
 

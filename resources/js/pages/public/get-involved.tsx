@@ -54,14 +54,14 @@ export default function GetInvolved({ programmes, upcomingEvents }: Props) {
                         icon={HandHeart}
                         title="Volunteer"
                         description="Join our team of dedicated volunteers and directly impact the communities we serve."
-                        href="/contact"
+                        href="/get-involved/volunteer"
                         buttonLabel="Sign Up"
                     />
                     <EngagementCard
                         icon={Users}
                         title="Partner"
                         description="Collaborate with us as a corporate or institutional partner to multiply our impact."
-                        href="/contact"
+                        href="/get-involved/partner"
                         buttonLabel="Partner With Us"
                     />
                     <EngagementCard

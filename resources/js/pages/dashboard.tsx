@@ -3,8 +3,8 @@ import { dashboard } from '@/routes';
 import { CircleDollarSign, FileText, Heart, Mail, Newspaper, Users } from 'lucide-react';
 
 type Stats = {
-    totalDonations: number;
-    donationCount: number;
+    totalDonations: number | null;
+    donationCount: number | null;
     subscriberCount: number;
     unreadMessages: number;
     projectCount: number;
@@ -81,6 +81,7 @@ export default function Dashboard({ stats, recentDonations, recentMessages, rece
                     {statCards.map((card) => {
                         const Icon = card.icon;
                         const value = stats[card.key];
+                        if (value === null) return null;
                         return (
                             <div key={card.key} className="rounded-xl border border-sidebar-border/70 bg-white p-5 dark:border-sidebar-border dark:bg-neutral-900">
                                 <div className="flex items-center justify-between">

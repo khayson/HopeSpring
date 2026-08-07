@@ -1,0 +1,79 @@
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
+import { dashboard } from '@/routes';
+import { Head, useForm } from '@inertiajs/react';
+
+type Role = { value: string; label: string };
+
+type Props = { roles: Role[] };
+
+export default function UsersCreate({ roles }: Props) {
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        email: '',
+        role: 'editor',
+    });
+
+    function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        post('/admin/users');
+    }
+
+    return (
+        <>
+            <Head title="Invite User" />
+            <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
+                <h1 className="text-xl font-bold">Invite User</h1>
+                <p className="max-w-md text-sm text-muted-foreground">
+                    We'll email them a secure link to set their own password and activate the account.
+                </p>
+
+                <form onSubmit={handleSubmit} className="max-w-md space-y-5 rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <div className="space-y-2">
+                        <Label htmlFor="name">Full Name</Label>
+                        <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} required />
+                        {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="email">Email Address</Label>
+                        <Input id="email" type="email" value={data.email} onChange={(e) => setData('email', e.target.value)} required />
+                        {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="role">Role</Label>
+                        <select
+                            id="role"
+                            value={data.role}
+                            onChange={(e) => setData('role', e.target.value)}
+                            className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                        >
+                            {roles.map((role) => (
+                                <option key={role.value} value={role.value}>
+                                    {role.label}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.role && <p className="text-xs text-destructive">{errors.role}</p>}
+                    </div>
+
+                    <Button type="submit" disabled={processing} className="w-full bg-brand-green font-bold hover:bg-brand-green-dark">
+                        {processing && <Spinner />}
+                        Send Invite
+                    </Button>
+                </form>
+            </div>
+        </>
+    );
+}
+
+UsersCreate.layout = {
+    breadcrumbs: [
+        { title: 'Dashboard', href: dashboard() },
+        { title: 'Users', href: '/admin/users' },
+        { title: 'Invite', href: '/admin/users/create' },
+    ],
+};

@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRole;
 use App\Models\ContactMessage;
 use App\Models\Donation;
 use App\Models\Event;
 use App\Models\GalleryImage;
 use App\Models\ImpactStat;
+use App\Models\Inquiry;
 use App\Models\Milestone;
 use App\Models\NewsletterSubscriber;
 use App\Models\Partner;
@@ -28,6 +30,19 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'HopeSpring Admin',
             'email' => 'admin@hopespringfoundation.org',
+            'role' => UserRole::Admin,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Ama Editor',
+            'email' => 'editor@hopespringfoundation.org',
+            'role' => UserRole::Editor,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Kofi Finance',
+            'email' => 'finance@hopespringfoundation.org',
+            'role' => UserRole::Finance,
         ]);
 
         $this->seedProgrammesAndProjects();
@@ -38,6 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->seedDonations();
         $this->seedContactMessages();
         $this->seedNewsletterSubscribers();
+        $this->seedInquiries();
         $this->seedImpactStats();
         $this->seedMilestones();
         $this->seedPartners();
@@ -109,6 +125,12 @@ class DatabaseSeeder extends Seeder
     private function seedNewsletterSubscribers(): void
     {
         NewsletterSubscriber::factory()->count(30)->create();
+    }
+
+    private function seedInquiries(): void
+    {
+        Inquiry::factory()->count(6)->volunteer()->create();
+        Inquiry::factory()->count(4)->partner()->create();
     }
 
     private function seedImpactStats(): void

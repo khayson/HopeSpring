@@ -8,8 +8,11 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GetInvolvedController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProgrammeController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +27,11 @@ Route::get('/projects', [ProjectController::class, 'index'])->name('projects.ind
 Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->name('projects.show');
 
 Route::get('/get-involved', GetInvolvedController::class)->name('get-involved');
+Route::get('/get-involved/volunteer', [InquiryController::class, 'volunteer'])->name('get-involved.volunteer');
+Route::get('/get-involved/partner', [InquiryController::class, 'partner'])->name('get-involved.partner');
+Route::post('/get-involved/{type}', [InquiryController::class, 'store'])
+    ->where('type', 'volunteer|partner')
+    ->name('get-involved.store');
 
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{post:slug}', [NewsController::class, 'show'])->name('news.show');
@@ -42,6 +50,12 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->na
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
+    Route::get('portal', PortalController::class)->middleware('role:volunteer,partner')->name('portal.index');
+});
+
+Route::middleware(['guest', 'signed'])->group(function () {
+    Route::get('invite/{user}/accept', [InviteController::class, 'show'])->name('invite.accept');
+    Route::post('invite/{user}/accept', [InviteController::class, 'store'])->name('invite.store');
 });
 
 if (app()->environment('local')) {
@@ -49,3 +63,4 @@ if (app()->environment('local')) {
 }
 
 require __DIR__.'/settings.php';
+require __DIR__.'/admin.php';

@@ -32,4 +32,24 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    server: {
+        host: '127.0.0.1',
+        port: 5173,
+        strictPort: true,
+        hmr: {
+            host: '127.0.0.1',
+        },
+        watch: {
+            ignored: [
+                '**/vendor/**',
+                '**/storage/**',
+                '**/node_modules/**',
+                '**/.git/**',
+                '**/bootstrap/cache/**',
+                '**/public/build/**',
+                '**/public/build.bak/**',
+                '**/hope-spring-foundation*',
+            ],
+        },
+    },
 });

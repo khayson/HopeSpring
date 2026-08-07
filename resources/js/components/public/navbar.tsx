@@ -12,7 +12,7 @@ type NavLink = {
 const navLinks: NavLink[] = [
     { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
-    { label: 'Our Programs', href: '/programs' },
+    { label: 'Our Programmes', href: '/programmes' },
     { label: 'Projects', href: '/projects' },
     { label: 'Get Involved', href: '/get-involved' },
     { label: 'News & Stories', href: '/news' },

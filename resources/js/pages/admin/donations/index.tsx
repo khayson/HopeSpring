@@ -1,7 +1,10 @@
 import { Pagination } from '@/components/admin/pagination';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
+
+const ALL_STATUSES = 'all';
 
 type Donation = {
     id: number;
@@ -63,16 +66,20 @@ export default function DonationsIndex({ donations, filters, totals }: Props) {
                         onChange={(e) => filter({ search: e.target.value })}
                         className="max-w-xs"
                     />
-                    <select
-                        value={filters.status ?? ''}
-                        onChange={(e) => filter({ status: e.target.value })}
-                        className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+                    <Select
+                        value={filters.status || ALL_STATUSES}
+                        onValueChange={(value) => filter({ status: value === ALL_STATUSES ? '' : value })}
                     >
-                        <option value="">All statuses</option>
-                        <option value="success">Success</option>
-                        <option value="pending">Pending</option>
-                        <option value="failed">Failed</option>
-                    </select>
+                        <SelectTrigger className="h-9">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={ALL_STATUSES}>All statuses</SelectItem>
+                            <SelectItem value="success">Success</SelectItem>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="failed">Failed</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className="rounded-xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">

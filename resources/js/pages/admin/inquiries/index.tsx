@@ -1,6 +1,10 @@
 import { Pagination } from '@/components/admin/pagination';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
+
+const ALL_TYPES = 'all';
+const ALL_STATUSES = 'all';
 
 type Inquiry = {
     id: number;
@@ -38,25 +42,33 @@ export default function InquiriesIndex({ inquiries, filters }: Props) {
                 <h1 className="text-xl font-bold">Volunteer & Partner Inquiries</h1>
 
                 <div className="flex flex-wrap items-center gap-3">
-                    <select
-                        value={filters.type ?? ''}
-                        onChange={(e) => filter({ type: e.target.value })}
-                        className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+                    <Select
+                        value={filters.type || ALL_TYPES}
+                        onValueChange={(value) => filter({ type: value === ALL_TYPES ? '' : value })}
                     >
-                        <option value="">All types</option>
-                        <option value="volunteer">Volunteer</option>
-                        <option value="partner">Partner</option>
-                    </select>
-                    <select
-                        value={filters.status ?? ''}
-                        onChange={(e) => filter({ status: e.target.value })}
-                        className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+                        <SelectTrigger className="h-9">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={ALL_TYPES}>All types</SelectItem>
+                            <SelectItem value="volunteer">Volunteer</SelectItem>
+                            <SelectItem value="partner">Partner</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Select
+                        value={filters.status || ALL_STATUSES}
+                        onValueChange={(value) => filter({ status: value === ALL_STATUSES ? '' : value })}
                     >
-                        <option value="">All statuses</option>
-                        <option value="new">New</option>
-                        <option value="reviewed">Reviewed</option>
-                        <option value="converted">Converted</option>
-                    </select>
+                        <SelectTrigger className="h-9">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={ALL_STATUSES}>All statuses</SelectItem>
+                            <SelectItem value="new">New</SelectItem>
+                            <SelectItem value="reviewed">Reviewed</SelectItem>
+                            <SelectItem value="converted">Converted</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className="rounded-xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">

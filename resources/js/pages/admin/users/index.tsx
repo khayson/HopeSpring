@@ -1,8 +1,10 @@
+import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
 import { Mail, Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 type User = {
     id: number;
@@ -29,14 +31,22 @@ const roleColors: Record<string, string> = {
 };
 
 export default function UsersIndex({ users }: Props) {
+    const [pendingDelete, setPendingDelete] = useState<number | null>(null);
+    const [processing, setProcessing] = useState(false);
+
     function resendInvite(id: number) {
         router.post(`/admin/users/${id}/resend-invite`);
     }
 
-    function destroy(id: number) {
-        if (confirm('Remove this user? They will lose access immediately.')) {
-            router.delete(`/admin/users/${id}`);
-        }
+    function destroy() {
+        if (pendingDelete === null) return;
+        setProcessing(true);
+        router.delete(`/admin/users/${pendingDelete}`, {
+            onFinish: () => {
+                setProcessing(false);
+                setPendingDelete(null);
+            },
+        });
     }
 
     return (
@@ -81,7 +91,7 @@ export default function UsersIndex({ users }: Props) {
                                             Resend Invite
                                         </button>
                                     )}
-                                    <button onClick={() => destroy(user.id)} className="text-rose-600 hover:text-rose-800" aria-label="Remove user">
+                                    <button onClick={() => setPendingDelete(user.id)} className="text-rose-600 hover:text-rose-800" aria-label="Remove user">
                                         <Trash2 className="size-4" />
                                     </button>
                                 </div>
@@ -91,6 +101,17 @@ export default function UsersIndex({ users }: Props) {
                     <Pagination links={users.links} />
                 </div>
             </div>
+
+            <ConfirmDialog
+                open={pendingDelete !== null}
+                onOpenChange={(open) => !open && setPendingDelete(null)}
+                title="Remove this user?"
+                description="They will lose access immediately."
+                confirmLabel="Remove"
+                variant="destructive"
+                processing={processing}
+                onConfirm={destroy}
+            />
         </>
     );
 }

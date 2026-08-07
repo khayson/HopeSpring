@@ -1,7 +1,9 @@
+import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
 import { dashboard } from '@/routes';
 import { Head, router } from '@inertiajs/react';
 import { Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 type Subscriber = {
     id: number;
@@ -19,10 +21,18 @@ type Props = {
 };
 
 export default function NewsletterIndex({ subscribers, activeCount }: Props) {
-    function destroy(id: number) {
-        if (confirm('Remove this subscriber?')) {
-            router.delete(`/admin/newsletter/${id}`);
-        }
+    const [pendingDelete, setPendingDelete] = useState<number | null>(null);
+    const [processing, setProcessing] = useState(false);
+
+    function destroy() {
+        if (pendingDelete === null) return;
+        setProcessing(true);
+        router.delete(`/admin/newsletter/${pendingDelete}`, {
+            onFinish: () => {
+                setProcessing(false);
+                setPendingDelete(null);
+            },
+        });
     }
 
     return (
@@ -52,7 +62,7 @@ export default function NewsletterIndex({ subscribers, activeCount }: Props) {
                                             })}
                                         </p>
                                     </div>
-                                    <button onClick={() => destroy(sub.id)} className="text-rose-600 hover:text-rose-800" aria-label="Remove subscriber">
+                                    <button onClick={() => setPendingDelete(sub.id)} className="text-rose-600 hover:text-rose-800" aria-label="Remove subscriber">
                                         <Trash2 className="size-4" />
                                     </button>
                                 </div>
@@ -62,6 +72,17 @@ export default function NewsletterIndex({ subscribers, activeCount }: Props) {
                     <Pagination links={subscribers.links} />
                 </div>
             </div>
+
+            <ConfirmDialog
+                open={pendingDelete !== null}
+                onOpenChange={(open) => !open && setPendingDelete(null)}
+                title="Remove this subscriber?"
+                description="They will stop receiving newsletter emails."
+                confirmLabel="Remove"
+                variant="destructive"
+                processing={processing}
+                onConfirm={destroy}
+            />
         </>
     );
 }

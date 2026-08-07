@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { dashboard } from '@/routes';
 import { Head, useForm } from '@inertiajs/react';
@@ -45,18 +46,18 @@ export default function UsersCreate({ roles }: Props) {
 
                     <div className="space-y-2">
                         <Label htmlFor="role">Role</Label>
-                        <select
-                            id="role"
-                            value={data.role}
-                            onChange={(e) => setData('role', e.target.value)}
-                            className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
-                        >
-                            {roles.map((role) => (
-                                <option key={role.value} value={role.value}>
-                                    {role.label}
-                                </option>
-                            ))}
-                        </select>
+                        <Select value={data.role} onValueChange={(value) => setData('role', value)}>
+                            <SelectTrigger id="role" className="w-full">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {roles.map((role) => (
+                                    <SelectItem key={role.value} value={role.value}>
+                                        {role.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                         {errors.role && <p className="text-xs text-destructive">{errors.role}</p>}
                     </div>
 

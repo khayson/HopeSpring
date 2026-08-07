@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { useForm } from '@inertiajs/react';
 
@@ -84,18 +85,18 @@ export function PostForm({ post, action, method, submitLabel }: PostFormProps) {
             <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                     <Label htmlFor="category">Category</Label>
-                    <select
-                        id="category"
-                        value={data.category}
-                        onChange={(e) => setData('category', e.target.value)}
-                        className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm capitalize"
-                    >
-                        {categories.map((c) => (
-                            <option key={c} value={c}>
-                                {c}
-                            </option>
-                        ))}
-                    </select>
+                    <Select value={data.category} onValueChange={(value) => setData('category', value)}>
+                        <SelectTrigger id="category" className="w-full capitalize">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {categories.map((c) => (
+                                <SelectItem key={c} value={c} className="capitalize">
+                                    {c}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                     {errors.category && <p className="text-xs text-destructive">{errors.category}</p>}
                 </div>
                 <div className="space-y-2">

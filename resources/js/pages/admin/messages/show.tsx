@@ -1,7 +1,9 @@
+import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
 import { ArrowLeft, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 type Message = {
     id: number;
@@ -15,10 +17,15 @@ type Message = {
 type Props = { message: Message };
 
 export default function MessageShow({ message }: Props) {
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [processing, setProcessing] = useState(false);
+
     function destroy() {
-        if (confirm('Delete this message? This cannot be undone.')) {
-            router.delete(`/admin/messages/${message.id}`, { onSuccess: () => router.visit('/admin/messages') });
-        }
+        setProcessing(true);
+        router.delete(`/admin/messages/${message.id}`, {
+            onSuccess: () => router.visit('/admin/messages'),
+            onFinish: () => setProcessing(false),
+        });
     }
 
     return (
@@ -32,7 +39,7 @@ export default function MessageShow({ message }: Props) {
                             Back to Messages
                         </Link>
                     </Button>
-                    <button onClick={destroy} className="flex items-center gap-1.5 text-sm text-rose-600 hover:text-rose-800">
+                    <button onClick={() => setConfirmOpen(true)} className="flex items-center gap-1.5 text-sm text-rose-600 hover:text-rose-800">
                         <Trash2 className="size-4" />
                         Delete
                     </button>
@@ -51,6 +58,17 @@ export default function MessageShow({ message }: Props) {
                     </Button>
                 </div>
             </div>
+
+            <ConfirmDialog
+                open={confirmOpen}
+                onOpenChange={setConfirmOpen}
+                title="Delete this message?"
+                description="This cannot be undone."
+                confirmLabel="Delete"
+                variant="destructive"
+                processing={processing}
+                onConfirm={destroy}
+            />
         </>
     );
 }

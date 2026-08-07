@@ -1,8 +1,10 @@
+import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
 import { Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 type Post = {
     id: number;
@@ -21,10 +23,18 @@ type Props = {
 };
 
 export default function PostsIndex({ posts }: Props) {
-    function destroy(id: number) {
-        if (confirm('Delete this post? This cannot be undone.')) {
-            router.delete(`/admin/posts/${id}`);
-        }
+    const [pendingDelete, setPendingDelete] = useState<number | null>(null);
+    const [processing, setProcessing] = useState(false);
+
+    function destroy() {
+        if (pendingDelete === null) return;
+        setProcessing(true);
+        router.delete(`/admin/posts/${pendingDelete}`, {
+            onFinish: () => {
+                setProcessing(false);
+                setPendingDelete(null);
+            },
+        });
     }
 
     return (
@@ -70,7 +80,7 @@ export default function PostsIndex({ posts }: Props) {
                                         <Link href={`/admin/posts/${post.id}/edit`} className="text-xs font-medium text-blue-600 hover:underline">
                                             Edit
                                         </Link>
-                                        <button onClick={() => destroy(post.id)} className="text-rose-600 hover:text-rose-800" aria-label="Delete post">
+                                        <button onClick={() => setPendingDelete(post.id)} className="text-rose-600 hover:text-rose-800" aria-label="Delete post">
                                             <Trash2 className="size-4" />
                                         </button>
                                     </div>
@@ -81,6 +91,17 @@ export default function PostsIndex({ posts }: Props) {
                     <Pagination links={posts.links} />
                 </div>
             </div>
+
+            <ConfirmDialog
+                open={pendingDelete !== null}
+                onOpenChange={(open) => !open && setPendingDelete(null)}
+                title="Delete this post?"
+                description="This cannot be undone."
+                confirmLabel="Delete"
+                variant="destructive"
+                processing={processing}
+                onConfirm={destroy}
+            />
         </>
     );
 }

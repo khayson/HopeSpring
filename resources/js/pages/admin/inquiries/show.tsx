@@ -1,7 +1,9 @@
+import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
 import { ArrowLeft, UserPlus } from 'lucide-react';
+import { useState } from 'react';
 
 type Inquiry = {
     id: number;
@@ -19,10 +21,17 @@ type Inquiry = {
 type Props = { inquiry: Inquiry };
 
 export default function InquiryShow({ inquiry }: Props) {
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [processing, setProcessing] = useState(false);
+
     function invite() {
-        if (confirm(`Create a ${inquiry.type} account for ${inquiry.name} and send an invite email?`)) {
-            router.post(`/admin/inquiries/${inquiry.id}/invite`);
-        }
+        setProcessing(true);
+        router.post(`/admin/inquiries/${inquiry.id}/invite`, {}, {
+            onFinish: () => {
+                setProcessing(false);
+                setConfirmOpen(false);
+            },
+        });
     }
 
     return (
@@ -71,7 +80,7 @@ export default function InquiryShow({ inquiry }: Props) {
                         {inquiry.converted_user_id ? (
                             <span className="text-sm text-muted-foreground">Account already created.</span>
                         ) : (
-                            <Button onClick={invite} className="bg-brand-green font-bold hover:bg-brand-green-dark">
+                            <Button onClick={() => setConfirmOpen(true)} className="bg-brand-green font-bold hover:bg-brand-green-dark">
                                 <UserPlus className="size-4" />
                                 Create Account & Invite
                             </Button>
@@ -79,6 +88,16 @@ export default function InquiryShow({ inquiry }: Props) {
                     </div>
                 </div>
             </div>
+
+            <ConfirmDialog
+                open={confirmOpen}
+                onOpenChange={setConfirmOpen}
+                title="Create account and send invite?"
+                description={`This creates a ${inquiry.type} account for ${inquiry.name} and emails them a link to set their password.`}
+                confirmLabel="Create Account & Invite"
+                processing={processing}
+                onConfirm={invite}
+            />
         </>
     );
 }

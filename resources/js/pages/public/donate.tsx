@@ -3,6 +3,7 @@ import { PageHero } from '@/components/public/page-hero';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import PublicLayout from '@/layouts/public/public-layout';
 import { cn } from '@/lib/utils';
 import { Head, usePage } from '@inertiajs/react';
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const presetAmounts = [50, 100, 200, 500, 1000, 2500];
+const GENERAL_FUND = 'general';
 
 type DonationState = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -255,19 +257,22 @@ export default function Donate({ programmes, settings }: Props) {
                             {programmes.length > 0 && (
                                 <div className="mt-6 space-y-2">
                                     <Label htmlFor="programme">Direct your donation (optional)</Label>
-                                    <select
-                                        id="programme"
-                                        value={selectedProgramme}
-                                        onChange={(e) => setSelectedProgramme(e.target.value)}
-                                        className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                    <Select
+                                        value={selectedProgramme || GENERAL_FUND}
+                                        onValueChange={(value) => setSelectedProgramme(value === GENERAL_FUND ? '' : value)}
                                     >
-                                        <option value="">Where it&apos;s needed most</option>
-                                        {programmes.map((p) => (
-                                            <option key={p.id} value={p.title}>
-                                                {p.title}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        <SelectTrigger id="programme" className="w-full">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value={GENERAL_FUND}>Where it&apos;s needed most</SelectItem>
+                                            {programmes.map((p) => (
+                                                <SelectItem key={p.id} value={p.title}>
+                                                    {p.title}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             )}
 

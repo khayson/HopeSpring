@@ -1,8 +1,10 @@
+import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
 import { Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
 type Event = {
     id: number;
@@ -20,10 +22,18 @@ type Props = {
 };
 
 export default function EventsIndex({ events }: Props) {
-    function destroy(id: number) {
-        if (confirm('Delete this event? This cannot be undone.')) {
-            router.delete(`/admin/events/${id}`);
-        }
+    const [pendingDelete, setPendingDelete] = useState<number | null>(null);
+    const [processing, setProcessing] = useState(false);
+
+    function destroy() {
+        if (pendingDelete === null) return;
+        setProcessing(true);
+        router.delete(`/admin/events/${pendingDelete}`, {
+            onFinish: () => {
+                setProcessing(false);
+                setPendingDelete(null);
+            },
+        });
     }
 
     return (
@@ -65,7 +75,7 @@ export default function EventsIndex({ events }: Props) {
                                         <Link href={`/admin/events/${event.id}/edit`} className="text-xs font-medium text-blue-600 hover:underline">
                                             Edit
                                         </Link>
-                                        <button onClick={() => destroy(event.id)} className="text-rose-600 hover:text-rose-800" aria-label="Delete event">
+                                        <button onClick={() => setPendingDelete(event.id)} className="text-rose-600 hover:text-rose-800" aria-label="Delete event">
                                             <Trash2 className="size-4" />
                                         </button>
                                     </div>
@@ -76,6 +86,17 @@ export default function EventsIndex({ events }: Props) {
                     <Pagination links={events.links} />
                 </div>
             </div>
+
+            <ConfirmDialog
+                open={pendingDelete !== null}
+                onOpenChange={(open) => !open && setPendingDelete(null)}
+                title="Delete this event?"
+                description="This cannot be undone."
+                confirmLabel="Delete"
+                variant="destructive"
+                processing={processing}
+                onConfirm={destroy}
+            />
         </>
     );
 }

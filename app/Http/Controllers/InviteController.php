@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -34,7 +35,7 @@ class InviteController extends Controller
         ]);
 
         $user->password = $validated['password'];
-        $user->email_verified_at = now();
+        $user->email_verified_at = Carbon::now();
         $user->save();
 
         Auth::login($user);

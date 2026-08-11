@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\URL;
@@ -13,12 +14,12 @@ class AccountInvitation extends Notification
     /**
      * @return array<int, string>
      */
-    public function via(object $notifiable): array
+    public function via(User $notifiable): array
     {
         return ['mail'];
     }
 
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(User $notifiable): MailMessage
     {
         $url = URL::temporarySignedRoute(
             'invite.accept',
@@ -27,7 +28,7 @@ class AccountInvitation extends Notification
         );
 
         return (new MailMessage)
-            ->subject('You’ve been invited to HopeSpring Foundation')
+            ->subject("You've been invited to HopeSpring Foundation")
             ->greeting("Hi {$notifiable->name},")
             ->line("You've been invited to join HopeSpring Foundation as a {$this->roleLabel}.")
             ->action('Set up your account', $url)

@@ -19,6 +19,7 @@ class GalleryImageLike extends Model
     /** @use HasFactory<GalleryImageLikeFactory> */
     use HasFactory;
 
+    /** @return BelongsTo<GalleryImage, $this> */
     public function galleryImage(): BelongsTo
     {
         return $this->belongsTo(GalleryImage::class);

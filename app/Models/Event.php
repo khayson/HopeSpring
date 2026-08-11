@@ -37,16 +37,19 @@ class Event extends Model
         ];
     }
 
+    /** @param Builder<Event> $query */
     public function scopeUpcoming(Builder $query): void
     {
         $query->where('starts_at', '>=', now())->orderBy('starts_at');
     }
 
+    /** @param Builder<Event> $query */
     public function scopePast(Builder $query): void
     {
         $query->where('starts_at', '<', now())->orderByDesc('starts_at');
     }
 
+    /** @return HasMany<Donation, $this> */
     public function donations(): HasMany
     {
         return $this->hasMany(Donation::class);

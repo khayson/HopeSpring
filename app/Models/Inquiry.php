@@ -25,6 +25,7 @@ class Inquiry extends Model
     /** @use HasFactory<InquiryFactory> */
     use HasFactory;
 
+    /** @return BelongsTo<User, $this> */
     public function convertedUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'converted_user_id');

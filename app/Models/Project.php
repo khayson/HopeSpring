@@ -38,6 +38,7 @@ class Project extends Model
         ];
     }
 
+    /** @return BelongsTo<Programme, $this> */
     public function programme(): BelongsTo
     {
         return $this->belongsTo(Programme::class);

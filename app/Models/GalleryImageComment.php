@@ -20,6 +20,7 @@ class GalleryImageComment extends Model
     /** @use HasFactory<GalleryImageCommentFactory> */
     use HasFactory;
 
+    /** @return BelongsTo<GalleryImage, $this> */
     public function galleryImage(): BelongsTo
     {
         return $this->belongsTo(GalleryImage::class);

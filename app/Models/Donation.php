@@ -61,16 +61,19 @@ class Donation extends Model
         ];
     }
 
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<Programme, $this> */
     public function fundedProgramme(): BelongsTo
     {
         return $this->belongsTo(Programme::class, 'programme_id');
     }
 
+    /** @return BelongsTo<Event, $this> */
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

@@ -33,11 +33,13 @@ class Programme extends Model
         ];
     }
 
+    /** @return HasMany<Project, $this> */
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
 
+    /** @return HasMany<Donation, $this> */
     public function donations(): HasMany
     {
         return $this->hasMany(Donation::class);

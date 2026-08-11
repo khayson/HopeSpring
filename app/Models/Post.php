@@ -36,16 +36,19 @@ class Post extends Model
         ];
     }
 
+    /** @return BelongsTo<User, $this> */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    /** @param Builder<Post> $query */
     public function scopePublished(Builder $query): void
     {
         $query->whereNotNull('published_at')->where('published_at', '<=', now());
     }
 
+    /** @param Builder<Post> $query */
     public function scopeFeatured(Builder $query): void
     {
         $query->where('is_featured', true);

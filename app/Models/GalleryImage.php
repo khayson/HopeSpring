@@ -22,11 +22,13 @@ class GalleryImage extends Model
     /** @use HasFactory<GalleryImageFactory> */
     use HasFactory;
 
+    /** @return HasMany<GalleryImageLike, $this> */
     public function likes(): HasMany
     {
         return $this->hasMany(GalleryImageLike::class);
     }
 
+    /** @return HasMany<GalleryImageComment, $this> */
     public function comments(): HasMany
     {
         return $this->hasMany(GalleryImageComment::class)->latest();

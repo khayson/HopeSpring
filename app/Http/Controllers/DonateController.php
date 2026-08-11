@@ -57,16 +57,19 @@ class DonateController extends Controller
     {
         $validated = $request->validated();
 
+        /** @var Programme|null $programme */
         $programme = isset($validated['programme_id'])
             ? Programme::query()->find($validated['programme_id'])
             : null;
 
+        /** @var Event|null $event */
         $event = isset($validated['event_id'])
             ? Event::query()->find($validated['event_id'])
             : null;
 
-        $destinationLabel = $programme?->title
-            ?? ($event !== null ? 'Event: '.$event->title : null);
+        $destinationLabel = $programme !== null
+            ? $programme->title
+            : ($event !== null ? 'Event: '.$event->title : null);
 
         $reference = 'HS-'.strtoupper(Str::random(12));
 

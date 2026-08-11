@@ -1,6 +1,6 @@
-import { show as galleryShow } from '@/routes/gallery';
 import { Link } from '@inertiajs/react';
 import { useLayoutEffect, useRef, useState } from 'react';
+import { show as galleryShow } from '@/routes/gallery';
 
 type RelatedImage = {
     id: number;

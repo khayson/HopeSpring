@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type PageHeroProps = {
     title: string;
@@ -54,6 +54,7 @@ export function PageHero({ title, subtitle, image, breadcrumbs, className }: Pag
                 <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-1.5 text-xs font-medium">
                     {crumbs.map((crumb, i) => {
                         const isLast = i === crumbs.length - 1;
+
                         return (
                             <span key={i} className="flex items-center gap-1.5">
                                 {i > 0 && <ChevronRight className="size-3 text-white/30" aria-hidden="true" />}

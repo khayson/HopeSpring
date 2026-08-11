@@ -1,10 +1,10 @@
+import { Head, Link, router } from '@inertiajs/react';
+import { Mail, Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
-import { Head, Link, router } from '@inertiajs/react';
-import { Mail, Plus, Trash2 } from 'lucide-react';
-import { useState } from 'react';
 
 type User = {
     id: number;
@@ -39,7 +39,10 @@ export default function UsersIndex({ users }: Props) {
     }
 
     function destroy() {
-        if (pendingDelete === null) return;
+        if (pendingDelete === null) {
+return;
+}
+
         setProcessing(true);
         router.delete(`/admin/users/${pendingDelete}`, {
             onFinish: () => {

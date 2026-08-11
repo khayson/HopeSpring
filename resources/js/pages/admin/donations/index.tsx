@@ -1,8 +1,8 @@
+import { Head, Link, router } from '@inertiajs/react';
 import { Pagination } from '@/components/admin/pagination';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { dashboard } from '@/routes';
-import { Head, Link, router } from '@inertiajs/react';
 
 const ALL_STATUSES = 'all';
 

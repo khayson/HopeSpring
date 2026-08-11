@@ -1,9 +1,9 @@
+import { useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { useForm } from '@inertiajs/react';
 
 type EventFormData = {
     title: string;
@@ -24,7 +24,10 @@ type EventFormProps = {
 };
 
 function toDatetimeLocal(value?: string): string {
-    if (!value) return '';
+    if (!value) {
+return '';
+}
+
     return value.slice(0, 16);
 }
 

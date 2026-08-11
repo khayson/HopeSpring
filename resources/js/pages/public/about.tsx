@@ -1,3 +1,5 @@
+import { Head } from '@inertiajs/react';
+import { Eye, Heart, Shield, Users } from 'lucide-react';
 import { BrushEdge } from '@/components/public/brush-edge';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
@@ -8,8 +10,6 @@ import { TimelineItem } from '@/components/public/timeline-item';
 import { ValueCard } from '@/components/public/value-card';
 import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
-import { Head } from '@inertiajs/react';
-import { Eye, Heart, Shield, Users } from 'lucide-react';
 
 type TeamMember = {
     id: number;

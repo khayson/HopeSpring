@@ -1,10 +1,10 @@
+import { useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import { useForm } from '@inertiajs/react';
 
 type PostFormData = {
     title: string;

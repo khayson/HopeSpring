@@ -1,3 +1,5 @@
+import { Head } from '@inertiajs/react';
+import { createElement } from 'react';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
 import { ProjectCard } from '@/components/public/project-card';
@@ -5,7 +7,6 @@ import PublicLayout from '@/layouts/public/public-layout';
 import { getIcon } from '@/lib/icon-map';
 import { pageHeroes } from '@/lib/page-heroes';
 import { donate } from '@/routes';
-import { Head } from '@inertiajs/react';
 
 type Project = {
     id: number;
@@ -32,8 +33,11 @@ type Props = {
     programme: Programme;
 };
 
+function ProgrammeIcon({ name }: { name: string }) {
+    return createElement(getIcon(name), { className: 'size-7 text-white' });
+}
+
 export default function ProgrammeShow({ programme }: Props) {
-    const Icon = getIcon(programme.icon);
     const donateHref = donate.url({ query: { programme: programme.slug } });
 
     return (
@@ -50,7 +54,7 @@ export default function ProgrammeShow({ programme }: Props) {
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-3xl">
                     <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-brand-green">
-                        <Icon className="size-7 text-white" />
+                        <ProgrammeIcon name={programme.icon} />
                     </div>
                     <p className="text-lg leading-relaxed text-muted-foreground">{programme.description}</p>
                     {programme.long_description && (

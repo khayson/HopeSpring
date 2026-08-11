@@ -1,9 +1,9 @@
+import { Head, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { dashboard } from '@/routes';
-import { Head, useForm } from '@inertiajs/react';
 
 type ImpactStat = {
     id: number;
@@ -93,6 +93,7 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
 
     const orderedGroups = Object.entries(settings).sort(([a], [b]) => {
         const order = ['general', 'home', 'about', 'contact', 'social', 'payment'];
+
         return order.indexOf(a) - order.indexOf(b);
     });
 

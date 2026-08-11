@@ -1,6 +1,6 @@
+import { Head, Link } from '@inertiajs/react';
 import { Pagination } from '@/components/admin/pagination';
 import { dashboard } from '@/routes';
-import { Head, Link } from '@inertiajs/react';
 
 type Message = {
     id: number;

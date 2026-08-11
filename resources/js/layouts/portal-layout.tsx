@@ -1,8 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { Heart } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { logout } from '@/routes';
-import type { ReactNode } from 'react';
 
 export default function PortalLayout({ children }: { children: ReactNode }) {
     return (

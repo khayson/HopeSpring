@@ -1,18 +1,10 @@
+import { Head, Link } from '@inertiajs/react';
+import { Calendar, HandHeart, Heart, MapPin, Megaphone, Users } from 'lucide-react';
 import { DonationBand } from '@/components/public/donation-band';
 import { EngagementCard } from '@/components/public/engagement-card';
 import { PageHero } from '@/components/public/page-hero';
 import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
-import { Head, Link } from '@inertiajs/react';
-import { Calendar, HandHeart, Heart, MapPin, Megaphone, Users } from 'lucide-react';
-
-type Programme = {
-    id: number;
-    title: string;
-    slug: string;
-    description: string;
-    icon: string;
-};
 
 type Event = {
     id: number;
@@ -24,11 +16,10 @@ type Event = {
 };
 
 type Props = {
-    programmes: Programme[];
     upcomingEvents: Event[];
 };
 
-export default function GetInvolved({ programmes, upcomingEvents }: Props) {
+export default function GetInvolved({ upcomingEvents }: Props) {
     return (
         <PublicLayout currentPath="/get-involved">
             <Head title="Get Involved — HopeSpring Foundation" />

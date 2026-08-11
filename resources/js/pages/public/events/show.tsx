@@ -1,3 +1,5 @@
+import { Head, Link } from '@inertiajs/react';
+import { ArrowLeft, Calendar, Clock, MapPin } from 'lucide-react';
 import { BrushEdge } from '@/components/public/brush-edge';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
@@ -5,8 +7,6 @@ import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
 import { donate } from '@/routes';
-import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Calendar, Clock, MapPin } from 'lucide-react';
 
 type Event = {
     id: number;

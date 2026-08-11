@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { useForm } from '@inertiajs/react';
 import { ArrowRight, Check } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export function NewsletterForm() {
     const { data, setData, post, processing, recentlySuccessful, errors, reset } = useForm({

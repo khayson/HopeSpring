@@ -1,8 +1,8 @@
+import { Head, Link } from '@inertiajs/react';
 import { BrushEdge } from '@/components/public/brush-edge';
 import { DonationBand } from '@/components/public/donation-band';
 import { StatsBar } from '@/components/public/stats-bar';
 import { Button } from '@/components/ui/button';
-import { Head, Link } from '@inertiajs/react';
 
 const colors = [
     { label: 'Navy', class: 'bg-navy', hex: '#1a2f5c' },

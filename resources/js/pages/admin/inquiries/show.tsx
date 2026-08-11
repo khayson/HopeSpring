@@ -1,9 +1,9 @@
-import { ConfirmDialog } from '@/components/admin/confirm-dialog';
-import { Button } from '@/components/ui/button';
-import { dashboard } from '@/routes';
 import { Head, Link, router } from '@inertiajs/react';
 import { ArrowLeft, UserPlus } from 'lucide-react';
 import { useState } from 'react';
+import { ConfirmDialog } from '@/components/admin/confirm-dialog';
+import { Button } from '@/components/ui/button';
+import { dashboard } from '@/routes';
 
 type Inquiry = {
     id: number;

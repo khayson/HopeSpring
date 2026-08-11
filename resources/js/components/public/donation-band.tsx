@@ -1,9 +1,9 @@
+import { Link } from '@inertiajs/react';
+import { Heart } from 'lucide-react';
 import { BrushEdge } from '@/components/public/brush-edge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { donate } from '@/routes';
-import { Link } from '@inertiajs/react';
-import { Heart } from 'lucide-react';
 
 type DonationBandProps = {
     title?: string;

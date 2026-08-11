@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { MapPin } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type ProjectCardProps = {
     title: string;

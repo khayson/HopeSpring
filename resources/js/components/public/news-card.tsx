@@ -1,7 +1,8 @@
-import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
+import { cva  } from 'class-variance-authority';
+import type {VariantProps} from 'class-variance-authority';
 import { ArrowRight } from 'lucide-react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
 const categoryTone = cva('text-xs font-bold tracking-[0.16em] uppercase', {
     variants: {

@@ -1,3 +1,4 @@
+import { Head, Link } from '@inertiajs/react';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
 import { ProjectCard } from '@/components/public/project-card';
@@ -5,7 +6,6 @@ import { ScrollReveal } from '@/components/public/scroll-reveal';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
-import { Head, Link } from '@inertiajs/react';
 
 type Project = {
     id: number;

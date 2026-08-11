@@ -1,3 +1,4 @@
+import { Head, Link } from '@inertiajs/react';
 import { DonationBand } from '@/components/public/donation-band';
 import { NewsCard } from '@/components/public/news-card';
 import { PageHero } from '@/components/public/page-hero';
@@ -7,7 +8,6 @@ import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
 import { cn } from '@/lib/utils';
 import { index as newsIndex, show as newsShow } from '@/routes/news';
-import { Head, Link } from '@inertiajs/react';
 
 type Post = {
     id: number;

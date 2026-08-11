@@ -1,3 +1,4 @@
+import { Head, Link } from '@inertiajs/react';
 import { DonationBand } from '@/components/public/donation-band';
 import { GalleryGrid } from '@/components/public/gallery-grid';
 import { PageHero } from '@/components/public/page-hero';
@@ -6,7 +7,6 @@ import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
 import { cn } from '@/lib/utils';
 import { index as galleryIndex } from '@/routes/gallery';
-import { Head, Link } from '@inertiajs/react';
 
 type GalleryImage = {
     id: number;

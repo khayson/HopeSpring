@@ -1,9 +1,9 @@
+import { useForm } from '@inertiajs/react';
+import { Check, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { useForm } from '@inertiajs/react';
-import { Check, Send } from 'lucide-react';
 
 type InquiryFormProps = {
     type: 'volunteer' | 'partner';

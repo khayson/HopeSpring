@@ -1,9 +1,3 @@
-import { DonationBand } from '@/components/public/donation-band';
-import { PinterestPinLayout } from '@/components/public/pinterest-pin-layout';
-import PublicLayout from '@/layouts/public/public-layout';
-import { donate } from '@/routes';
-import { index as galleryIndex, like as toggleLike, show as galleryShow } from '@/routes/gallery';
-import { store as storeComment } from '@/routes/gallery/comments';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import {
     ArrowLeft,
@@ -16,7 +10,14 @@ import {
     Share2,
     X,
 } from 'lucide-react';
-import { FormEvent, useEffect, useState } from 'react';
+import type { FormEvent} from 'react';
+import { useEffect, useState } from 'react';
+import { DonationBand } from '@/components/public/donation-band';
+import { PinterestPinLayout } from '@/components/public/pinterest-pin-layout';
+import PublicLayout from '@/layouts/public/public-layout';
+import { donate } from '@/routes';
+import { index as galleryIndex, like as toggleLike, show as galleryShow } from '@/routes/gallery';
+import { store as storeComment } from '@/routes/gallery/comments';
 
 type GalleryImage = {
     id: number;
@@ -75,6 +76,7 @@ export default function GalleryShow({
 
         if (navigator.share) {
             void navigator.share({ title, url });
+
             return;
         }
 

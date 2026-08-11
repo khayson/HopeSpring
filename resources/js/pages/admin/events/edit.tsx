@@ -1,6 +1,6 @@
+import { Head } from '@inertiajs/react';
 import { EventForm } from '@/components/admin/event-form';
 import { dashboard } from '@/routes';
-import { Head } from '@inertiajs/react';
 
 type Event = {
     id: number;

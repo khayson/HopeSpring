@@ -1,16 +1,16 @@
+import { Head, Link, usePage } from '@inertiajs/react';
+import { AlertCircle, Check, Heart, Loader2, Shield } from 'lucide-react';
+import { useState } from 'react';
 import { BrushEdge } from '@/components/public/brush-edge';
 import { ScrollReveal } from '@/components/public/scroll-reveal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import PublicLayout from '@/layouts/public/public-layout';
-import { cn } from '@/lib/utils';
 import { pageHeroes } from '@/lib/page-heroes';
+import { cn } from '@/lib/utils';
 import { home } from '@/routes';
 import { store as storeDonation } from '@/routes/donate';
-import { Head, Link, usePage } from '@inertiajs/react';
-import { AlertCircle, Check, Heart, Loader2, Shield } from 'lucide-react';
-import { useState } from 'react';
 
 type Programme = { id: number; title: string; slug: string; description: string; photo: string | null };
 type FundraisingEvent = {
@@ -132,6 +132,7 @@ export default function Donate({
     const selectedLabel = (() => {
         if (destination.startsWith('programme:')) {
             const id = Number(destination.slice('programme:'.length));
+
             return programmes.find((programme) => programme.id === id)?.title ?? null;
         }
 
@@ -188,16 +189,19 @@ export default function Donate({
 
         if (!amount || amount <= 0) {
             setErrorMessage('Please select or enter a donation amount.');
+
             return;
         }
 
         if (!donorName.trim()) {
             setFieldErrors((prev) => ({ ...prev, donor_name: 'Please enter your name.' }));
+
             return;
         }
 
         if (!donorEmail.trim()) {
             setFieldErrors((prev) => ({ ...prev, donor_email: 'Please enter your email.' }));
+
             return;
         }
 
@@ -231,13 +235,17 @@ export default function Donate({
             if (!response.ok) {
                 if (response.status === 422 && data.errors) {
                     const errors: Record<string, string> = {};
+
                     for (const [key, msgs] of Object.entries(data.errors)) {
                         errors[key] = (msgs as string[])[0];
                     }
+
                     setFieldErrors(errors);
                     setState('idle');
+
                     return;
                 }
+
                 throw new Error(data.message || 'Payment initialization failed.');
             }
 

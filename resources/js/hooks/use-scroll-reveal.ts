@@ -13,7 +13,6 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshol
         }
 
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            setIsVisible(true);
             return;
         }
 
@@ -22,11 +21,10 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshol
 
         // Above-the-fold content stays visible — no flash after hydration.
         if (alreadyInView) {
-            setIsVisible(true);
             return;
         }
 
-        setIsVisible(false);
+        const rafId = window.requestAnimationFrame(() => setIsVisible(false));
 
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -40,7 +38,10 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshol
 
         observer.observe(el);
 
-        return () => observer.disconnect();
+        return () => {
+            window.cancelAnimationFrame(rafId);
+            observer.disconnect();
+        };
     }, [threshold]);
 
     return { ref, isVisible };

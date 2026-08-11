@@ -1,8 +1,8 @@
+import { Head } from '@inertiajs/react';
 import { InquiryForm } from '@/components/public/inquiry-form';
 import { PageHero } from '@/components/public/page-hero';
 import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
-import { Head } from '@inertiajs/react';
 
 export default function VolunteerInquiry() {
     return (

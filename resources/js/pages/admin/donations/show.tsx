@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { dashboard } from '@/routes';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { dashboard } from '@/routes';
 
 type Donation = {
     id: number;

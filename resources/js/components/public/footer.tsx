@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { Facebook, Heart, Instagram, Mail, MapPin, Phone, Twitter } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { NewsletterForm } from './newsletter-form';
 
 const quickLinks = [

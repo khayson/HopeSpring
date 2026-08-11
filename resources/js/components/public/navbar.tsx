@@ -1,7 +1,7 @@
-import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { Heart, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 
 type NavLink = {

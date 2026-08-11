@@ -1,3 +1,4 @@
+import { Head } from '@inertiajs/react';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
 import { ProgrammeCard } from '@/components/public/programme-card';
@@ -5,7 +6,6 @@ import { ScrollReveal } from '@/components/public/scroll-reveal';
 import PublicLayout from '@/layouts/public/public-layout';
 import { getIcon } from '@/lib/icon-map';
 import { pageHeroes } from '@/lib/page-heroes';
-import { Head } from '@inertiajs/react';
 
 type Programme = {
     id: number;

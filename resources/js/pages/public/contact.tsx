@@ -1,9 +1,9 @@
+import { Head } from '@inertiajs/react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { ContactForm } from '@/components/public/contact-form';
 import { PageHero } from '@/components/public/page-hero';
 import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
-import { Head } from '@inertiajs/react';
-import { Mail, MapPin, Phone } from 'lucide-react';
 
 type Props = {
     settings: Record<string, string>;

@@ -1,6 +1,6 @@
+import { Link } from '@inertiajs/react';
 import { cn } from '@/lib/utils';
 import { show as galleryShow } from '@/routes/gallery';
-import { Link } from '@inertiajs/react';
 
 type GalleryImage = {
     id: number;

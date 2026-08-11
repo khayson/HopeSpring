@@ -1,7 +1,8 @@
-import { cn } from '@/lib/utils';
-import { cva, type VariantProps } from 'class-variance-authority';
-import type { LucideIcon } from 'lucide-react';
 import { Link } from '@inertiajs/react';
+import { cva  } from 'class-variance-authority';
+import type {VariantProps} from 'class-variance-authority';
+import type { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const cardVariants = cva('group overflow-hidden rounded-xl transition-shadow', {
     variants: {

@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
-import { dashboard } from '@/routes';
 import { CircleDollarSign, FileText, Heart, Mail, Newspaper, Users } from 'lucide-react';
+import { dashboard } from '@/routes';
 
 type Stats = {
     totalDonations: number | null;
@@ -55,10 +55,22 @@ function timeAgo(dateString: string): string {
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-    if (seconds < 60) return 'just now';
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-    if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
+    if (seconds < 60) {
+return 'just now';
+}
+
+    if (seconds < 3600) {
+return `${Math.floor(seconds / 60)}m ago`;
+}
+
+    if (seconds < 86400) {
+return `${Math.floor(seconds / 3600)}h ago`;
+}
+
+    if (seconds < 604800) {
+return `${Math.floor(seconds / 86400)}d ago`;
+}
+
     return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
@@ -81,7 +93,11 @@ export default function Dashboard({ stats, recentDonations, recentMessages, rece
                     {statCards.map((card) => {
                         const Icon = card.icon;
                         const value = stats[card.key];
-                        if (value === null) return null;
+
+                        if (value === null) {
+return null;
+}
+
                         return (
                             <div key={card.key} className="rounded-xl border border-sidebar-border/70 bg-white p-5 dark:border-sidebar-border dark:bg-neutral-900">
                                 <div className="flex items-center justify-between">

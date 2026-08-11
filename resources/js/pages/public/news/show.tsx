@@ -1,3 +1,6 @@
+import { Head, Link } from '@inertiajs/react';
+import { ArrowLeft, Check, Facebook, Link as LinkIcon, Linkedin, Twitter } from 'lucide-react';
+import { useState } from 'react';
 import { DonationBand } from '@/components/public/donation-band';
 import { NewsCard } from '@/components/public/news-card';
 import { PageHero } from '@/components/public/page-hero';
@@ -6,9 +9,6 @@ import PublicLayout from '@/layouts/public/public-layout';
 import { pageHeroes } from '@/lib/page-heroes';
 import { cn } from '@/lib/utils';
 import { index as newsIndex, show as newsShow } from '@/routes/news';
-import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Check, Facebook, Link as LinkIcon, Linkedin, Twitter } from 'lucide-react';
-import { useState } from 'react';
 
 type Author = { id: number; name: string };
 

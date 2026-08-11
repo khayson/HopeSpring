@@ -1,6 +1,6 @@
+import { Head } from '@inertiajs/react';
 import { PostForm } from '@/components/admin/post-form';
 import { dashboard } from '@/routes';
-import { Head } from '@inertiajs/react';
 
 export default function PostsCreate() {
     return (

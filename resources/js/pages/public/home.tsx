@@ -1,11 +1,11 @@
+import { Head, Link } from '@inertiajs/react';
+import { Droplets, GraduationCap, HandHeart, Heart, MapPin, Users } from 'lucide-react';
 import { ScrollReveal } from '@/components/public/scroll-reveal';
 import { StatCounter } from '@/components/public/stat-counter';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
 import { getIcon } from '@/lib/icon-map';
 import { pageHeroes } from '@/lib/page-heroes';
-import { Head, Link } from '@inertiajs/react';
-import { Droplets, GraduationCap, HandHeart, Heart, MapPin, Users } from 'lucide-react';
 
 type Programme = {
     id: number;

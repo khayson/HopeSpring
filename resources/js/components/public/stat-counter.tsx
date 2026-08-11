@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils';
 import { useEffect, useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 type StatCounterProps = {
     value: number;
@@ -22,7 +22,6 @@ export function StatCounter({ value, suffix = '+', label, className }: StatCount
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         if (prefersReducedMotion) {
-            setCount(value);
             return;
         }
 

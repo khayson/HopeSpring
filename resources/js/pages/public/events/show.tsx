@@ -26,10 +26,18 @@ type Props = {
 
 export default function EventShow({ event }: Props) {
     const formatDate = (date: string) =>
-        new Date(date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        new Date(date).toLocaleDateString('en-GB', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        });
 
     const formatTime = (date: string) =>
-        new Date(date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        new Date(date).toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+        });
 
     const donateHref = donate.url({ query: { event: event.slug } });
 
@@ -40,7 +48,11 @@ export default function EventShow({ event }: Props) {
             <PageHero
                 title={event.title}
                 image={pageHeroes.events}
-                breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Events', href: '/events' }, { label: event.title }]}
+                breadcrumbs={[
+                    { label: 'Home', href: '/' },
+                    { label: 'Events', href: '/events' },
+                    { label: event.title },
+                ]}
             />
             <BrushEdge className="h-8 text-background md:h-12" />
 
@@ -48,7 +60,9 @@ export default function EventShow({ event }: Props) {
                 <div className="mb-8 flex flex-wrap gap-4 rounded-xl border border-border bg-secondary/50 p-6">
                     <div className="flex items-center gap-2 text-sm">
                         <Calendar className="size-4 text-brand-green" />
-                        <span className="font-semibold text-navy">{formatDate(event.starts_at)}</span>
+                        <span className="font-semibold text-navy">
+                            {formatDate(event.starts_at)}
+                        </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <Clock className="size-4 text-brand-green" />
@@ -59,22 +73,33 @@ export default function EventShow({ event }: Props) {
                     </div>
                     <div className="flex items-center gap-2 text-sm">
                         <MapPin className="size-4 text-brand-green" />
-                        <span className="text-muted-foreground">{event.location}</span>
+                        <span className="text-muted-foreground">
+                            {event.location}
+                        </span>
                     </div>
                 </div>
 
                 <div className="prose prose-lg max-w-none text-muted-foreground">
-                    <p className="text-lg leading-relaxed">{event.description}</p>
+                    <p className="text-lg leading-relaxed">
+                        {event.description}
+                    </p>
                     {event.long_description && (
                         <div className="mt-6">{event.long_description}</div>
                     )}
                 </div>
 
                 <div className="mt-12 flex flex-wrap gap-3">
-                    <Button asChild className="bg-brand-green font-bold hover:bg-brand-green-dark">
+                    <Button
+                        asChild
+                        className="bg-brand-green font-bold hover:bg-brand-green-dark"
+                    >
                         <Link href={donateHref}>Support this event</Link>
                     </Button>
-                    <Button asChild variant="outline" className="border-navy font-semibold text-navy hover:bg-navy hover:text-white">
+                    <Button
+                        asChild
+                        variant="outline"
+                        className="border-navy font-semibold text-navy hover:bg-navy hover:text-white"
+                    >
                         <Link href="/events">
                             <ArrowLeft className="size-4" />
                             Back to Events

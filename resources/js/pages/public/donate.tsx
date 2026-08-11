@@ -12,7 +12,13 @@ import { cn } from '@/lib/utils';
 import { home } from '@/routes';
 import { store as storeDonation } from '@/routes/donate';
 
-type Programme = { id: number; title: string; slug: string; description: string; photo: string | null };
+type Programme = {
+    id: number;
+    title: string;
+    slug: string;
+    description: string;
+    photo: string | null;
+};
 type FundraisingEvent = {
     id: number;
     title: string;
@@ -45,7 +51,10 @@ const impactCopy: Record<number, string> = {
 
 type DonationState = 'idle' | 'submitting' | 'success' | 'error';
 
-function destinationValue(programmeId: number | null, eventId: number | null): string {
+function destinationValue(
+    programmeId: number | null,
+    eventId: number | null,
+): string {
     if (programmeId) {
         return `programme:${programmeId}`;
     }
@@ -62,7 +71,13 @@ function resolveHero(
     programmes: Programme[],
     events: FundraisingEvent[],
     defaultHeroImage: string,
-): { image: string; eyebrow: string; title: string; subtitle: string; pageTitle: string } {
+): {
+    image: string;
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    pageTitle: string;
+} {
     if (destination.startsWith('programme:')) {
         const id = Number(destination.slice('programme:'.length));
         const programme = programmes.find((item) => item.id === id);
@@ -111,16 +126,21 @@ export default function Donate({
     defaultHeroImage = pageHeroes.donate,
     settings,
 }: Props) {
-    const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props;
+    const { flash } = usePage<{ flash: { success?: string; error?: string } }>()
+        .props;
     const [selectedAmount, setSelectedAmount] = useState<number | null>(100);
     const [customAmount, setCustomAmount] = useState('');
-    const [destination, setDestination] = useState(() => destinationValue(selectedProgrammeId, selectedEventId));
+    const [destination, setDestination] = useState(() =>
+        destinationValue(selectedProgrammeId, selectedEventId),
+    );
     const [donorName, setDonorName] = useState('');
     const [donorEmail, setDonorEmail] = useState('');
     const [donorPhone, setDonorPhone] = useState('');
     const [message, setMessage] = useState('');
     const [isAnonymous, setIsAnonymous] = useState(false);
-    const [state, setState] = useState<DonationState>(flash?.success ? 'success' : 'idle');
+    const [state, setState] = useState<DonationState>(
+        flash?.success ? 'success' : 'idle',
+    );
     const [errorMessage, setErrorMessage] = useState(flash?.error || '');
     const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
@@ -133,7 +153,10 @@ export default function Donate({
         if (destination.startsWith('programme:')) {
             const id = Number(destination.slice('programme:'.length));
 
-            return programmes.find((programme) => programme.id === id)?.title ?? null;
+            return (
+                programmes.find((programme) => programme.id === id)?.title ??
+                null
+            );
         }
 
         if (destination.startsWith('event:')) {
@@ -170,13 +193,22 @@ export default function Donate({
         return 'Fuels multi-community work in water, education, and healthcare.';
     })();
 
-    function parseDestination(value: string): { programme_id: number | null; event_id: number | null } {
+    function parseDestination(value: string): {
+        programme_id: number | null;
+        event_id: number | null;
+    } {
         if (value.startsWith('programme:')) {
-            return { programme_id: Number(value.slice('programme:'.length)), event_id: null };
+            return {
+                programme_id: Number(value.slice('programme:'.length)),
+                event_id: null,
+            };
         }
 
         if (value.startsWith('event:')) {
-            return { programme_id: null, event_id: Number(value.slice('event:'.length)) };
+            return {
+                programme_id: null,
+                event_id: Number(value.slice('event:'.length)),
+            };
         }
 
         return { programme_id: null, event_id: null };
@@ -194,13 +226,19 @@ export default function Donate({
         }
 
         if (!donorName.trim()) {
-            setFieldErrors((prev) => ({ ...prev, donor_name: 'Please enter your name.' }));
+            setFieldErrors((prev) => ({
+                ...prev,
+                donor_name: 'Please enter your name.',
+            }));
 
             return;
         }
 
         if (!donorEmail.trim()) {
-            setFieldErrors((prev) => ({ ...prev, donor_email: 'Please enter your email.' }));
+            setFieldErrors((prev) => ({
+                ...prev,
+                donor_email: 'Please enter your email.',
+            }));
 
             return;
         }
@@ -208,7 +246,9 @@ export default function Donate({
         setState('submitting');
 
         try {
-            const csrfToken = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content;
+            const csrfToken = document.querySelector<HTMLMetaElement>(
+                'meta[name="csrf-token"]',
+            )?.content;
             const { programme_id, event_id } = parseDestination(destination);
 
             const response = await fetch(storeDonation.url(), {
@@ -246,7 +286,9 @@ export default function Donate({
                     return;
                 }
 
-                throw new Error(data.message || 'Payment initialization failed.');
+                throw new Error(
+                    data.message || 'Payment initialization failed.',
+                );
             }
 
             if (data.authorization_url) {
@@ -256,7 +298,11 @@ export default function Donate({
             }
         } catch (err) {
             setState('error');
-            setErrorMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+            setErrorMessage(
+                err instanceof Error
+                    ? err.message
+                    : 'Something went wrong. Please try again.',
+            );
         }
     }
 
@@ -273,18 +319,24 @@ export default function Donate({
                         }}
                     />
                     <div className="relative z-10 mx-auto max-w-2xl px-4 py-24 text-center md:px-6">
-                        <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-brand-green/20 text-brand-green-light animate-in zoom-in-95 duration-500">
+                        <div className="mx-auto mb-6 flex size-16 animate-in items-center justify-center rounded-full bg-brand-green/20 text-brand-green-light duration-500 zoom-in-95">
                             <Check className="size-8" strokeWidth={2.5} />
                         </div>
-                        <p className="font-serif text-sm font-semibold tracking-[0.2em] text-brand-gold uppercase">HopeSpring Foundation</p>
-                        <h1 className="mt-4 font-serif text-4xl font-bold text-white md:text-5xl animate-in fade-in-0 slide-in-from-bottom-2 duration-700">
+                        <p className="font-serif text-sm font-semibold tracking-[0.2em] text-brand-gold uppercase">
+                            HopeSpring Foundation
+                        </p>
+                        <h1 className="mt-4 animate-in font-serif text-4xl font-bold text-white duration-700 fade-in-0 slide-in-from-bottom-2 md:text-5xl">
                             Thank you
                         </h1>
                         <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-white/70">
                             {flash?.success ||
                                 'Your generosity reaches communities across Ghana — clean water, classrooms, and care that lasts.'}
                         </p>
-                        <Button asChild size="lg" className="mt-10 bg-brand-green font-bold hover:bg-brand-green-dark">
+                        <Button
+                            asChild
+                            size="lg"
+                            className="mt-10 bg-brand-green font-bold hover:bg-brand-green-dark"
+                        >
                             <Link href={home.url()}>Return home</Link>
                         </Button>
                     </div>
@@ -302,7 +354,7 @@ export default function Donate({
                     key={hero.image}
                     src={hero.image}
                     alt=""
-                    className="absolute inset-0 size-full scale-105 object-cover animate-in fade-in-0 duration-700"
+                    className="absolute inset-0 size-full scale-105 animate-in object-cover duration-700 fade-in-0"
                     width={1600}
                     height={900}
                 />
@@ -321,34 +373,34 @@ export default function Donate({
                     }}
                 />
                 <div
-                    className="pointer-events-none absolute -right-24 top-10 size-80 rounded-full blur-3xl"
+                    className="pointer-events-none absolute top-10 -right-24 size-80 rounded-full blur-3xl"
                     style={{ background: 'oklch(0.56 0.15 145 / 0.2)' }}
                 />
                 <div
-                    className="pointer-events-none absolute -left-16 bottom-0 size-72 rounded-full blur-3xl"
+                    className="pointer-events-none absolute bottom-0 -left-16 size-72 rounded-full blur-3xl"
                     style={{ background: 'oklch(0.79 0.15 75 / 0.14)' }}
                 />
 
-                <div className="relative z-10 mx-auto flex min-h-[48vh] max-w-7xl flex-col justify-end px-4 pb-14 pt-28 md:min-h-[56vh] md:px-6 md:pb-16 md:pt-32">
+                <div className="relative z-10 mx-auto flex min-h-[48vh] max-w-7xl flex-col justify-end px-4 pt-28 pb-14 md:min-h-[56vh] md:px-6 md:pt-32 md:pb-16">
                     <p
                         key={`eyebrow-${hero.eyebrow}`}
-                        className="font-serif text-sm font-semibold tracking-[0.22em] text-brand-gold uppercase animate-in fade-in-0 duration-500"
+                        className="animate-in font-serif text-sm font-semibold tracking-[0.22em] text-brand-gold uppercase duration-500 fade-in-0"
                     >
                         {hero.eyebrow}
                     </p>
                     <h1
                         key={`title-${hero.title}`}
-                        className="mt-4 max-w-3xl font-serif text-4xl font-bold leading-[1.1] text-white md:text-5xl lg:text-6xl animate-in fade-in-0 slide-in-from-bottom-3 duration-500"
+                        className="mt-4 max-w-3xl animate-in font-serif text-4xl leading-[1.1] font-bold text-white duration-500 fade-in-0 slide-in-from-bottom-3 md:text-5xl lg:text-6xl"
                     >
                         {hero.title}
                     </h1>
                     <p
                         key={`subtitle-${hero.subtitle}`}
-                        className="mt-5 max-w-xl text-base leading-relaxed text-white/70 md:text-lg animate-in fade-in-0 slide-in-from-bottom-2 duration-700"
+                        className="mt-5 max-w-xl animate-in text-base leading-relaxed text-white/70 duration-700 fade-in-0 slide-in-from-bottom-2 md:text-lg"
                     >
                         {hero.subtitle}
                     </p>
-                    <div className="mt-8 animate-in fade-in-0 duration-1000">
+                    <div className="mt-8 animate-in duration-1000 fade-in-0">
                         <a
                             href="#give"
                             className="inline-flex items-center gap-2 bg-brand-green px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-green-dark"
@@ -362,7 +414,10 @@ export default function Donate({
 
             <BrushEdge className="h-8 text-background md:h-12" />
 
-            <section id="give" className="relative bg-background px-4 py-14 md:px-6 md:py-20">
+            <section
+                id="give"
+                className="relative bg-background px-4 py-14 md:px-6 md:py-20"
+            >
                 <div
                     className="pointer-events-none absolute inset-x-0 top-0 h-64 opacity-60"
                     style={{
@@ -374,18 +429,28 @@ export default function Donate({
                 <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)] lg:gap-16">
                     <ScrollReveal>
                         <form onSubmit={handleSubmit} className="space-y-10">
-                            {(state === 'error' || errorMessage || flash?.error) && (
+                            {(state === 'error' ||
+                                errorMessage ||
+                                flash?.error) && (
                                 <div className="flex items-start gap-3 border-l-4 border-destructive bg-destructive/5 px-4 py-3">
                                     <AlertCircle className="mt-0.5 size-5 shrink-0 text-destructive" />
-                                    <p className="text-sm text-destructive">{errorMessage || flash?.error}</p>
+                                    <p className="text-sm text-destructive">
+                                        {errorMessage || flash?.error}
+                                    </p>
                                 </div>
                             )}
 
                             {selectedLabel && (
                                 <div className="flex items-center gap-3 border-l-4 border-brand-gold bg-brand-gold/10 px-4 py-3">
-                                    <Heart className="size-4 shrink-0 text-brand-gold" fill="currentColor" />
+                                    <Heart
+                                        className="size-4 shrink-0 text-brand-gold"
+                                        fill="currentColor"
+                                    />
                                     <p className="text-sm text-navy">
-                                        Directing this gift to <span className="font-semibold">{selectedLabel}</span>
+                                        Directing this gift to{' '}
+                                        <span className="font-semibold">
+                                            {selectedLabel}
+                                        </span>
                                     </p>
                                 </div>
                             )}
@@ -393,8 +458,12 @@ export default function Donate({
                             <div>
                                 <div className="flex items-end justify-between gap-4">
                                     <div>
-                                        <h2 className="font-serif text-2xl font-bold text-navy md:text-3xl">Choose an amount</h2>
-                                        <p className="mt-1 text-sm text-muted-foreground">Amounts in Ghana Cedis (GHS)</p>
+                                        <h2 className="font-serif text-2xl font-bold text-navy md:text-3xl">
+                                            Choose an amount
+                                        </h2>
+                                        <p className="mt-1 text-sm text-muted-foreground">
+                                            Amounts in Ghana Cedis (GHS)
+                                        </p>
                                     </div>
                                     {amount && amount > 0 && (
                                         <p className="hidden font-serif text-2xl font-bold text-brand-green sm:block">
@@ -405,7 +474,9 @@ export default function Donate({
 
                                 <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
                                     {presetAmounts.map((amt, index) => {
-                                        const active = selectedAmount === amt && !customAmount;
+                                        const active =
+                                            selectedAmount === amt &&
+                                            !customAmount;
 
                                         return (
                                             <button
@@ -421,7 +492,9 @@ export default function Donate({
                                                         ? 'bg-navy text-white shadow-lg shadow-navy/20'
                                                         : 'bg-secondary/70 text-navy hover:bg-secondary',
                                                 )}
-                                                style={{ transitionDelay: `${index * 20}ms` }}
+                                                style={{
+                                                    transitionDelay: `${index * 20}ms`,
+                                                }}
                                             >
                                                 <span className="block text-xs font-semibold tracking-wider text-current/55 uppercase">
                                                     GHS
@@ -438,7 +511,10 @@ export default function Donate({
                                 </div>
 
                                 <div className="mt-4">
-                                    <Label htmlFor="custom-amount" className="sr-only">
+                                    <Label
+                                        htmlFor="custom-amount"
+                                        className="sr-only"
+                                    >
                                         Custom amount
                                     </Label>
                                     <div className="relative">
@@ -462,23 +538,31 @@ export default function Donate({
 
                                 <p
                                     key={impactText}
-                                    className="mt-5 text-sm leading-relaxed text-muted-foreground animate-in fade-in-0 slide-in-from-bottom-1 duration-300"
+                                    className="mt-5 animate-in text-sm leading-relaxed text-muted-foreground duration-300 fade-in-0 slide-in-from-bottom-1"
                                 >
-                                    <span className="font-semibold text-brand-green">Your impact:</span> {impactText}
+                                    <span className="font-semibold text-brand-green">
+                                        Your impact:
+                                    </span>{' '}
+                                    {impactText}
                                 </p>
                             </div>
 
                             {hasDestinations && (
                                 <div>
-                                    <h3 className="font-serif text-xl font-bold text-navy">Where should it go?</h3>
+                                    <h3 className="font-serif text-xl font-bold text-navy">
+                                        Where should it go?
+                                    </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        Keep it flexible, or direct the gift to a programme or upcoming event.
+                                        Keep it flexible, or direct the gift to
+                                        a programme or upcoming event.
                                     </p>
 
                                     <div className="mt-5 flex flex-wrap gap-2">
                                         <button
                                             type="button"
-                                            onClick={() => setDestination(GENERAL_FUND)}
+                                            onClick={() =>
+                                                setDestination(GENERAL_FUND)
+                                            }
                                             className={cn(
                                                 'px-4 py-2 text-sm font-semibold transition-colors duration-200',
                                                 destination === GENERAL_FUND
@@ -495,7 +579,9 @@ export default function Donate({
                                                 <button
                                                     key={programme.id}
                                                     type="button"
-                                                    onClick={() => setDestination(value)}
+                                                    onClick={() =>
+                                                        setDestination(value)
+                                                    }
                                                     className={cn(
                                                         'px-4 py-2 text-sm font-semibold transition-colors duration-200',
                                                         destination === value
@@ -514,7 +600,9 @@ export default function Donate({
                                                 <button
                                                     key={event.id}
                                                     type="button"
-                                                    onClick={() => setDestination(value)}
+                                                    onClick={() =>
+                                                        setDestination(value)
+                                                    }
                                                     className={cn(
                                                         'px-4 py-2 text-sm font-semibold transition-colors duration-200',
                                                         destination === value
@@ -527,66 +615,92 @@ export default function Donate({
                                             );
                                         })}
                                     </div>
-                                    {(fieldErrors.programme_id || fieldErrors.event_id) && (
+                                    {(fieldErrors.programme_id ||
+                                        fieldErrors.event_id) && (
                                         <p className="mt-2 text-xs text-destructive">
-                                            {fieldErrors.programme_id || fieldErrors.event_id}
+                                            {fieldErrors.programme_id ||
+                                                fieldErrors.event_id}
                                         </p>
                                     )}
                                 </div>
                             )}
 
                             <div>
-                                <h3 className="font-serif text-xl font-bold text-navy">Your details</h3>
+                                <h3 className="font-serif text-xl font-bold text-navy">
+                                    Your details
+                                </h3>
                                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                                     <div className="space-y-2">
-                                        <Label htmlFor="donor-name">Full name</Label>
+                                        <Label htmlFor="donor-name">
+                                            Full name
+                                        </Label>
                                         <Input
                                             id="donor-name"
                                             value={donorName}
-                                            onChange={(e) => setDonorName(e.target.value)}
+                                            onChange={(e) =>
+                                                setDonorName(e.target.value)
+                                            }
                                             placeholder="Your full name"
                                             required
                                             className="h-11 border-0 bg-secondary/70 shadow-none focus-visible:ring-brand-green"
                                         />
                                         {fieldErrors.donor_name && (
-                                            <p className="text-xs text-destructive">{fieldErrors.donor_name}</p>
+                                            <p className="text-xs text-destructive">
+                                                {fieldErrors.donor_name}
+                                            </p>
                                         )}
                                     </div>
                                     <div className="space-y-2">
-                                        <Label htmlFor="donor-email">Email</Label>
+                                        <Label htmlFor="donor-email">
+                                            Email
+                                        </Label>
                                         <Input
                                             id="donor-email"
                                             type="email"
                                             value={donorEmail}
-                                            onChange={(e) => setDonorEmail(e.target.value)}
+                                            onChange={(e) =>
+                                                setDonorEmail(e.target.value)
+                                            }
                                             placeholder="you@example.com"
                                             required
                                             className="h-11 border-0 bg-secondary/70 shadow-none focus-visible:ring-brand-green"
                                         />
                                         {fieldErrors.donor_email && (
-                                            <p className="text-xs text-destructive">{fieldErrors.donor_email}</p>
+                                            <p className="text-xs text-destructive">
+                                                {fieldErrors.donor_email}
+                                            </p>
                                         )}
                                     </div>
                                     <div className="space-y-2 sm:col-span-2">
-                                        <Label htmlFor="donor-phone">Phone (optional)</Label>
+                                        <Label htmlFor="donor-phone">
+                                            Phone (optional)
+                                        </Label>
                                         <Input
                                             id="donor-phone"
                                             type="tel"
                                             value={donorPhone}
-                                            onChange={(e) => setDonorPhone(e.target.value)}
+                                            onChange={(e) =>
+                                                setDonorPhone(e.target.value)
+                                            }
                                             placeholder="+233 24 123 4567"
                                             className="h-11 border-0 bg-secondary/70 shadow-none focus-visible:ring-brand-green"
                                         />
                                         {fieldErrors.donor_phone && (
-                                            <p className="text-xs text-destructive">{fieldErrors.donor_phone}</p>
+                                            <p className="text-xs text-destructive">
+                                                {fieldErrors.donor_phone}
+                                            </p>
                                         )}
                                     </div>
                                     <div className="space-y-2 sm:col-span-2">
-                                        <Label htmlFor="donation-message">Message (optional)</Label>
+                                        <Label htmlFor="donation-message">
+                                            Message (optional)
+                                        </Label>
                                         <textarea
                                             id="donation-message"
                                             value={message}
-                                            onChange={(e) => setMessage(e.target.value)}
+                                            onChange={(e) =>
+                                                setMessage(e.target.value)
+                                            }
                                             placeholder="Share why you're giving..."
                                             rows={3}
                                             className="flex w-full rounded-md border-0 bg-secondary/70 px-3 py-2 text-sm shadow-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:outline-none"
@@ -598,10 +712,14 @@ export default function Donate({
                                     <input
                                         type="checkbox"
                                         checked={isAnonymous}
-                                        onChange={(e) => setIsAnonymous(e.target.checked)}
+                                        onChange={(e) =>
+                                            setIsAnonymous(e.target.checked)
+                                        }
                                         className="size-4 rounded border-input text-brand-green focus:ring-brand-green"
                                     />
-                                    <span className="text-sm text-muted-foreground">Make this donation anonymous</span>
+                                    <span className="text-sm text-muted-foreground">
+                                        Make this donation anonymous
+                                    </span>
                                 </label>
                             </div>
 
@@ -610,7 +728,11 @@ export default function Donate({
                                     type="submit"
                                     size="lg"
                                     className="h-12 w-full bg-brand-green text-base font-bold hover:bg-brand-green-dark sm:w-auto sm:min-w-64"
-                                    disabled={!amount || amount <= 0 || state === 'submitting'}
+                                    disabled={
+                                        !amount ||
+                                        amount <= 0 ||
+                                        state === 'submitting'
+                                    }
                                 >
                                     {state === 'submitting' ? (
                                         <>
@@ -619,14 +741,21 @@ export default function Donate({
                                         </>
                                     ) : (
                                         <>
-                                            <Heart className="size-4" fill="currentColor" />
-                                            Donate{amount ? ` GHS ${amount.toLocaleString()}` : ''}
+                                            <Heart
+                                                className="size-4"
+                                                fill="currentColor"
+                                            />
+                                            Donate
+                                            {amount
+                                                ? ` GHS ${amount.toLocaleString()}`
+                                                : ''}
                                         </>
                                     )}
                                 </Button>
                                 <p className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground">
                                     <Shield className="size-3.5" />
-                                    Secure checkout via Paystack · Card, MoMo, and bank transfer
+                                    Secure checkout via Paystack · Card, MoMo,
+                                    and bank transfer
                                 </p>
                             </div>
                         </form>
@@ -636,20 +765,29 @@ export default function Donate({
                         <aside className="relative overflow-hidden bg-navy px-7 py-8 text-white md:px-8 md:py-10">
                             <div
                                 className="pointer-events-none absolute -top-20 -right-16 size-48 rounded-full blur-3xl"
-                                style={{ background: 'oklch(0.56 0.15 145 / 0.35)' }}
+                                style={{
+                                    background: 'oklch(0.56 0.15 145 / 0.35)',
+                                }}
                             />
                             <div
                                 className="pointer-events-none absolute -bottom-24 -left-10 size-56 rounded-full blur-3xl"
-                                style={{ background: 'oklch(0.79 0.15 75 / 0.2)' }}
+                                style={{
+                                    background: 'oklch(0.79 0.15 75 / 0.2)',
+                                }}
                             />
 
                             <div className="relative">
-                                <p className="text-xs font-bold tracking-[0.18em] text-brand-gold uppercase">Why give</p>
-                                <h2 className="mt-3 font-serif text-2xl font-bold leading-snug md:text-3xl">
+                                <p className="text-xs font-bold tracking-[0.18em] text-brand-gold uppercase">
+                                    Why give
+                                </p>
+                                <h2 className="mt-3 font-serif text-2xl leading-snug font-bold md:text-3xl">
                                     One gift. Lasting change.
                                 </h2>
                                 <p className="mt-4 text-sm leading-relaxed text-white/70">
-                                    HopeSpring works alongside communities in Ghana so your support becomes boreholes that stay, classrooms that open, and care that reaches the next village.
+                                    HopeSpring works alongside communities in
+                                    Ghana so your support becomes boreholes that
+                                    stay, classrooms that open, and care that
+                                    reaches the next village.
                                 </p>
 
                                 <div className="mt-8 space-y-8 border-t border-white/10 pt-8">
@@ -657,23 +795,41 @@ export default function Donate({
                                         <p className="text-sm text-white/60">
                                             Campaign goal{' '}
                                             <span className="font-semibold text-brand-gold-light">
-                                                GHS {Number(settings.donation_goal).toLocaleString()}
+                                                GHS{' '}
+                                                {Number(
+                                                    settings.donation_goal,
+                                                ).toLocaleString()}
                                             </span>
                                         </p>
                                     )}
 
                                     <ul className="space-y-5">
                                         <li>
-                                            <p className="font-serif text-lg font-semibold text-brand-green-light">Water that stays</p>
-                                            <p className="mt-1 text-sm text-white/60">Boreholes and WASH committees built to last 15+ years.</p>
+                                            <p className="font-serif text-lg font-semibold text-brand-green-light">
+                                                Water that stays
+                                            </p>
+                                            <p className="mt-1 text-sm text-white/60">
+                                                Boreholes and WASH committees
+                                                built to last 15+ years.
+                                            </p>
                                         </li>
                                         <li>
-                                            <p className="font-serif text-lg font-semibold text-brand-green-light">Learning that sticks</p>
-                                            <p className="mt-1 text-sm text-white/60">Scholarships, classrooms, and teachers who stay.</p>
+                                            <p className="font-serif text-lg font-semibold text-brand-green-light">
+                                                Learning that sticks
+                                            </p>
+                                            <p className="mt-1 text-sm text-white/60">
+                                                Scholarships, classrooms, and
+                                                teachers who stay.
+                                            </p>
                                         </li>
                                         <li>
-                                            <p className="font-serif text-lg font-semibold text-brand-green-light">Care that travels</p>
-                                            <p className="mt-1 text-sm text-white/60">Mobile clinics and medicine where hospitals are far.</p>
+                                            <p className="font-serif text-lg font-semibold text-brand-green-light">
+                                                Care that travels
+                                            </p>
+                                            <p className="mt-1 text-sm text-white/60">
+                                                Mobile clinics and medicine
+                                                where hospitals are far.
+                                            </p>
                                         </li>
                                     </ul>
                                 </div>

@@ -10,11 +10,25 @@ type PageHeroProps = {
     className?: string;
 };
 
-export function PageHero({ title, subtitle, image, breadcrumbs, className }: PageHeroProps) {
-    const crumbs = breadcrumbs ?? [{ label: 'Home', href: '/' }, { label: title }];
+export function PageHero({
+    title,
+    subtitle,
+    image,
+    breadcrumbs,
+    className,
+}: PageHeroProps) {
+    const crumbs = breadcrumbs ?? [
+        { label: 'Home', href: '/' },
+        { label: title },
+    ];
 
     return (
-        <div className={cn('relative flex min-h-[260px] items-end overflow-hidden bg-navy-dark md:min-h-[320px]', className)}>
+        <div
+            className={cn(
+                'relative flex min-h-[260px] items-end overflow-hidden bg-navy-dark md:min-h-[320px]',
+                className,
+            )}
+        >
             {image ? (
                 <img
                     src={image}
@@ -27,7 +41,8 @@ export function PageHero({ title, subtitle, image, breadcrumbs, className }: Pag
                 <div
                     className="pointer-events-none absolute inset-0 opacity-[0.03]"
                     style={{
-                        backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+                        backgroundImage:
+                            'radial-gradient(circle, white 1px, transparent 1px)',
                         backgroundSize: '24px 24px',
                     }}
                 />
@@ -45,25 +60,46 @@ export function PageHero({ title, subtitle, image, breadcrumbs, className }: Pag
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{
-                        background: 'linear-gradient(to top, oklch(0.18 0.05 258 / 0.72) 0%, transparent 55%)',
+                        background:
+                            'linear-gradient(to top, oklch(0.18 0.05 258 / 0.72) 0%, transparent 55%)',
                     }}
                 />
             )}
 
-            <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-8 pt-12 md:px-6 md:pb-10">
-                <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-1.5 text-xs font-medium">
+            <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pt-12 pb-8 md:px-6 md:pb-10">
+                <nav
+                    aria-label="Breadcrumb"
+                    className="mb-5 flex items-center gap-1.5 text-xs font-medium"
+                >
                     {crumbs.map((crumb, i) => {
                         const isLast = i === crumbs.length - 1;
 
                         return (
                             <span key={i} className="flex items-center gap-1.5">
-                                {i > 0 && <ChevronRight className="size-3 text-white/30" aria-hidden="true" />}
+                                {i > 0 && (
+                                    <ChevronRight
+                                        className="size-3 text-white/30"
+                                        aria-hidden="true"
+                                    />
+                                )}
                                 {crumb.href && !isLast ? (
-                                    <Link href={crumb.href} className="text-white/50 transition-colors hover:text-white/80">
+                                    <Link
+                                        href={crumb.href}
+                                        className="text-white/50 transition-colors hover:text-white/80"
+                                    >
                                         {crumb.label}
                                     </Link>
                                 ) : (
-                                    <span className={isLast ? 'text-brand-green-light' : 'text-white/50'} aria-current={isLast ? 'page' : undefined}>
+                                    <span
+                                        className={
+                                            isLast
+                                                ? 'text-brand-green-light'
+                                                : 'text-white/50'
+                                        }
+                                        aria-current={
+                                            isLast ? 'page' : undefined
+                                        }
+                                    >
                                         {crumb.label}
                                     </span>
                                 )}
@@ -72,7 +108,7 @@ export function PageHero({ title, subtitle, image, breadcrumbs, className }: Pag
                     })}
                 </nav>
 
-                <h1 className="font-serif text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
+                <h1 className="font-serif text-3xl leading-tight font-bold text-white md:text-4xl lg:text-5xl">
                     {title}
                 </h1>
 

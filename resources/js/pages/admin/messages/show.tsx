@@ -39,7 +39,10 @@ export default function MessageShow({ message }: Props) {
                             Back to Messages
                         </Link>
                     </Button>
-                    <button onClick={() => setConfirmOpen(true)} className="flex items-center gap-1.5 text-sm text-rose-600 hover:text-rose-800">
+                    <button
+                        onClick={() => setConfirmOpen(true)}
+                        className="flex items-center gap-1.5 text-sm text-rose-600 hover:text-rose-800"
+                    >
                         <Trash2 className="size-4" />
                         Delete
                     </button>
@@ -49,12 +52,24 @@ export default function MessageShow({ message }: Props) {
                     <h1 className="text-lg font-bold">{message.subject}</h1>
                     <p className="mt-1 text-sm text-muted-foreground">
                         {message.name} &middot; {message.email} &middot;{' '}
-                        {new Date(message.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        {new Date(message.created_at).toLocaleDateString(
+                            'en-GB',
+                            { day: 'numeric', month: 'long', year: 'numeric' },
+                        )}
                     </p>
-                    <p className="mt-6 whitespace-pre-line text-sm leading-relaxed">{message.message}</p>
+                    <p className="mt-6 text-sm leading-relaxed whitespace-pre-line">
+                        {message.message}
+                    </p>
 
-                    <Button asChild className="mt-6 bg-brand-green font-bold hover:bg-brand-green-dark">
-                        <a href={`mailto:${message.email}?subject=Re: ${message.subject}`}>Reply by Email</a>
+                    <Button
+                        asChild
+                        className="mt-6 bg-brand-green font-bold hover:bg-brand-green-dark"
+                    >
+                        <a
+                            href={`mailto:${message.email}?subject=Re: ${message.subject}`}
+                        >
+                            Reply by Email
+                        </a>
                     </Button>
                 </div>
             </div>

@@ -36,10 +36,19 @@ type Props = {
 };
 
 function formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    return new Date(date).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    });
 }
 
-export default function NewsIndex({ posts, featuredPost, categories, currentCategory }: Props) {
+export default function NewsIndex({
+    posts,
+    featuredPost,
+    categories,
+    currentCategory,
+}: Props) {
     const showFeatured = Boolean(featuredPost && !currentCategory);
     const listHeading = currentCategory
         ? `${currentCategory.charAt(0).toUpperCase()}${currentCategory.slice(1)} stories`
@@ -77,10 +86,15 @@ export default function NewsIndex({ posts, featuredPost, categories, currentCate
                 <div className="mb-10 flex flex-col gap-6 md:mb-12 md:flex-row md:items-end md:justify-between">
                     <ScrollReveal>
                         <div>
-                            <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">From the field</p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">{listHeading}</h2>
+                            <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                                From the field
+                            </p>
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
+                                {listHeading}
+                            </h2>
                             <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
-                                Browse recent updates, or filter by the programme area that matters most to you.
+                                Browse recent updates, or filter by the
+                                programme area that matters most to you.
                             </p>
                         </div>
                     </ScrollReveal>
@@ -105,7 +119,9 @@ export default function NewsIndex({ posts, featuredPost, categories, currentCate
                                 {categories.map((cat) => (
                                     <Link
                                         key={cat}
-                                        href={newsIndex.url({ query: { category: cat } })}
+                                        href={newsIndex.url({
+                                            query: { category: cat },
+                                        })}
                                         className={cn(
                                             '-mb-px border-b-2 px-3 py-2 text-sm font-semibold capitalize transition-colors',
                                             currentCategory === cat
@@ -137,7 +153,9 @@ export default function NewsIndex({ posts, featuredPost, categories, currentCate
                         ))}
                     </div>
                 ) : (
-                    <p className="py-16 text-center text-muted-foreground">No stories found for this filter.</p>
+                    <p className="py-16 text-center text-muted-foreground">
+                        No stories found for this filter.
+                    </p>
                 )}
 
                 {posts.last_page > 1 && (

@@ -35,11 +35,16 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
                     <div className="flex size-8 items-center justify-center rounded-full bg-brand-green">
                         <Heart className="size-4 text-white" fill="white" />
                     </div>
-                    <span className="font-serif text-lg font-bold text-white">HopeSpring</span>
+                    <span className="font-serif text-lg font-bold text-white">
+                        HopeSpring
+                    </span>
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
+                <nav
+                    aria-label="Main navigation"
+                    className="hidden items-center gap-1 lg:flex"
+                >
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
@@ -58,7 +63,10 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
 
                 {/* Donate CTA */}
                 <div className="hidden lg:block">
-                    <Button asChild className="bg-brand-green font-bold hover:bg-brand-green-dark">
+                    <Button
+                        asChild
+                        className="bg-brand-green font-bold hover:bg-brand-green-dark"
+                    >
                         <Link href="/donate">Donate Now</Link>
                     </Button>
                 </div>
@@ -72,7 +80,11 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
                     aria-expanded={mobileOpen}
                     aria-controls="mobile-nav"
                 >
-                    {mobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+                    {mobileOpen ? (
+                        <X className="size-6" />
+                    ) : (
+                        <Menu className="size-6" />
+                    )}
                 </button>
             </div>
 
@@ -81,7 +93,7 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
                 <nav
                     id="mobile-nav"
                     aria-label="Mobile navigation"
-                    className="absolute left-0 right-0 top-full z-40 border-t border-white/10 bg-navy-dark shadow-xl lg:hidden"
+                    className="absolute top-full right-0 left-0 z-40 border-t border-white/10 bg-navy-dark shadow-xl lg:hidden"
                 >
                     <div className="px-4 pb-4">
                         {navLinks.map((link) => (
@@ -100,7 +112,10 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
                             </Link>
                         ))}
                         <div className="mt-3 px-3">
-                            <Button asChild className="w-full bg-brand-green font-bold hover:bg-brand-green-dark">
+                            <Button
+                                asChild
+                                className="w-full bg-brand-green font-bold hover:bg-brand-green-dark"
+                            >
                                 <Link href="/donate">Donate Now</Link>
                             </Button>
                         </div>

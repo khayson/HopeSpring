@@ -41,13 +41,19 @@ export default function ProjectShow({ project }: Props) {
             <PageHero
                 title={project.title}
                 image={pageHeroes.projects}
-                breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: project.title }]}
+                breadcrumbs={[
+                    { label: 'Home', href: '/' },
+                    { label: 'Projects', href: '/projects' },
+                    { label: project.title },
+                ]}
             />
             <BrushEdge className="h-8 text-background md:h-12" />
 
             <article className="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">
                 <div className="mb-8 flex flex-wrap items-center gap-3">
-                    <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${statusColors[project.status] ?? 'bg-muted text-muted-foreground'}`}>
+                    <span
+                        className={`rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase ${statusColors[project.status] ?? 'bg-muted text-muted-foreground'}`}
+                    >
                         {project.status}
                     </span>
                     <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -57,8 +63,12 @@ export default function ProjectShow({ project }: Props) {
                     {project.start_date && (
                         <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                             <Calendar className="size-3.5" />
-                            {new Date(project.start_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
-                            {project.end_date && ` — ${new Date(project.end_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`}
+                            {new Date(project.start_date).toLocaleDateString(
+                                'en-GB',
+                                { month: 'long', year: 'numeric' },
+                            )}
+                            {project.end_date &&
+                                ` — ${new Date(project.end_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`}
                         </span>
                     )}
                 </div>
@@ -66,21 +76,30 @@ export default function ProjectShow({ project }: Props) {
                 {project.programme && (
                     <p className="mb-6 text-sm text-muted-foreground">
                         Programme:{' '}
-                        <Link href={`/programmes/${project.programme.slug}`} className="font-semibold text-brand-green hover:underline">
+                        <Link
+                            href={`/programmes/${project.programme.slug}`}
+                            className="font-semibold text-brand-green hover:underline"
+                        >
                             {project.programme.title}
                         </Link>
                     </p>
                 )}
 
                 <div className="prose prose-lg max-w-none text-muted-foreground">
-                    <p className="text-lg leading-relaxed">{project.description}</p>
+                    <p className="text-lg leading-relaxed">
+                        {project.description}
+                    </p>
                     {project.long_description && (
                         <div className="mt-6">{project.long_description}</div>
                     )}
                 </div>
 
                 <div className="mt-12">
-                    <Button asChild variant="outline" className="border-navy font-semibold text-navy hover:bg-navy hover:text-white">
+                    <Button
+                        asChild
+                        variant="outline"
+                        className="border-navy font-semibold text-navy hover:bg-navy hover:text-white"
+                    >
                         <Link href="/projects">
                             <ArrowLeft className="size-4" />
                             Back to Projects

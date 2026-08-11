@@ -28,7 +28,9 @@ export default function MessagesIndex({ messages }: Props) {
                 <div className="rounded-xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">
                     <div className="divide-y divide-sidebar-border/70 dark:divide-sidebar-border">
                         {messages.data.length === 0 ? (
-                            <p className="px-5 py-8 text-center text-sm text-muted-foreground">No messages yet.</p>
+                            <p className="px-5 py-8 text-center text-sm text-muted-foreground">
+                                No messages yet.
+                            </p>
                         ) : (
                             messages.data.map((msg) => (
                                 <Link
@@ -36,15 +38,24 @@ export default function MessagesIndex({ messages }: Props) {
                                     href={`/admin/messages/${msg.id}`}
                                     className="flex items-start gap-3 px-5 py-3 hover:bg-secondary/50"
                                 >
-                                    {!msg.is_read && <span className="mt-1.5 inline-block size-2 shrink-0 rounded-full bg-blue-500" />}
+                                    {!msg.is_read && (
+                                        <span className="mt-1.5 inline-block size-2 shrink-0 rounded-full bg-blue-500" />
+                                    )}
                                     <div className="min-w-0 flex-1">
-                                        <p className="truncate text-sm font-medium">{msg.subject}</p>
+                                        <p className="truncate text-sm font-medium">
+                                            {msg.subject}
+                                        </p>
                                         <p className="truncate text-xs text-muted-foreground">
                                             {msg.name} ({msg.email})
                                         </p>
                                     </div>
                                     <span className="shrink-0 text-xs text-muted-foreground">
-                                        {new Date(msg.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                                        {new Date(
+                                            msg.created_at,
+                                        ).toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                        })}
                                     </span>
                                 </Link>
                             ))

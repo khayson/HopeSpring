@@ -21,13 +21,22 @@ type PinterestPinLayoutProps = {
     children: React.ReactNode;
 };
 
-const ASPECTS = ['aspect-[3/4]', 'aspect-square', 'aspect-[4/5]', 'aspect-[5/6]', 'aspect-[2/3]'] as const;
+const ASPECTS = [
+    'aspect-[3/4]',
+    'aspect-square',
+    'aspect-[4/5]',
+    'aspect-[5/6]',
+    'aspect-[2/3]',
+] as const;
 
 /**
  * Dynamic Pinterest-style layout: the pin sits top-left and related
  * images pack into responsive columns beside and underneath it.
  */
-export function PinterestPinLayout({ related, children }: PinterestPinLayoutProps) {
+export function PinterestPinLayout({
+    related,
+    children,
+}: PinterestPinLayoutProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const pinRef = useRef<HTMLDivElement>(null);
     const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -78,14 +87,23 @@ export function PinterestPinLayout({ related, children }: PinterestPinLayoutProp
                 return;
             }
 
-            const columnCount = Math.max(2, Math.floor((width + gap) / (minColWidth + gap)));
+            const columnCount = Math.max(
+                2,
+                Math.floor((width + gap) / (minColWidth + gap)),
+            );
             const columnWidth = (width - gap * (columnCount - 1)) / columnCount;
 
             const isStacked = width < 1024;
             const preferredPinWidth = Math.min(720, width * 0.58);
             const pinSpan = isStacked
                 ? columnCount
-                : Math.min(columnCount - 1, Math.max(2, Math.round(preferredPinWidth / (columnWidth + gap))));
+                : Math.min(
+                      columnCount - 1,
+                      Math.max(
+                          2,
+                          Math.round(preferredPinWidth / (columnWidth + gap)),
+                      ),
+                  );
 
             const pinWidth = pinSpan * columnWidth + (pinSpan - 1) * gap;
             pin.style.width = `${pinWidth}px`;
@@ -108,7 +126,9 @@ export function PinterestPinLayout({ related, children }: PinterestPinLayoutProp
 
             const items: Position[] = related.map((_, index) => {
                 const el = itemRefs.current[index];
-                const height = el ? el.getBoundingClientRect().height : columnWidth * 1.25;
+                const height = el
+                    ? el.getBoundingClientRect().height
+                    : columnWidth * 1.25;
 
                 let shortest = 0;
 
@@ -200,7 +220,10 @@ export function PinterestPinLayout({ related, children }: PinterestPinLayoutProp
         <div
             ref={containerRef}
             className="relative w-full"
-            style={{ height: layout.ready ? layout.height : undefined, minHeight: layout.ready ? undefined : 480 }}
+            style={{
+                height: layout.ready ? layout.height : undefined,
+                minHeight: layout.ready ? undefined : 480,
+            }}
         >
             <div
                 ref={pinRef}
@@ -234,7 +257,7 @@ export function PinterestPinLayout({ related, children }: PinterestPinLayoutProp
                         <Link
                             href={galleryShow.url(item.id)}
                             prefetch
-                            className="group block text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2"
+                            className="group block text-left focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 focus-visible:outline-none"
                         >
                             <figure>
                                 <div
@@ -249,11 +272,13 @@ export function PinterestPinLayout({ related, children }: PinterestPinLayoutProp
                                     />
                                 </div>
                                 <figcaption className="mt-1.5 px-0.5">
-                                    <p className="line-clamp-2 text-sm font-semibold leading-snug text-white">
+                                    <p className="line-clamp-2 text-sm leading-snug font-semibold text-white">
                                         {item.caption ?? item.alt}
                                     </p>
                                     {item.category && (
-                                        <p className="mt-0.5 text-xs capitalize text-white/60">{item.category}</p>
+                                        <p className="mt-0.5 text-xs text-white/60 capitalize">
+                                            {item.category}
+                                        </p>
                                     )}
                                 </figcaption>
                             </figure>

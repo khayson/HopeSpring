@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { cva  } from 'class-variance-authority';
-import type {VariantProps} from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -70,7 +70,9 @@ export function ProgrammeCard({
                 <p
                     className={cn(
                         'mt-2 text-sm leading-relaxed',
-                        variant === 'dark' ? 'text-white/70' : 'text-muted-foreground',
+                        variant === 'dark'
+                            ? 'text-white/70'
+                            : 'text-muted-foreground',
                     )}
                 >
                     {description}

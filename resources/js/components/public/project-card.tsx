@@ -11,9 +11,21 @@ type ProjectCardProps = {
     className?: string;
 };
 
-export function ProjectCard({ title, description, location, image, href, className }: ProjectCardProps) {
+export function ProjectCard({
+    title,
+    description,
+    location,
+    image,
+    href,
+    className,
+}: ProjectCardProps) {
     const card = (
-        <div className={cn('group overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-card', className)}>
+        <div
+            className={cn(
+                'group overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-card',
+                className,
+            )}
+        >
             {image && (
                 <div className="overflow-hidden">
                     <img
@@ -31,8 +43,12 @@ export function ProjectCard({ title, description, location, image, href, classNa
                     <MapPin className="size-3.5" />
                     {location}
                 </div>
-                <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+                <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
+                    {title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {description}
+                </p>
             </div>
         </div>
     );

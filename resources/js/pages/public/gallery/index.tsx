@@ -22,7 +22,11 @@ type Props = {
     currentCategory: string | null;
 };
 
-export default function GalleryIndex({ images, categories, currentCategory }: Props) {
+export default function GalleryIndex({
+    images,
+    categories,
+    currentCategory,
+}: Props) {
     return (
         <PublicLayout currentPath="/gallery">
             <Head title="Gallery — HopeSpring Foundation" />
@@ -36,7 +40,11 @@ export default function GalleryIndex({ images, categories, currentCategory }: Pr
             <section className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
                 {categories.length > 0 && (
                     <ScrollReveal>
-                        <div className="mb-4 flex flex-wrap gap-2" role="navigation" aria-label="Gallery categories">
+                        <div
+                            className="mb-4 flex flex-wrap gap-2"
+                            role="navigation"
+                            aria-label="Gallery categories"
+                        >
                             <Link
                                 href={galleryIndex.url()}
                                 className={cn(
@@ -51,7 +59,9 @@ export default function GalleryIndex({ images, categories, currentCategory }: Pr
                             {categories.map((cat) => (
                                 <Link
                                     key={cat}
-                                    href={galleryIndex.url({ query: { category: cat } })}
+                                    href={galleryIndex.url({
+                                        query: { category: cat },
+                                    })}
                                     className={cn(
                                         'rounded-full px-4 py-1.5 text-sm font-semibold capitalize transition-colors',
                                         currentCategory === cat
@@ -71,7 +81,9 @@ export default function GalleryIndex({ images, categories, currentCategory }: Pr
                         <GalleryGrid images={images} />
                     </ScrollReveal>
                 ) : (
-                    <p className="py-12 text-center text-muted-foreground">No images found for this category.</p>
+                    <p className="py-12 text-center text-muted-foreground">
+                        No images found for this category.
+                    </p>
                 )}
             </section>
 

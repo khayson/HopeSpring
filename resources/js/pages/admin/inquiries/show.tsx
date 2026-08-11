@@ -26,12 +26,16 @@ export default function InquiryShow({ inquiry }: Props) {
 
     function invite() {
         setProcessing(true);
-        router.post(`/admin/inquiries/${inquiry.id}/invite`, {}, {
-            onFinish: () => {
-                setProcessing(false);
-                setConfirmOpen(false);
+        router.post(
+            `/admin/inquiries/${inquiry.id}/invite`,
+            {},
+            {
+                onFinish: () => {
+                    setProcessing(false);
+                    setConfirmOpen(false);
+                },
             },
-        });
+        );
     }
 
     return (
@@ -47,40 +51,65 @@ export default function InquiryShow({ inquiry }: Props) {
 
                 <div className="max-w-2xl rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
                     <div className="mb-6 flex items-center justify-between">
-                        <h1 className="text-lg font-bold capitalize">{inquiry.type} Inquiry — {inquiry.name}</h1>
-                        <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold capitalize">{inquiry.status}</span>
+                        <h1 className="text-lg font-bold capitalize">
+                            {inquiry.type} Inquiry — {inquiry.name}
+                        </h1>
+                        <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold capitalize">
+                            {inquiry.status}
+                        </span>
                     </div>
 
                     <dl className="grid gap-4 sm:grid-cols-2">
                         <div>
-                            <dt className="text-xs font-medium uppercase text-muted-foreground">Email</dt>
+                            <dt className="text-xs font-medium text-muted-foreground uppercase">
+                                Email
+                            </dt>
                             <dd className="mt-1 text-sm">{inquiry.email}</dd>
                         </div>
                         <div>
-                            <dt className="text-xs font-medium uppercase text-muted-foreground">Phone</dt>
-                            <dd className="mt-1 text-sm">{inquiry.phone || '—'}</dd>
+                            <dt className="text-xs font-medium text-muted-foreground uppercase">
+                                Phone
+                            </dt>
+                            <dd className="mt-1 text-sm">
+                                {inquiry.phone || '—'}
+                            </dd>
                         </div>
                         {inquiry.organisation && (
                             <div>
-                                <dt className="text-xs font-medium uppercase text-muted-foreground">Organisation</dt>
-                                <dd className="mt-1 text-sm">{inquiry.organisation}</dd>
+                                <dt className="text-xs font-medium text-muted-foreground uppercase">
+                                    Organisation
+                                </dt>
+                                <dd className="mt-1 text-sm">
+                                    {inquiry.organisation}
+                                </dd>
                             </div>
                         )}
                     </dl>
 
                     <div className="mt-6 border-t border-sidebar-border/70 pt-4 dark:border-sidebar-border">
-                        <dt className="text-xs font-medium uppercase text-muted-foreground">Message</dt>
-                        <dd className="mt-1 whitespace-pre-line text-sm leading-relaxed">{inquiry.message}</dd>
+                        <dt className="text-xs font-medium text-muted-foreground uppercase">
+                            Message
+                        </dt>
+                        <dd className="mt-1 text-sm leading-relaxed whitespace-pre-line">
+                            {inquiry.message}
+                        </dd>
                     </div>
 
                     <div className="mt-6 flex items-center gap-3">
                         <Button asChild variant="outline">
-                            <a href={`mailto:${inquiry.email}`}>Reply by Email</a>
+                            <a href={`mailto:${inquiry.email}`}>
+                                Reply by Email
+                            </a>
                         </Button>
                         {inquiry.converted_user_id ? (
-                            <span className="text-sm text-muted-foreground">Account already created.</span>
+                            <span className="text-sm text-muted-foreground">
+                                Account already created.
+                            </span>
                         ) : (
-                            <Button onClick={() => setConfirmOpen(true)} className="bg-brand-green font-bold hover:bg-brand-green-dark">
+                            <Button
+                                onClick={() => setConfirmOpen(true)}
+                                className="bg-brand-green font-bold hover:bg-brand-green-dark"
+                            >
                                 <UserPlus className="size-4" />
                                 Create Account & Invite
                             </Button>

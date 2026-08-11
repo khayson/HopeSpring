@@ -2,7 +2,13 @@ import { Head, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { dashboard } from '@/routes';
 
@@ -28,40 +34,77 @@ export default function UsersCreate({ roles }: Props) {
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
                 <h1 className="text-xl font-bold">Invite User</h1>
                 <p className="max-w-md text-sm text-muted-foreground">
-                    We'll email them a secure link to set their own password and activate the account.
+                    We'll email them a secure link to set their own password and
+                    activate the account.
                 </p>
 
-                <form onSubmit={handleSubmit} className="max-w-md space-y-5 rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                <form
+                    onSubmit={handleSubmit}
+                    className="max-w-md space-y-5 rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900"
+                >
                     <div className="space-y-2">
                         <Label htmlFor="name">Full Name</Label>
-                        <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} required />
-                        {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+                        <Input
+                            id="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            required
+                        />
+                        {errors.name && (
+                            <p className="text-xs text-destructive">
+                                {errors.name}
+                            </p>
+                        )}
                     </div>
 
                     <div className="space-y-2">
                         <Label htmlFor="email">Email Address</Label>
-                        <Input id="email" type="email" value={data.email} onChange={(e) => setData('email', e.target.value)} required />
-                        {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                        <Input
+                            id="email"
+                            type="email"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            required
+                        />
+                        {errors.email && (
+                            <p className="text-xs text-destructive">
+                                {errors.email}
+                            </p>
+                        )}
                     </div>
 
                     <div className="space-y-2">
                         <Label htmlFor="role">Role</Label>
-                        <Select value={data.role} onValueChange={(value) => setData('role', value)}>
+                        <Select
+                            value={data.role}
+                            onValueChange={(value) => setData('role', value)}
+                        >
                             <SelectTrigger id="role" className="w-full">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                                 {roles.map((role) => (
-                                    <SelectItem key={role.value} value={role.value}>
+                                    <SelectItem
+                                        key={role.value}
+                                        value={role.value}
+                                    >
                                         {role.label}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>
-                        {errors.role && <p className="text-xs text-destructive">{errors.role}</p>}
+                        {errors.role && (
+                            <p className="text-xs text-destructive">
+                                {errors.role}
+                            </p>
+                        )}
                     </div>
 
-                    <Button type="submit" disabled={processing} className="w-full bg-brand-green font-bold hover:bg-brand-green-dark">
+                    <Button
+                        type="submit"
+                        disabled={processing}
+                        className="w-full bg-brand-green font-bold hover:bg-brand-green-dark"
+                    >
                         {processing && <Spinner />}
                         Send Invite
                     </Button>

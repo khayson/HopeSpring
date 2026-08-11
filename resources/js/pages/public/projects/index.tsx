@@ -61,7 +61,9 @@ export default function ProjectsIndex({ projects }: Props) {
                     <div className="mt-12 flex items-center justify-center gap-3">
                         {projects.prev_page_url && (
                             <Button asChild variant="outline">
-                                <Link href={projects.prev_page_url}>Previous</Link>
+                                <Link href={projects.prev_page_url}>
+                                    Previous
+                                </Link>
                             </Button>
                         )}
                         <span className="text-sm text-muted-foreground">

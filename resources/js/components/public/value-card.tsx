@@ -8,7 +8,12 @@ type ValueCardProps = {
     className?: string;
 };
 
-export function ValueCard({ title, description, icon: Icon, className }: ValueCardProps) {
+export function ValueCard({
+    title,
+    description,
+    icon: Icon,
+    className,
+}: ValueCardProps) {
     return (
         <div
             className={cn(
@@ -19,8 +24,12 @@ export function ValueCard({ title, description, icon: Icon, className }: ValueCa
             <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-brand-green/10">
                 <Icon className="size-6 text-brand-green" />
             </div>
-            <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">{title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+            <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
+                {title}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {description}
+            </p>
         </div>
     );
 }

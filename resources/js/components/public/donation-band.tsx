@@ -23,8 +23,13 @@ export function DonationBand({
             <BrushEdge className="h-8 text-brand-green md:h-12" />
             <div className="bg-brand-green px-4 py-12 text-center text-white md:py-16">
                 <div className="mx-auto max-w-2xl">
-                    <Heart className="mx-auto mb-4 size-8 opacity-80" fill="currentColor" />
-                    <h2 className="font-serif text-3xl font-bold md:text-4xl">{title}</h2>
+                    <Heart
+                        className="mx-auto mb-4 size-8 opacity-80"
+                        fill="currentColor"
+                    />
+                    <h2 className="font-serif text-3xl font-bold md:text-4xl">
+                        {title}
+                    </h2>
                     <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-white/85">
                         {description}
                     </p>
@@ -34,7 +39,9 @@ export function DonationBand({
                             size="lg"
                             className="bg-white font-bold text-brand-green hover:bg-white/90"
                         >
-                            <Link href={donateHref ?? donate.url()}>Donate Now</Link>
+                            <Link href={donateHref ?? donate.url()}>
+                                Donate Now
+                            </Link>
                         </Button>
                         <Button
                             asChild

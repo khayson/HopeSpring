@@ -92,7 +92,8 @@ export default function Login({ status, canResetPassword }: Props) {
                         </div>
 
                         <div className="text-center text-sm text-muted-foreground">
-                            Accounts are invite-only. Contact your administrator for access.
+                            Accounts are invite-only. Contact your administrator
+                            for access.
                         </div>
                     </>
                 )}

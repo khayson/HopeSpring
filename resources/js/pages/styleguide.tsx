@@ -22,25 +22,51 @@ const semanticColors = [
     { label: 'Secondary', bg: 'bg-secondary', fg: 'text-secondary-foreground' },
     { label: 'Accent', bg: 'bg-accent', fg: 'text-accent-foreground' },
     { label: 'Muted', bg: 'bg-muted', fg: 'text-muted-foreground' },
-    { label: 'Destructive', bg: 'bg-destructive', fg: 'text-destructive-foreground' },
+    {
+        label: 'Destructive',
+        bg: 'bg-destructive',
+        fg: 'text-destructive-foreground',
+    },
     { label: 'Success', bg: 'bg-success', fg: 'text-success-foreground' },
     { label: 'Warning', bg: 'bg-warning', fg: 'text-warning-foreground' },
     { label: 'Info', bg: 'bg-info', fg: 'text-info-foreground' },
 ];
 
-function ColorSwatch({ label, className, hex }: { label: string; className: string; hex?: string }) {
+function ColorSwatch({
+    label,
+    className,
+    hex,
+}: {
+    label: string;
+    className: string;
+    hex?: string;
+}) {
     return (
         <div className="space-y-2">
-            <div className={`h-20 w-full rounded-lg border border-border ${className}`} />
+            <div
+                className={`h-20 w-full rounded-lg border border-border ${className}`}
+            />
             <p className="text-sm font-semibold">{label}</p>
-            {hex && <p className="font-mono text-xs text-muted-foreground">{hex}</p>}
+            {hex && (
+                <p className="font-mono text-xs text-muted-foreground">{hex}</p>
+            )}
         </div>
     );
 }
 
-function SemanticSwatch({ label, bg, fg }: { label: string; bg: string; fg: string }) {
+function SemanticSwatch({
+    label,
+    bg,
+    fg,
+}: {
+    label: string;
+    bg: string;
+    fg: string;
+}) {
     return (
-        <div className={`flex items-center justify-center rounded-lg p-6 ${bg}`}>
+        <div
+            className={`flex items-center justify-center rounded-lg p-6 ${bg}`}
+        >
             <span className={`text-sm font-semibold ${fg}`}>{label}</span>
         </div>
     );
@@ -62,10 +88,12 @@ export default function Styleguide() {
 
                 {/* Typography */}
                 <section className="space-y-6">
-                    <h2 className="font-serif text-2xl font-semibold text-foreground">Typography</h2>
+                    <h2 className="font-serif text-2xl font-semibold text-foreground">
+                        Typography
+                    </h2>
                     <div className="space-y-4 rounded-xl border border-border bg-card p-8">
                         <div>
-                            <p className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                            <p className="mb-1 text-xs font-bold tracking-wider text-muted-foreground uppercase">
                                 Display — Lora (serif)
                             </p>
                             <p className="font-serif text-5xl font-bold">
@@ -73,7 +101,7 @@ export default function Styleguide() {
                             </p>
                         </div>
                         <div>
-                            <p className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                            <p className="mb-1 text-xs font-bold tracking-wider text-muted-foreground uppercase">
                                 Heading 1 — Lora
                             </p>
                             <h1 className="font-serif text-4xl font-bold">
@@ -81,30 +109,36 @@ export default function Styleguide() {
                             </h1>
                         </div>
                         <div>
-                            <p className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                            <p className="mb-1 text-xs font-bold tracking-wider text-muted-foreground uppercase">
                                 Heading 2 — Lora
                             </p>
-                            <h2 className="font-serif text-3xl font-semibold">Our Programmes</h2>
+                            <h2 className="font-serif text-3xl font-semibold">
+                                Our Programmes
+                            </h2>
                         </div>
                         <div>
-                            <p className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                            <p className="mb-1 text-xs font-bold tracking-wider text-muted-foreground uppercase">
                                 Heading 3 — Lora
                             </p>
-                            <h3 className="font-serif text-2xl font-semibold">Impact Report 2026</h3>
+                            <h3 className="font-serif text-2xl font-semibold">
+                                Impact Report 2026
+                            </h3>
                         </div>
                         <div>
-                            <p className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                            <p className="mb-1 text-xs font-bold tracking-wider text-muted-foreground uppercase">
                                 Body — Mulish (sans-serif)
                             </p>
                             <p className="max-w-prose text-base leading-relaxed">
-                                HopeSpring Foundation was born out of a simple act of compassion — a
-                                torn school bag held together with pride by a child in Accra. Today, we
-                                serve over 25,000 lives across Ghana through clean water, education,
-                                healthcare, and community development programmes.
+                                HopeSpring Foundation was born out of a simple
+                                act of compassion — a torn school bag held
+                                together with pride by a child in Accra. Today,
+                                we serve over 25,000 lives across Ghana through
+                                clean water, education, healthcare, and
+                                community development programmes.
                             </p>
                         </div>
                         <div>
-                            <p className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                            <p className="mb-1 text-xs font-bold tracking-wider text-muted-foreground uppercase">
                                 Small / Caption — Mulish
                             </p>
                             <p className="text-sm text-muted-foreground">
@@ -121,7 +155,12 @@ export default function Styleguide() {
                     </h2>
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
                         {colors.map((c) => (
-                            <ColorSwatch key={c.label} label={c.label} className={c.class} hex={c.hex} />
+                            <ColorSwatch
+                                key={c.label}
+                                label={c.label}
+                                className={c.class}
+                                hex={c.hex}
+                            />
                         ))}
                     </div>
                 </section>
@@ -146,14 +185,22 @@ export default function Styleguide() {
                     <div className="grid gap-4 sm:grid-cols-3">
                         <div className="rounded-xl border border-border bg-background p-6">
                             <p className="text-sm font-semibold">Background</p>
-                            <p className="text-xs text-muted-foreground">bg-background</p>
+                            <p className="text-xs text-muted-foreground">
+                                bg-background
+                            </p>
                         </div>
                         <div className="rounded-xl border border-border bg-card p-6">
-                            <p className="text-sm font-semibold text-card-foreground">Card</p>
-                            <p className="text-xs text-muted-foreground">bg-card</p>
+                            <p className="text-sm font-semibold text-card-foreground">
+                                Card
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                                bg-card
+                            </p>
                         </div>
                         <div className="rounded-xl bg-navy p-6">
-                            <p className="text-sm font-semibold text-white">Navy Surface</p>
+                            <p className="text-sm font-semibold text-white">
+                                Navy Surface
+                            </p>
                             <p className="text-xs text-white/60">bg-navy</p>
                         </div>
                     </div>
@@ -183,7 +230,9 @@ export default function Styleguide() {
                         </div>
                         <div className="space-y-2 text-center">
                             <div className="h-16 w-16 rounded-full border-2 border-primary bg-secondary" />
-                            <p className="text-xs text-muted-foreground">full</p>
+                            <p className="text-xs text-muted-foreground">
+                                full
+                            </p>
                         </div>
                     </div>
                 </section>
@@ -195,12 +244,15 @@ export default function Styleguide() {
                     </h2>
                     <div className="overflow-hidden rounded-xl">
                         <div className="bg-navy px-6 py-12 text-center">
-                            <p className="font-serif text-2xl font-bold text-white">Hero Section</p>
+                            <p className="font-serif text-2xl font-bold text-white">
+                                Hero Section
+                            </p>
                         </div>
                         <BrushEdge className="h-10 text-background" />
                     </div>
                     <p className="text-sm text-muted-foreground">
-                        Used once per screen at the hero-to-stats transition. Never as wallpaper.
+                        Used once per screen at the hero-to-stats transition.
+                        Never as wallpaper.
                     </p>
                 </section>
 
@@ -229,12 +281,18 @@ export default function Styleguide() {
                     </h2>
                     <div className="flex flex-wrap items-center gap-3">
                         <Button>Primary (Navy)</Button>
-                        <Button className="bg-brand-green hover:bg-brand-green-dark">Donate Now</Button>
+                        <Button className="bg-brand-green hover:bg-brand-green-dark">
+                            Donate Now
+                        </Button>
                         <Button variant="outline">Outline</Button>
                         <Button variant="secondary">Secondary</Button>
                         <Button variant="ghost">Ghost</Button>
                         <Button variant="destructive">Destructive</Button>
-                        <Button asChild variant="outline" className="border-navy font-semibold text-navy hover:bg-navy hover:text-white">
+                        <Button
+                            asChild
+                            variant="outline"
+                            className="border-navy font-semibold text-navy hover:bg-navy hover:text-white"
+                        >
                             <Link href="#">Get Involved</Link>
                         </Button>
                     </div>
@@ -257,12 +315,20 @@ export default function Styleguide() {
                     </h2>
                     <div className="max-w-xs overflow-hidden rounded-xl">
                         <div className="space-y-2 bg-sidebar p-6">
-                            <p className="text-sm font-bold text-sidebar-foreground">Dashboard</p>
+                            <p className="text-sm font-bold text-sidebar-foreground">
+                                Dashboard
+                            </p>
                             <div className="rounded-md bg-sidebar-accent px-3 py-2">
-                                <p className="text-sm text-sidebar-accent-foreground">Donations</p>
+                                <p className="text-sm text-sidebar-accent-foreground">
+                                    Donations
+                                </p>
                             </div>
-                            <p className="px-3 text-sm text-sidebar-foreground/60">Events</p>
-                            <p className="px-3 text-sm text-sidebar-foreground/60">Blog Posts</p>
+                            <p className="px-3 text-sm text-sidebar-foreground/60">
+                                Events
+                            </p>
+                            <p className="px-3 text-sm text-sidebar-foreground/60">
+                                Blog Posts
+                            </p>
                             <div className="border-t border-sidebar-border pt-4">
                                 <div className="inline-block rounded-full bg-sidebar-primary px-3 py-1">
                                     <span className="text-xs font-bold text-sidebar-primary-foreground">
@@ -276,8 +342,9 @@ export default function Styleguide() {
 
                 <footer className="border-t border-border pt-8 text-sm text-muted-foreground">
                     <p>
-                        This styleguide is only available in the local environment. It documents the
-                        design tokens for Direction A — "The Founder&apos;s Mark."
+                        This styleguide is only available in the local
+                        environment. It documents the design tokens for
+                        Direction A — "The Founder&apos;s Mark."
                     </p>
                 </footer>
             </div>

@@ -13,16 +13,24 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
                         <div className="flex size-8 items-center justify-center rounded-full bg-brand-green">
                             <Heart className="size-4 text-white" fill="white" />
                         </div>
-                        <span className="font-serif text-lg font-bold text-white">HopeSpring</span>
+                        <span className="font-serif text-lg font-bold text-white">
+                            HopeSpring
+                        </span>
                     </Link>
-                    <Button asChild variant="ghost" className="text-white hover:bg-white/10 hover:text-white">
+                    <Button
+                        asChild
+                        variant="ghost"
+                        className="text-white hover:bg-white/10 hover:text-white"
+                    >
                         <Link href={logout()} method="post" as="button">
                             Log out
                         </Link>
                     </Button>
                 </div>
             </header>
-            <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-16">{children}</main>
+            <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-16">
+                {children}
+            </main>
         </div>
     );
 }

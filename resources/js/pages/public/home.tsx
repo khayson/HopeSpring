@@ -1,5 +1,12 @@
 import { Head, Link } from '@inertiajs/react';
-import { Droplets, GraduationCap, HandHeart, Heart, MapPin, Users } from 'lucide-react';
+import {
+    Droplets,
+    GraduationCap,
+    HandHeart,
+    Heart,
+    MapPin,
+    Users,
+} from 'lucide-react';
 import { ScrollReveal } from '@/components/public/scroll-reveal';
 import { StatCounter } from '@/components/public/stat-counter';
 import { Button } from '@/components/ui/button';
@@ -26,7 +33,11 @@ type HomeProps = {
 
 const statIcons = [Users, Droplets, GraduationCap, MapPin];
 
-function setting(settings: HomeProps['settings'], key: string, fallback = ''): string {
+function setting(
+    settings: HomeProps['settings'],
+    key: string,
+    fallback = '',
+): string {
     return settings[key]?.trim() || fallback;
 }
 
@@ -41,13 +52,23 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
         .map((index) => ({
             title: setting(settings, `home_value_${index}_title`),
             description: setting(settings, `home_value_${index}_description`),
-            icon: getIcon(setting(settings, `home_value_${index}_icon`, 'Heart')),
+            icon: getIcon(
+                setting(settings, `home_value_${index}_icon`, 'Heart'),
+            ),
         }))
         .filter((value) => value.title !== '');
 
     const heroImage = setting(settings, 'home_hero_image', pageHeroes.home);
-    const aboutImage = setting(settings, 'home_about_image', pageHeroes.homeAbout);
-    const bannerImage = setting(settings, 'home_banner_image', '/images/home-banner.jpg');
+    const aboutImage = setting(
+        settings,
+        'home_about_image',
+        pageHeroes.homeAbout,
+    );
+    const bannerImage = setting(
+        settings,
+        'home_banner_image',
+        '/images/home-banner.jpg',
+    );
 
     return (
         <PublicLayout currentPath="/">
@@ -71,32 +92,53 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{
-                        background: 'linear-gradient(to top, oklch(0.18 0.05 258 / 0.85) 0%, transparent 45%)',
+                        background:
+                            'linear-gradient(to top, oklch(0.18 0.05 258 / 0.85) 0%, transparent 45%)',
                     }}
                 />
 
-                <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-center px-4 pb-16 pt-28 md:min-h-[78vh] md:px-6 md:pb-20 md:pt-32">
-                    <p className="text-sm font-extrabold tracking-[0.18em] text-brand-green-light uppercase animate-in fade-in-0 duration-700">
-                        {setting(settings, 'home_hero_eyebrow', 'Welcome to HopeSpring Foundation')}
+                <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-center px-4 pt-28 pb-16 md:min-h-[78vh] md:px-6 md:pt-32 md:pb-20">
+                    <p className="animate-in text-sm font-extrabold tracking-[0.18em] text-brand-green-light uppercase duration-700 fade-in-0">
+                        {setting(
+                            settings,
+                            'home_hero_eyebrow',
+                            'Welcome to HopeSpring Foundation',
+                        )}
                     </p>
-                    <h1 className="mt-4 max-w-3xl font-serif text-4xl font-bold leading-[1.08] text-white md:text-5xl lg:text-6xl animate-in fade-in-0 slide-in-from-bottom-3 duration-700">
-                        {setting(settings, 'home_hero_title_prefix', 'We exist to')}{' '}
+                    <h1 className="mt-4 max-w-3xl animate-in font-serif text-4xl leading-[1.08] font-bold text-white duration-700 fade-in-0 slide-in-from-bottom-3 md:text-5xl lg:text-6xl">
+                        {setting(
+                            settings,
+                            'home_hero_title_prefix',
+                            'We exist to',
+                        )}{' '}
                         <span className="text-brand-green-light">
-                            {setting(settings, 'home_hero_title_highlight', 'transform lives')}
+                            {setting(
+                                settings,
+                                'home_hero_title_highlight',
+                                'transform lives',
+                            )}
                         </span>
                     </h1>
-                    <p className="mt-5 max-w-xl text-base leading-relaxed text-white/75 md:text-lg animate-in fade-in-0 slide-in-from-bottom-2 duration-1000">
+                    <p className="mt-5 max-w-xl animate-in text-base leading-relaxed text-white/75 duration-1000 fade-in-0 slide-in-from-bottom-2 md:text-lg">
                         {setting(
                             settings,
                             'home_hero_subtitle',
                             'We bring hope, restore dignity, and create opportunities for a better tomorrow.',
                         )}
                     </p>
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap animate-in fade-in-0 duration-1000">
-                        <Button asChild size="lg" className="bg-brand-green font-bold hover:bg-brand-green-dark">
+                    <div className="mt-8 flex animate-in flex-col gap-3 duration-1000 fade-in-0 sm:flex-row sm:flex-wrap">
+                        <Button
+                            asChild
+                            size="lg"
+                            className="bg-brand-green font-bold hover:bg-brand-green-dark"
+                        >
                             <Link href="/donate">
                                 <Heart className="size-4" fill="currentColor" />
-                                {setting(settings, 'home_cta_donate_label', 'Donate Now')}
+                                {setting(
+                                    settings,
+                                    'home_cta_donate_label',
+                                    'Donate Now',
+                                )}
                             </Link>
                         </Button>
                         <Button
@@ -107,7 +149,11 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                         >
                             <Link href="/get-involved/volunteer">
                                 <HandHeart className="size-4" />
-                                {setting(settings, 'home_cta_volunteer_label', 'Become a Volunteer')}
+                                {setting(
+                                    settings,
+                                    'home_cta_volunteer_label',
+                                    'Become a Volunteer',
+                                )}
                             </Link>
                         </Button>
                         <Button
@@ -117,7 +163,11 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             className="border-white/40 font-bold text-white hover:bg-white/10 hover:text-white"
                         >
                             <Link href="/get-involved/partner">
-                                {setting(settings, 'home_cta_partner_label', 'Partner With Us')}
+                                {setting(
+                                    settings,
+                                    'home_cta_partner_label',
+                                    'Partner With Us',
+                                )}
                             </Link>
                         </Button>
                     </div>
@@ -132,7 +182,10 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 const Icon = statIcons[index] ?? Users;
 
                                 return (
-                                    <div key={stat.label} className="flex flex-col items-center text-center">
+                                    <div
+                                        key={stat.label}
+                                        className="flex flex-col items-center text-center"
+                                    >
                                         <Icon className="mb-2 size-5 text-brand-green" />
                                         <StatCounter
                                             value={stat.value}
@@ -148,7 +201,9 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                 </div>
             )}
 
-            <section className={`bg-background px-4 md:px-6 ${stats.length > 0 ? 'pt-12 pb-16 md:pt-16 md:pb-24' : 'py-16 md:py-24'}`}>
+            <section
+                className={`bg-background px-4 md:px-6 ${stats.length > 0 ? 'pt-12 pb-16 md:pt-16 md:pb-24' : 'py-16 md:py-24'}`}
+            >
                 <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
                     <ScrollReveal>
                         <div className="relative">
@@ -161,14 +216,24 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             />
                             <div className="absolute right-4 bottom-4 left-4 bg-white p-5 shadow-xl md:right-auto md:bottom-8 md:left-8 md:max-w-xs md:p-6">
                                 <p className="text-xs font-bold tracking-[0.16em] text-brand-green uppercase">
-                                    {setting(settings, 'home_about_mission_label', 'Our Mission')}
+                                    {setting(
+                                        settings,
+                                        'home_about_mission_label',
+                                        'Our Mission',
+                                    )}
                                 </p>
-                                <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-muted-foreground">{mission}</p>
+                                <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-muted-foreground">
+                                    {mission}
+                                </p>
                                 <Link
                                     href="/about"
                                     className="mt-3 inline-flex text-sm font-bold text-brand-green-dark hover:text-brand-green"
                                 >
-                                    {setting(settings, 'home_about_mission_link_label', 'Read More')}
+                                    {setting(
+                                        settings,
+                                        'home_about_mission_link_label',
+                                        'Read More',
+                                    )}
                                 </Link>
                             </div>
                         </div>
@@ -177,10 +242,18 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                     <ScrollReveal delay={80}>
                         <div>
                             <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
-                                {setting(settings, 'home_about_eyebrow', 'About Us')}
+                                {setting(
+                                    settings,
+                                    'home_about_eyebrow',
+                                    'About Us',
+                                )}
                             </p>
                             <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
-                                {setting(settings, 'home_about_title', 'Our Story, Our Why')}
+                                {setting(
+                                    settings,
+                                    'home_about_title',
+                                    'Our Story, Our Why',
+                                )}
                             </h2>
                             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                                 {setting(
@@ -196,12 +269,17 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                         const Icon = value.icon;
 
                                         return (
-                                            <div key={value.title} className="flex gap-3">
+                                            <div
+                                                key={value.title}
+                                                className="flex gap-3"
+                                            >
                                                 <div className="flex size-10 shrink-0 items-center justify-center bg-brand-green/10 text-brand-green">
                                                     <Icon className="size-5" />
                                                 </div>
                                                 <div>
-                                                    <h3 className="font-serif text-base font-semibold text-navy">{value.title}</h3>
+                                                    <h3 className="font-serif text-base font-semibold text-navy">
+                                                        {value.title}
+                                                    </h3>
                                                     <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                                                         {value.description}
                                                     </p>
@@ -212,8 +290,18 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 </div>
                             )}
 
-                            <Button asChild size="lg" className="mt-8 bg-brand-green font-bold hover:bg-brand-green-dark">
-                                <Link href="/about">{setting(settings, 'home_about_cta_label', 'Learn More About Us')}</Link>
+                            <Button
+                                asChild
+                                size="lg"
+                                className="mt-8 bg-brand-green font-bold hover:bg-brand-green-dark"
+                            >
+                                <Link href="/about">
+                                    {setting(
+                                        settings,
+                                        'home_about_cta_label',
+                                        'Learn More About Us',
+                                    )}
+                                </Link>
                             </Button>
                         </div>
                     </ScrollReveal>
@@ -224,20 +312,32 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                 <div className="mx-auto max-w-7xl">
                     <div className="mb-10 text-center">
                         <p className="text-xs font-bold tracking-[0.18em] text-brand-green-light uppercase">
-                            {setting(settings, 'home_programmes_eyebrow', 'Our Programs')}
+                            {setting(
+                                settings,
+                                'home_programmes_eyebrow',
+                                'Our Programs',
+                            )}
                         </p>
                         <h2 className="mt-3 font-serif text-3xl font-bold text-white md:text-4xl">
-                            {setting(settings, 'home_programmes_title', 'Areas We Focus On')}
+                            {setting(
+                                settings,
+                                'home_programmes_title',
+                                'Areas We Focus On',
+                            )}
                         </h2>
                     </div>
 
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {programmes.map((programme, index) => {
                             const Icon = getIcon(programme.icon);
-                            const image = programme.photo || pageHeroes.programmes;
+                            const image =
+                                programme.photo || pageHeroes.programmes;
 
                             return (
-                                <ScrollReveal key={programme.id} delay={index * 60}>
+                                <ScrollReveal
+                                    key={programme.id}
+                                    delay={index * 60}
+                                >
                                     <Link
                                         href={`/programmes/${programme.slug}`}
                                         className="group flex h-full flex-col overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1"
@@ -256,7 +356,9 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                             <div className="mb-3 flex size-11 items-center justify-center rounded-full bg-brand-green">
                                                 <Icon className="size-5 text-white" />
                                             </div>
-                                            <h3 className="font-serif text-lg font-semibold text-navy">{programme.title}</h3>
+                                            <h3 className="font-serif text-lg font-semibold text-navy">
+                                                {programme.title}
+                                            </h3>
                                             <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
                                                 {programme.description}
                                             </p>
@@ -275,7 +377,11 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             className="border-white/40 font-bold text-white hover:bg-white/10 hover:text-white"
                         >
                             <Link href="/programmes">
-                                {setting(settings, 'home_programmes_cta_label', 'View All Programs')}
+                                {setting(
+                                    settings,
+                                    'home_programmes_cta_label',
+                                    'View All Programs',
+                                )}
                             </Link>
                         </Button>
                     </div>
@@ -298,17 +404,25 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                     }}
                 />
                 <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-6 text-center md:flex-row md:text-left">
-                    <p className="flex-1 font-serif text-2xl font-bold leading-snug text-white md:text-3xl">
+                    <p className="flex-1 font-serif text-2xl leading-snug font-bold text-white md:text-3xl">
                         {setting(
                             settings,
                             'home_banner_text',
                             "Be the reason someone's life changes today. Your support brings hope, restores dignity, and creates brighter futures.",
                         )}
                     </p>
-                    <Button asChild size="lg" className="shrink-0 bg-white font-bold text-brand-green hover:bg-white/90">
+                    <Button
+                        asChild
+                        size="lg"
+                        className="shrink-0 bg-white font-bold text-brand-green hover:bg-white/90"
+                    >
                         <Link href="/donate">
                             <Heart className="size-4" fill="currentColor" />
-                            {setting(settings, 'home_banner_cta_label', 'Donate Now')}
+                            {setting(
+                                settings,
+                                'home_banner_cta_label',
+                                'Donate Now',
+                            )}
                         </Link>
                     </Button>
                 </div>

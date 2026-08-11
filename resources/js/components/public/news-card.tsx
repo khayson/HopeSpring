@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { cva  } from 'class-variance-authority';
-import type {VariantProps} from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -67,14 +67,21 @@ export function NewsCard({
                             <span aria-hidden="true" className="text-white/25">
                                 ·
                             </span>
-                            <span className={cn(categoryTone({ category }), 'text-brand-green-light')}>
+                            <span
+                                className={cn(
+                                    categoryTone({ category }),
+                                    'text-brand-green-light',
+                                )}
+                            >
                                 {category}
                             </span>
                         </div>
-                        <h2 className="mt-4 font-serif text-2xl font-bold leading-snug text-white md:text-3xl lg:text-4xl">
+                        <h2 className="mt-4 font-serif text-2xl leading-snug font-bold text-white md:text-3xl lg:text-4xl">
                             {title}
                         </h2>
-                        <p className="mt-4 max-w-lg text-base leading-relaxed text-white/65">{excerpt}</p>
+                        <p className="mt-4 max-w-lg text-base leading-relaxed text-white/65">
+                            {excerpt}
+                        </p>
                         <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-brand-green-light transition-colors group-hover:text-white">
                             Read full story
                             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
@@ -86,7 +93,10 @@ export function NewsCard({
     }
 
     return (
-        <Link href={href} className={cn('group flex h-full flex-col', className)}>
+        <Link
+            href={href}
+            className={cn('group flex h-full flex-col', className)}
+        >
             <article className="flex h-full flex-col overflow-hidden bg-white transition-transform duration-300 group-hover:-translate-y-1 dark:bg-card">
                 <div className="relative overflow-hidden bg-secondary">
                     {image ? (
@@ -108,12 +118,16 @@ export function NewsCard({
                         <span aria-hidden="true" className="text-border">
                             ·
                         </span>
-                        <span className={categoryTone({ category })}>{category}</span>
+                        <span className={categoryTone({ category })}>
+                            {category}
+                        </span>
                     </div>
-                    <h3 className="mt-3 font-serif text-lg font-semibold leading-snug text-navy dark:text-foreground">
+                    <h3 className="mt-3 font-serif text-lg leading-snug font-semibold text-navy dark:text-foreground">
                         {title}
                     </h3>
-                    <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">{excerpt}</p>
+                    <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                        {excerpt}
+                    </p>
                     <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand-green-dark">
                         Read story
                         <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />

@@ -15,10 +15,13 @@ export default function PortalIndex({ name, roleLabel }: Props) {
                 <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-brand-green/10">
                     <Heart className="size-8 text-brand-green" />
                 </div>
-                <h1 className="font-serif text-3xl font-bold text-navy">Welcome, {name}</h1>
+                <h1 className="font-serif text-3xl font-bold text-navy">
+                    Welcome, {name}
+                </h1>
                 <p className="mt-4 text-muted-foreground">
-                    Thanks for stepping up as a {roleLabel.toLowerCase()} with HopeSpring Foundation. Our team has
-                    your details and will be in touch soon with next steps.
+                    Thanks for stepping up as a {roleLabel.toLowerCase()} with
+                    HopeSpring Foundation. Our team has your details and will be
+                    in touch soon with next steps.
                 </p>
             </div>
         </>

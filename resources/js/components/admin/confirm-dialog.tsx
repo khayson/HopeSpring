@@ -40,13 +40,26 @@ export function ConfirmDialog({
                     <DialogDescription>{description}</DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={processing}>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => onOpenChange(false)}
+                        disabled={processing}
+                    >
                         {cancelLabel}
                     </Button>
                     <Button
                         type="button"
-                        variant={variant === 'destructive' ? 'destructive' : 'default'}
-                        className={variant === 'default' ? 'bg-brand-green font-bold hover:bg-brand-green-dark' : undefined}
+                        variant={
+                            variant === 'destructive'
+                                ? 'destructive'
+                                : 'default'
+                        }
+                        className={
+                            variant === 'default'
+                                ? 'bg-brand-green font-bold hover:bg-brand-green-dark'
+                                : undefined
+                        }
                         onClick={onConfirm}
                         disabled={processing}
                     >

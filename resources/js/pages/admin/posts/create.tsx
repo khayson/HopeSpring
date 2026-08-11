@@ -8,7 +8,11 @@ export default function PostsCreate() {
             <Head title="New Post" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
                 <h1 className="text-xl font-bold">New Post</h1>
-                <PostForm action="/admin/posts" method="post" submitLabel="Create Post" />
+                <PostForm
+                    action="/admin/posts"
+                    method="post"
+                    submitLabel="Create Post"
+                />
             </div>
         </>
     );

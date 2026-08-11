@@ -49,8 +49,10 @@ export default function DonationShow({ donation }: Props) {
 
                 <div className="rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
                     <div className="mb-6 flex items-center justify-between">
-                        <h1 className="text-xl font-bold">{formatCurrency(donation.amount)}</h1>
-                        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold capitalize text-emerald-800">
+                        <h1 className="text-xl font-bold">
+                            {formatCurrency(donation.amount)}
+                        </h1>
+                        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 capitalize">
                             {donation.status}
                         </span>
                     </div>
@@ -58,15 +60,21 @@ export default function DonationShow({ donation }: Props) {
                     <dl className="grid gap-4 sm:grid-cols-2">
                         {rows.map(({ label, key }) => (
                             <div key={key}>
-                                <dt className="text-xs font-medium uppercase text-muted-foreground">{label}</dt>
-                                <dd className="mt-1 text-sm">{donation[key]?.toString() || '—'}</dd>
+                                <dt className="text-xs font-medium text-muted-foreground uppercase">
+                                    {label}
+                                </dt>
+                                <dd className="mt-1 text-sm">
+                                    {donation[key]?.toString() || '—'}
+                                </dd>
                             </div>
                         ))}
                     </dl>
 
                     {donation.message && (
                         <div className="mt-6 border-t border-sidebar-border/70 pt-4 dark:border-sidebar-border">
-                            <dt className="text-xs font-medium uppercase text-muted-foreground">Message</dt>
+                            <dt className="text-xs font-medium text-muted-foreground uppercase">
+                                Message
+                            </dt>
                             <dd className="mt-1 text-sm">{donation.message}</dd>
                         </div>
                     )}

@@ -48,7 +48,11 @@ export default function ProgrammeShow({ programme }: Props) {
                 title={programme.title}
                 subtitle={programme.description}
                 image={pageHeroes.programmes}
-                breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Programmes', href: '/programmes' }, { label: programme.title }]}
+                breadcrumbs={[
+                    { label: 'Home', href: '/' },
+                    { label: 'Programmes', href: '/programmes' },
+                    { label: programme.title },
+                ]}
             />
 
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
@@ -56,7 +60,9 @@ export default function ProgrammeShow({ programme }: Props) {
                     <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-brand-green">
                         <ProgrammeIcon name={programme.icon} />
                     </div>
-                    <p className="text-lg leading-relaxed text-muted-foreground">{programme.description}</p>
+                    <p className="text-lg leading-relaxed text-muted-foreground">
+                        {programme.description}
+                    </p>
                     {programme.long_description && (
                         <div className="mt-6 text-base leading-relaxed text-muted-foreground">
                             {programme.long_description}

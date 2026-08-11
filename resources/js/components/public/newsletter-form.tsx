@@ -3,7 +3,15 @@ import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function NewsletterForm() {
-    const { data, setData, post, processing, recentlySuccessful, errors, reset } = useForm({
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        recentlySuccessful,
+        errors,
+        reset,
+    } = useForm({
         email: '',
     });
 
@@ -34,7 +42,7 @@ export function NewsletterForm() {
                     placeholder="Your email"
                     required
                     aria-label="Email address for newsletter"
-                    className="h-10 flex-1 rounded-md border border-white/20 bg-white/10 px-3 text-sm text-white placeholder:text-white/40 focus:border-brand-green-light focus:outline-none focus:ring-1 focus:ring-brand-green-light"
+                    className="h-10 flex-1 rounded-md border border-white/20 bg-white/10 px-3 text-sm text-white placeholder:text-white/40 focus:border-brand-green-light focus:ring-1 focus:ring-brand-green-light focus:outline-none"
                 />
                 <Button
                     type="submit"
@@ -46,7 +54,9 @@ export function NewsletterForm() {
                     <ArrowRight className="size-4" />
                 </Button>
             </div>
-            {errors.email && <p className="text-xs text-red-400">{errors.email}</p>}
+            {errors.email && (
+                <p className="text-xs text-red-400">{errors.email}</p>
+            )}
         </form>
     );
 }

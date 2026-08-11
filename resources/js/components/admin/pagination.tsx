@@ -13,8 +13,8 @@ type PaginationProps = {
 
 export function Pagination({ links }: PaginationProps) {
     if (links.length <= 3) {
-return null;
-}
+        return null;
+    }
 
     return (
         <nav className="flex flex-wrap items-center gap-1 px-5 py-4">

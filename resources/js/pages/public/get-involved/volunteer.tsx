@@ -13,7 +13,11 @@ export default function VolunteerInquiry() {
                 title="Volunteer With Us"
                 subtitle="Join our team and directly impact the communities we serve. Tell us about yourself and we'll reach out."
                 image={pageHeroes.volunteer}
-                breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Get Involved', href: '/get-involved' }, { label: 'Volunteer' }]}
+                breadcrumbs={[
+                    { label: 'Home', href: '/' },
+                    { label: 'Get Involved', href: '/get-involved' },
+                    { label: 'Volunteer' },
+                ]}
             />
 
             <section className="mx-auto max-w-2xl px-4 py-16 md:px-6 md:py-24">

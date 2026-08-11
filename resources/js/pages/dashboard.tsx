@@ -1,5 +1,12 @@
 import { Head, Link } from '@inertiajs/react';
-import { CircleDollarSign, FileText, Heart, Mail, Newspaper, Users } from 'lucide-react';
+import {
+    CircleDollarSign,
+    FileText,
+    Heart,
+    Mail,
+    Newspaper,
+    Users,
+} from 'lucide-react';
 import { dashboard } from '@/routes';
 
 type Stats = {
@@ -56,34 +63,75 @@ function timeAgo(dateString: string): string {
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
     if (seconds < 60) {
-return 'just now';
-}
+        return 'just now';
+    }
 
     if (seconds < 3600) {
-return `${Math.floor(seconds / 60)}m ago`;
-}
+        return `${Math.floor(seconds / 60)}m ago`;
+    }
 
     if (seconds < 86400) {
-return `${Math.floor(seconds / 3600)}h ago`;
-}
+        return `${Math.floor(seconds / 3600)}h ago`;
+    }
 
     if (seconds < 604800) {
-return `${Math.floor(seconds / 86400)}d ago`;
-}
+        return `${Math.floor(seconds / 86400)}d ago`;
+    }
 
     return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 const statCards = [
-    { key: 'totalDonations', label: 'Total Donations', icon: CircleDollarSign, format: (v: number) => formatCurrency(v), color: 'text-emerald-600 bg-emerald-50' },
-    { key: 'donationCount', label: 'Donations', icon: Heart, format: (v: number) => v.toLocaleString(), color: 'text-rose-600 bg-rose-50' },
-    { key: 'subscriberCount', label: 'Subscribers', icon: Users, format: (v: number) => v.toLocaleString(), color: 'text-blue-600 bg-blue-50' },
-    { key: 'unreadMessages', label: 'Unread Messages', icon: Mail, format: (v: number) => v.toLocaleString(), color: 'text-amber-600 bg-amber-50' },
-    { key: 'projectCount', label: 'Projects', icon: FileText, format: (v: number) => v.toLocaleString(), color: 'text-purple-600 bg-purple-50' },
-    { key: 'postCount', label: 'Published Posts', icon: Newspaper, format: (v: number) => v.toLocaleString(), color: 'text-cyan-600 bg-cyan-50' },
+    {
+        key: 'totalDonations',
+        label: 'Total Donations',
+        icon: CircleDollarSign,
+        format: (v: number) => formatCurrency(v),
+        color: 'text-emerald-600 bg-emerald-50',
+    },
+    {
+        key: 'donationCount',
+        label: 'Donations',
+        icon: Heart,
+        format: (v: number) => v.toLocaleString(),
+        color: 'text-rose-600 bg-rose-50',
+    },
+    {
+        key: 'subscriberCount',
+        label: 'Subscribers',
+        icon: Users,
+        format: (v: number) => v.toLocaleString(),
+        color: 'text-blue-600 bg-blue-50',
+    },
+    {
+        key: 'unreadMessages',
+        label: 'Unread Messages',
+        icon: Mail,
+        format: (v: number) => v.toLocaleString(),
+        color: 'text-amber-600 bg-amber-50',
+    },
+    {
+        key: 'projectCount',
+        label: 'Projects',
+        icon: FileText,
+        format: (v: number) => v.toLocaleString(),
+        color: 'text-purple-600 bg-purple-50',
+    },
+    {
+        key: 'postCount',
+        label: 'Published Posts',
+        icon: Newspaper,
+        format: (v: number) => v.toLocaleString(),
+        color: 'text-cyan-600 bg-cyan-50',
+    },
 ] as const;
 
-export default function Dashboard({ stats, recentDonations, recentMessages, recentPosts }: Props) {
+export default function Dashboard({
+    stats,
+    recentDonations,
+    recentMessages,
+    recentPosts,
+}: Props) {
     return (
         <>
             <Head title="Dashboard" />
@@ -95,18 +143,27 @@ export default function Dashboard({ stats, recentDonations, recentMessages, rece
                         const value = stats[card.key];
 
                         if (value === null) {
-return null;
-}
+                            return null;
+                        }
 
                         return (
-                            <div key={card.key} className="rounded-xl border border-sidebar-border/70 bg-white p-5 dark:border-sidebar-border dark:bg-neutral-900">
+                            <div
+                                key={card.key}
+                                className="rounded-xl border border-sidebar-border/70 bg-white p-5 dark:border-sidebar-border dark:bg-neutral-900"
+                            >
                                 <div className="flex items-center justify-between">
-                                    <p className="text-sm font-medium text-muted-foreground">{card.label}</p>
-                                    <div className={`rounded-lg p-2 ${card.color}`}>
+                                    <p className="text-sm font-medium text-muted-foreground">
+                                        {card.label}
+                                    </p>
+                                    <div
+                                        className={`rounded-lg p-2 ${card.color}`}
+                                    >
                                         <Icon className="size-4" />
                                     </div>
                                 </div>
-                                <p className="mt-2 text-2xl font-bold tracking-tight">{card.format(value)}</p>
+                                <p className="mt-2 text-2xl font-bold tracking-tight">
+                                    {card.format(value)}
+                                </p>
                             </div>
                         );
                     })}
@@ -121,16 +178,26 @@ return null;
                         </div>
                         <div className="divide-y divide-sidebar-border/70 dark:divide-sidebar-border">
                             {recentDonations.length === 0 ? (
-                                <p className="px-5 py-8 text-center text-sm text-muted-foreground">No donations yet.</p>
+                                <p className="px-5 py-8 text-center text-sm text-muted-foreground">
+                                    No donations yet.
+                                </p>
                             ) : (
                                 recentDonations.map((donation) => (
-                                    <div key={donation.id} className="flex items-center justify-between px-5 py-3">
+                                    <div
+                                        key={donation.id}
+                                        className="flex items-center justify-between px-5 py-3"
+                                    >
                                         <div className="min-w-0 flex-1">
                                             <p className="truncate text-sm font-medium">
-                                                {donation.is_anonymous ? 'Anonymous Donor' : donation.donor_name}
+                                                {donation.is_anonymous
+                                                    ? 'Anonymous Donor'
+                                                    : donation.donor_name}
                                             </p>
                                             <p className="truncate text-xs text-muted-foreground">
-                                                {donation.programme || 'General Fund'} &middot; {timeAgo(donation.created_at)}
+                                                {donation.programme ||
+                                                    'General Fund'}{' '}
+                                                &middot;{' '}
+                                                {timeAgo(donation.created_at)}
                                             </p>
                                         </div>
                                         <span className="ml-3 shrink-0 text-sm font-bold text-emerald-600">
@@ -149,17 +216,26 @@ return null;
                         </div>
                         <div className="divide-y divide-sidebar-border/70 dark:divide-sidebar-border">
                             {recentMessages.length === 0 ? (
-                                <p className="px-5 py-8 text-center text-sm text-muted-foreground">No messages yet.</p>
+                                <p className="px-5 py-8 text-center text-sm text-muted-foreground">
+                                    No messages yet.
+                                </p>
                             ) : (
                                 recentMessages.map((msg) => (
-                                    <div key={msg.id} className="flex items-start gap-3 px-5 py-3">
+                                    <div
+                                        key={msg.id}
+                                        className="flex items-start gap-3 px-5 py-3"
+                                    >
                                         {!msg.is_read && (
                                             <span className="mt-1.5 inline-block size-2 shrink-0 rounded-full bg-blue-500" />
                                         )}
                                         <div className="min-w-0 flex-1">
-                                            <p className="truncate text-sm font-medium">{msg.subject}</p>
+                                            <p className="truncate text-sm font-medium">
+                                                {msg.subject}
+                                            </p>
                                             <p className="truncate text-xs text-muted-foreground">
-                                                {msg.name} ({msg.email}) &middot; {timeAgo(msg.created_at)}
+                                                {msg.name} ({msg.email})
+                                                &middot;{' '}
+                                                {timeAgo(msg.created_at)}
                                             </p>
                                         </div>
                                     </div>
@@ -176,22 +252,38 @@ return null;
                     </div>
                     <div className="divide-y divide-sidebar-border/70 dark:divide-sidebar-border">
                         {recentPosts.length === 0 ? (
-                            <p className="px-5 py-8 text-center text-sm text-muted-foreground">No posts yet.</p>
+                            <p className="px-5 py-8 text-center text-sm text-muted-foreground">
+                                No posts yet.
+                            </p>
                         ) : (
                             recentPosts.map((post) => (
-                                <div key={post.id} className="flex items-center justify-between px-5 py-3">
+                                <div
+                                    key={post.id}
+                                    className="flex items-center justify-between px-5 py-3"
+                                >
                                     <div className="min-w-0 flex-1">
                                         <div className="flex items-center gap-2">
-                                            <p className="truncate text-sm font-medium">{post.title}</p>
+                                            <p className="truncate text-sm font-medium">
+                                                {post.title}
+                                            </p>
                                             {post.is_featured && (
-                                                <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase text-amber-700">
+                                                <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-700 uppercase">
                                                     Featured
                                                 </span>
                                             )}
                                         </div>
                                         <p className="text-xs text-muted-foreground">
                                             {post.published_at
-                                                ? new Date(post.published_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                                                ? new Date(
+                                                      post.published_at,
+                                                  ).toLocaleDateString(
+                                                      'en-GB',
+                                                      {
+                                                          day: 'numeric',
+                                                          month: 'short',
+                                                          year: 'numeric',
+                                                      },
+                                                  )
                                                 : 'Draft'}
                                         </p>
                                     </div>

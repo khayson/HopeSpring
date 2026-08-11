@@ -10,13 +10,17 @@ import {
     Share2,
     X,
 } from 'lucide-react';
-import type { FormEvent} from 'react';
+import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { DonationBand } from '@/components/public/donation-band';
 import { PinterestPinLayout } from '@/components/public/pinterest-pin-layout';
 import PublicLayout from '@/layouts/public/public-layout';
 import { donate } from '@/routes';
-import { index as galleryIndex, like as toggleLike, show as galleryShow } from '@/routes/gallery';
+import {
+    index as galleryIndex,
+    like as toggleLike,
+    show as galleryShow,
+} from '@/routes/gallery';
 import { store as storeComment } from '@/routes/gallery/comments';
 
 type GalleryImage = {
@@ -132,7 +136,7 @@ export default function GalleryShow({
                         <article className="overflow-hidden rounded-2xl bg-navy shadow-2xl ring-1 ring-white/10">
                             <div className="flex flex-col md:flex-row">
                                 <div className="group relative min-w-0 flex-1 bg-navy-dark">
-                                    <div className="absolute left-2.5 top-2.5 z-20 flex items-center gap-2">
+                                    <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-2">
                                         <Link
                                             href={galleryIndex.url()}
                                             className="flex size-8 items-center justify-center rounded-full bg-white/95 text-navy-dark shadow-sm transition-transform hover:scale-105"
@@ -157,18 +161,23 @@ export default function GalleryShow({
                                             className="aspect-[4/5] max-h-[420px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                                         />
                                         <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-dark/50 via-transparent to-navy-dark/20 opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-                                        <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold text-navy-dark opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                                            <Maximize2 className="size-3.5" aria-hidden />
+                                        <span className="pointer-events-none absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold text-navy-dark opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                            <Maximize2
+                                                className="size-3.5"
+                                                aria-hidden
+                                            />
                                             Expand
                                         </span>
                                     </button>
 
-                                    <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-10 flex items-center justify-between px-2">
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 left-0 z-10 flex items-center justify-between px-2">
                                         {previous ? (
                                             <Link
-                                                href={galleryShow.url(previous.id)}
+                                                href={galleryShow.url(
+                                                    previous.id,
+                                                )}
                                                 prefetch
-                                                className="pointer-events-auto flex size-8 items-center justify-center rounded-full bg-white/90 text-navy-dark opacity-0 shadow-md transition-all hover:scale-105 group-hover:opacity-100"
+                                                className="pointer-events-auto flex size-8 items-center justify-center rounded-full bg-white/90 text-navy-dark opacity-0 shadow-md transition-all group-hover:opacity-100 hover:scale-105"
                                                 aria-label="Previous image"
                                             >
                                                 <ChevronLeft className="size-4" />
@@ -180,7 +189,7 @@ export default function GalleryShow({
                                             <Link
                                                 href={galleryShow.url(next.id)}
                                                 prefetch
-                                                className="pointer-events-auto flex size-8 items-center justify-center rounded-full bg-white/90 text-navy-dark opacity-0 shadow-md transition-all hover:scale-105 group-hover:opacity-100"
+                                                className="pointer-events-auto flex size-8 items-center justify-center rounded-full bg-white/90 text-navy-dark opacity-0 shadow-md transition-all group-hover:opacity-100 hover:scale-105"
                                                 aria-label="Next image"
                                             >
                                                 <ChevronRight className="size-4" />
@@ -192,12 +201,17 @@ export default function GalleryShow({
                                 </div>
 
                                 <div className="flex w-full flex-col justify-between bg-gradient-to-b from-navy to-navy-dark md:w-[280px] md:shrink-0">
-                                    <div className="flex flex-col gap-4 px-4 pb-3 pt-4">
+                                    <div className="flex flex-col gap-4 px-4 pt-4 pb-3">
                                         <div className="flex items-start justify-between gap-2">
                                             {image.category ? (
                                                 <Link
-                                                    href={galleryIndex.url({ query: { category: image.category } })}
-                                                    className="inline-flex items-center rounded-full border border-brand-green/40 bg-brand-green/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-brand-green-light transition-colors hover:bg-brand-green/25"
+                                                    href={galleryIndex.url({
+                                                        query: {
+                                                            category:
+                                                                image.category,
+                                                        },
+                                                    })}
+                                                    className="inline-flex items-center rounded-full border border-brand-green/40 bg-brand-green/15 px-2.5 py-1 text-[10px] font-bold tracking-[0.14em] text-brand-green-light uppercase transition-colors hover:bg-brand-green/25"
                                                 >
                                                     {image.category}
                                                 </Link>
@@ -210,7 +224,11 @@ export default function GalleryShow({
                                                     type="button"
                                                     onClick={handleLike}
                                                     className="flex items-center gap-1 rounded-full px-2 py-1.5 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                                                    aria-label={liked ? 'Unlike image' : 'Like image'}
+                                                    aria-label={
+                                                        liked
+                                                            ? 'Unlike image'
+                                                            : 'Like image'
+                                                    }
                                                     aria-pressed={liked}
                                                 >
                                                     <Heart
@@ -240,35 +258,48 @@ export default function GalleryShow({
                                         </div>
 
                                         {copied && (
-                                            <p className="text-[11px] font-semibold text-brand-green-light">Link copied</p>
+                                            <p className="text-[11px] font-semibold text-brand-green-light">
+                                                Link copied
+                                            </p>
                                         )}
 
                                         <div>
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-gold-light/90">
+                                            <p className="text-[10px] font-bold tracking-[0.18em] text-brand-gold-light/90 uppercase">
                                                 HopeSpring Foundation
                                             </p>
                                             <div className="mt-2 h-0.5 w-10 rounded-full bg-brand-green" />
-                                            <h1 className="mt-3 font-serif text-xl font-bold leading-snug text-white">
+                                            <h1 className="mt-3 font-serif text-xl leading-snug font-bold text-white">
                                                 {title}
                                             </h1>
-                                            <p className="mt-2.5 text-xs leading-relaxed text-white/70">{image.alt}</p>
+                                            <p className="mt-2.5 text-xs leading-relaxed text-white/70">
+                                                {image.alt}
+                                            </p>
                                         </div>
 
                                         {/* Comments */}
                                         <div className="border-t border-white/10 pt-3">
                                             <div className="mb-2.5 flex items-center gap-1.5 text-white/80">
                                                 <MessageCircle className="size-3.5" />
-                                                <p className="text-[11px] font-bold uppercase tracking-wider">
-                                                    {comments.length} {comments.length === 1 ? 'Comment' : 'Comments'}
+                                                <p className="text-[11px] font-bold tracking-wider uppercase">
+                                                    {comments.length}{' '}
+                                                    {comments.length === 1
+                                                        ? 'Comment'
+                                                        : 'Comments'}
                                                 </p>
                                             </div>
 
                                             <div className="mb-3 max-h-36 space-y-2.5 overflow-y-auto pr-1">
                                                 {comments.length === 0 && (
-                                                    <p className="text-xs text-white/45">Be the first to leave a comment.</p>
+                                                    <p className="text-xs text-white/45">
+                                                        Be the first to leave a
+                                                        comment.
+                                                    </p>
                                                 )}
                                                 {comments.map((comment) => (
-                                                    <div key={comment.id} className="rounded-lg bg-white/5 px-2.5 py-2">
+                                                    <div
+                                                        key={comment.id}
+                                                        className="rounded-lg bg-white/5 px-2.5 py-2"
+                                                    >
                                                         <p className="text-[11px] font-bold text-brand-green-light">
                                                             {comment.name}
                                                         </p>
@@ -285,22 +316,44 @@ export default function GalleryShow({
                                                 </p>
                                             )}
 
-                                            <form onSubmit={submitComment} className="space-y-2">
+                                            <form
+                                                onSubmit={submitComment}
+                                                className="space-y-2"
+                                            >
                                                 <input
                                                     type="text"
-                                                    value={commentForm.data.name}
-                                                    onChange={(e) => commentForm.setData('name', e.target.value)}
+                                                    value={
+                                                        commentForm.data.name
+                                                    }
+                                                    onChange={(e) =>
+                                                        commentForm.setData(
+                                                            'name',
+                                                            e.target.value,
+                                                        )
+                                                    }
                                                     placeholder="Your name"
                                                     required
                                                     maxLength={80}
                                                     className="h-8 w-full rounded-md border border-white/15 bg-white/5 px-2.5 text-xs text-white placeholder:text-white/35 focus:border-brand-green focus:outline-none"
                                                 />
                                                 {commentForm.errors.name && (
-                                                    <p className="text-[11px] text-red-300">{commentForm.errors.name}</p>
+                                                    <p className="text-[11px] text-red-300">
+                                                        {
+                                                            commentForm.errors
+                                                                .name
+                                                        }
+                                                    </p>
                                                 )}
                                                 <textarea
-                                                    value={commentForm.data.body}
-                                                    onChange={(e) => commentForm.setData('body', e.target.value)}
+                                                    value={
+                                                        commentForm.data.body
+                                                    }
+                                                    onChange={(e) =>
+                                                        commentForm.setData(
+                                                            'body',
+                                                            e.target.value,
+                                                        )
+                                                    }
                                                     placeholder="Add a comment..."
                                                     required
                                                     rows={2}
@@ -308,14 +361,23 @@ export default function GalleryShow({
                                                     className="w-full resize-none rounded-md border border-white/15 bg-white/5 px-2.5 py-2 text-xs text-white placeholder:text-white/35 focus:border-brand-green focus:outline-none"
                                                 />
                                                 {commentForm.errors.body && (
-                                                    <p className="text-[11px] text-red-300">{commentForm.errors.body}</p>
+                                                    <p className="text-[11px] text-red-300">
+                                                        {
+                                                            commentForm.errors
+                                                                .body
+                                                        }
+                                                    </p>
                                                 )}
                                                 <button
                                                     type="submit"
-                                                    disabled={commentForm.processing}
+                                                    disabled={
+                                                        commentForm.processing
+                                                    }
                                                     className="w-full rounded-full bg-brand-green px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-brand-green-light disabled:opacity-60"
                                                 >
-                                                    {commentForm.processing ? 'Posting…' : 'Post comment'}
+                                                    {commentForm.processing
+                                                        ? 'Posting…'
+                                                        : 'Post comment'}
                                                 </button>
                                             </form>
                                         </div>
@@ -325,7 +387,9 @@ export default function GalleryShow({
                                         <div className="flex items-center justify-between gap-3">
                                             {previous ? (
                                                 <Link
-                                                    href={galleryShow.url(previous.id)}
+                                                    href={galleryShow.url(
+                                                        previous.id,
+                                                    )}
                                                     prefetch
                                                     className="inline-flex items-center gap-1 text-[11px] font-semibold text-white/60 transition-colors hover:text-white"
                                                 >
@@ -333,11 +397,15 @@ export default function GalleryShow({
                                                     Previous
                                                 </Link>
                                             ) : (
-                                                <span className="text-[11px] text-white/25">Previous</span>
+                                                <span className="text-[11px] text-white/25">
+                                                    Previous
+                                                </span>
                                             )}
                                             {next ? (
                                                 <Link
-                                                    href={galleryShow.url(next.id)}
+                                                    href={galleryShow.url(
+                                                        next.id,
+                                                    )}
                                                     prefetch
                                                     className="inline-flex items-center gap-1 text-[11px] font-semibold text-white/60 transition-colors hover:text-white"
                                                 >
@@ -345,7 +413,9 @@ export default function GalleryShow({
                                                     <ChevronRight className="size-3" />
                                                 </Link>
                                             ) : (
-                                                <span className="text-[11px] text-white/25">Next</span>
+                                                <span className="text-[11px] text-white/25">
+                                                    Next
+                                                </span>
                                             )}
                                         </div>
 
@@ -353,7 +423,10 @@ export default function GalleryShow({
                                             href={donateHref}
                                             className="flex w-full items-center justify-center gap-1.5 rounded-full bg-brand-green px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-green-light"
                                         >
-                                            <Heart className="size-3" fill="currentColor" />
+                                            <Heart
+                                                className="size-3"
+                                                fill="currentColor"
+                                            />
                                             Support this work
                                         </Link>
                                     </div>
@@ -366,7 +439,7 @@ export default function GalleryShow({
 
             {zoomed && (
                 <div
-                    className="fixed inset-0 z-[60] flex items-center justify-center bg-navy-dark/95 p-4 backdrop-blur-sm animate-in fade-in-0 duration-200"
+                    className="fixed inset-0 z-[60] flex animate-in items-center justify-center bg-navy-dark/95 p-4 backdrop-blur-sm duration-200 fade-in-0"
                     onClick={() => setZoomed(false)}
                     role="dialog"
                     aria-modal="true"
@@ -375,7 +448,7 @@ export default function GalleryShow({
                     <button
                         type="button"
                         onClick={() => setZoomed(false)}
-                        className="absolute right-4 top-4 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
+                        className="absolute top-4 right-4 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
                         aria-label="Close zoomed image"
                     >
                         <X className="size-5" />
@@ -387,9 +460,11 @@ export default function GalleryShow({
                         <img
                             src={image.src}
                             alt={image.alt}
-                            className="max-h-[80vh] max-w-full rounded-lg object-contain shadow-2xl animate-in zoom-in-95 duration-300"
+                            className="max-h-[80vh] max-w-full animate-in rounded-lg object-contain shadow-2xl duration-300 zoom-in-95"
                         />
-                        <p className="max-w-xl text-center font-serif text-lg text-white">{title}</p>
+                        <p className="max-w-xl text-center font-serif text-lg text-white">
+                            {title}
+                        </p>
                     </div>
                 </div>
             )}

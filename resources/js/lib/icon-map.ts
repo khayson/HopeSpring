@@ -1,4 +1,14 @@
-import { Award, Droplets, GraduationCap, Heart, HeartPulse, Shield, Sparkles, Users, Wrench } from 'lucide-react';
+import {
+    Award,
+    Droplets,
+    GraduationCap,
+    Heart,
+    HeartPulse,
+    Shield,
+    Sparkles,
+    Users,
+    Wrench,
+} from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 const icons: Record<string, LucideIcon> = {

@@ -1,5 +1,12 @@
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Check, Facebook, Link as LinkIcon, Linkedin, Twitter } from 'lucide-react';
+import {
+    ArrowLeft,
+    Check,
+    Facebook,
+    Link as LinkIcon,
+    Linkedin,
+    Twitter,
+} from 'lucide-react';
 import { useState } from 'react';
 import { DonationBand } from '@/components/public/donation-band';
 import { NewsCard } from '@/components/public/news-card';
@@ -54,7 +61,11 @@ function estimateReadingTime(text: string): number {
 }
 
 function formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    return new Date(date).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    });
 }
 
 function articleParagraphs(body: string): string[] {
@@ -100,7 +111,9 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
             <article className="mx-auto max-w-3xl px-4 py-14 md:px-6 md:py-20">
                 <ScrollReveal>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border pb-6 text-sm text-muted-foreground">
-                        <time dateTime={post.published_at}>{formatDate(post.published_at)}</time>
+                        <time dateTime={post.published_at}>
+                            {formatDate(post.published_at)}
+                        </time>
                         <span aria-hidden="true" className="text-border">
                             ·
                         </span>
@@ -112,7 +125,12 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                         <span aria-hidden="true" className="text-border">
                             ·
                         </span>
-                        <span className={cn('text-xs font-bold tracking-[0.16em] uppercase', categoryTone[post.category])}>
+                        <span
+                            className={cn(
+                                'text-xs font-bold tracking-[0.16em] uppercase',
+                                categoryTone[post.category],
+                            )}
+                        >
                             {post.category}
                         </span>
                     </div>
@@ -121,7 +139,10 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                 <ScrollReveal delay={60}>
                     <div className="mt-10 space-y-6">
                         {paragraphs.map((paragraph, index) => (
-                            <p key={index} className="text-lg leading-relaxed text-muted-foreground">
+                            <p
+                                key={index}
+                                className="text-lg leading-relaxed text-muted-foreground"
+                            >
                                 {paragraph}
                             </p>
                         ))}
@@ -130,7 +151,9 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
 
                 <ScrollReveal delay={100}>
                     <div className="mt-14 border-t border-border pt-8">
-                        <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">Share this story</p>
+                        <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                            Share this story
+                        </p>
                         <div className="mt-4 flex flex-wrap items-center gap-1">
                             <a
                                 href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodedUrl}`}
@@ -138,8 +161,7 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-navy"
                             >
-                                <Twitter className="size-4" />
-                                X
+                                <Twitter className="size-4" />X
                             </a>
                             <a
                                 href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
@@ -164,7 +186,11 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                                 onClick={copyLink}
                                 className="inline-flex items-center gap-2 px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-navy"
                             >
-                                {copied ? <Check className="size-4 text-brand-green" /> : <LinkIcon className="size-4" />}
+                                {copied ? (
+                                    <Check className="size-4 text-brand-green" />
+                                ) : (
+                                    <LinkIcon className="size-4" />
+                                )}
                                 {copied ? 'Copied' : 'Copy link'}
                             </button>
                         </div>
@@ -189,23 +215,33 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                     <div className="mx-auto max-w-7xl">
                         <ScrollReveal>
                             <div className="mb-10 max-w-2xl">
-                                <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">Keep reading</p>
-                                <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">Related stories</h2>
+                                <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                                    Keep reading
+                                </p>
+                                <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
+                                    Related stories
+                                </h2>
                                 <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-                                    More from our {post.category} work across Ghana.
+                                    More from our {post.category} work across
+                                    Ghana.
                                 </p>
                             </div>
                         </ScrollReveal>
 
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             {relatedPosts.map((related, index) => (
-                                <ScrollReveal key={related.id} delay={index * 50}>
+                                <ScrollReveal
+                                    key={related.id}
+                                    delay={index * 50}
+                                >
                                     <NewsCard
                                         title={related.title}
                                         excerpt={related.excerpt}
                                         date={formatDate(related.published_at)}
                                         category={related.category}
-                                        image={related.featured_image ?? undefined}
+                                        image={
+                                            related.featured_image ?? undefined
+                                        }
                                         href={newsShow.url(related.slug)}
                                     />
                                 </ScrollReveal>

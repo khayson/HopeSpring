@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshold = 0.15) {
+export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
+    threshold = 0.15,
+) {
     const ref = useRef<T>(null);
     // Visible by default so SSR HTML matches the first client render.
     const [isVisible, setIsVisible] = useState(true);
@@ -17,7 +19,8 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(threshol
         }
 
         const rect = el.getBoundingClientRect();
-        const alreadyInView = rect.top < window.innerHeight * (1 - threshold) && rect.bottom > 0;
+        const alreadyInView =
+            rect.top < window.innerHeight * (1 - threshold) && rect.bottom > 0;
 
         // Above-the-fold content stays visible — no flash after hydration.
         if (alreadyInView) {

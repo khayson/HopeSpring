@@ -24,9 +24,12 @@ export default function Contact({ settings }: Props) {
                 <div className="grid gap-12 lg:grid-cols-5">
                     {/* Contact Info */}
                     <div className="lg:col-span-2">
-                        <h2 className="font-serif text-2xl font-bold text-navy">Get in Touch</h2>
+                        <h2 className="font-serif text-2xl font-bold text-navy">
+                            Get in Touch
+                        </h2>
                         <p className="mt-3 text-muted-foreground">
-                            Have a question, want to volunteer, or interested in partnering with us? We&apos;d love to hear from you.
+                            Have a question, want to volunteer, or interested in
+                            partnering with us? We&apos;d love to hear from you.
                         </p>
 
                         <div className="mt-8 space-y-6">
@@ -35,9 +38,12 @@ export default function Contact({ settings }: Props) {
                                     <MapPin className="size-5 text-brand-green" />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-bold text-navy">Address</h3>
+                                    <h3 className="text-sm font-bold text-navy">
+                                        Address
+                                    </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        {settings.contact_address || 'East Legon, Accra, Ghana'}
+                                        {settings.contact_address ||
+                                            'East Legon, Accra, Ghana'}
                                     </p>
                                 </div>
                             </div>
@@ -47,9 +53,12 @@ export default function Contact({ settings }: Props) {
                                     <Mail className="size-5 text-brand-green" />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-bold text-navy">Email</h3>
+                                    <h3 className="text-sm font-bold text-navy">
+                                        Email
+                                    </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        {settings.contact_email || 'info@hopespringfoundation.org'}
+                                        {settings.contact_email ||
+                                            'info@hopespringfoundation.org'}
                                     </p>
                                 </div>
                             </div>
@@ -59,9 +68,12 @@ export default function Contact({ settings }: Props) {
                                     <Phone className="size-5 text-brand-green" />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-bold text-navy">Phone</h3>
+                                    <h3 className="text-sm font-bold text-navy">
+                                        Phone
+                                    </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        {settings.contact_phone || '+233 24 123 4567'}
+                                        {settings.contact_phone ||
+                                            '+233 24 123 4567'}
                                     </p>
                                 </div>
                             </div>

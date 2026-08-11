@@ -27,12 +27,10 @@
 @theme {
     /* ── Typography ───────────────────────────────────── */
     --font-sans:
-        'Mulish', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+        'Mulish', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
     --font-serif:
-        'Lora', ui-serif, Georgia, Cambria,
-        'Times New Roman', Times, serif;
+        'Lora', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 
     /* ── Border radii ────────────────────────────────── */
     --radius-lg: var(--radius);
@@ -108,15 +106,15 @@
 :root {
     /* Surface */
     --background: oklch(0.985 0.002 247);
-    --foreground: oklch(0.20 0.04 260);
+    --foreground: oklch(0.2 0.04 260);
 
     /* Cards */
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.20 0.04 260);
+    --card-foreground: oklch(0.2 0.04 260);
 
     /* Popovers */
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.20 0.04 260);
+    --popover-foreground: oklch(0.2 0.04 260);
 
     /* Primary: Navy #1a2f5c */
     --primary: oklch(0.305 0.07 260);
@@ -128,7 +126,7 @@
 
     /* Muted */
     --muted: oklch(0.955 0.01 260);
-    --muted-foreground: oklch(0.50 0.02 260);
+    --muted-foreground: oklch(0.5 0.02 260);
 
     /* Accent: Gold #f0a938 */
     --accent: oklch(0.79 0.15 75);
@@ -139,15 +137,15 @@
     --destructive-foreground: oklch(0.577 0.245 27.325);
 
     /* Borders & inputs */
-    --border: oklch(0.90 0.01 260);
-    --input: oklch(0.90 0.01 260);
+    --border: oklch(0.9 0.01 260);
+    --input: oklch(0.9 0.01 260);
     --ring: oklch(0.305 0.07 260);
 
     /* Charts — brand palette */
     --chart-1: oklch(0.305 0.07 260);
     --chart-2: oklch(0.56 0.15 145);
     --chart-3: oklch(0.79 0.15 75);
-    --chart-4: oklch(0.60 0.14 240);
+    --chart-4: oklch(0.6 0.14 240);
     --chart-5: oklch(0.65 0.16 145);
 
     /* Radius */
@@ -166,13 +164,13 @@
     /* ── Brand palette ─────────────────────────── */
     --navy: oklch(0.305 0.07 260);
     --navy-dark: oklch(0.24 0.06 258);
-    --navy-light: oklch(0.40 0.07 260);
+    --navy-light: oklch(0.4 0.07 260);
     --brand-green: oklch(0.56 0.15 145);
     --brand-green-light: oklch(0.65 0.16 145);
     --brand-green-dark: oklch(0.45 0.13 145);
     --brand-gold: oklch(0.79 0.15 75);
     --brand-gold-light: oklch(0.86 0.12 75);
-    --brand-blue: oklch(0.60 0.14 240);
+    --brand-blue: oklch(0.6 0.14 240);
     --brand-blue-light: oklch(0.72 0.12 240);
 
     /* Semantic states */
@@ -180,7 +178,7 @@
     --success-foreground: oklch(0.985 0 0);
     --warning: oklch(0.79 0.15 75);
     --warning-foreground: oklch(0.25 0.05 75);
-    --info: oklch(0.60 0.14 240);
+    --info: oklch(0.6 0.14 240);
     --info-foreground: oklch(0.985 0 0);
 }
 
@@ -199,7 +197,7 @@
     --popover-foreground: oklch(0.95 0.01 260);
 
     /* Primary: brighter navy for dark bg */
-    --primary: oklch(0.70 0.10 240);
+    --primary: oklch(0.7 0.1 240);
     --primary-foreground: oklch(0.15 0.04 258);
 
     /* Secondary */
@@ -224,10 +222,10 @@
     --ring: oklch(0.56 0.15 145);
 
     /* Charts */
-    --chart-1: oklch(0.60 0.14 240);
+    --chart-1: oklch(0.6 0.14 240);
     --chart-2: oklch(0.65 0.16 145);
     --chart-3: oklch(0.79 0.15 75);
-    --chart-4: oklch(0.70 0.10 240);
+    --chart-4: oklch(0.7 0.1 240);
     --chart-5: oklch(0.56 0.15 145);
 
     /* Sidebar (admin dark) */
@@ -248,16 +246,16 @@
     --brand-green-light: oklch(0.72 0.14 145);
     --brand-green-dark: oklch(0.56 0.15 145);
     --brand-gold: oklch(0.82 0.14 75);
-    --brand-gold-light: oklch(0.88 0.10 75);
-    --brand-blue: oklch(0.70 0.12 240);
-    --brand-blue-light: oklch(0.78 0.10 240);
+    --brand-gold-light: oklch(0.88 0.1 75);
+    --brand-blue: oklch(0.7 0.12 240);
+    --brand-blue-light: oklch(0.78 0.1 240);
 
     /* Semantic states (dark) */
     --success: oklch(0.65 0.16 145);
     --success-foreground: oklch(0.15 0.04 258);
     --warning: oklch(0.82 0.14 75);
     --warning-foreground: oklch(0.15 0.04 258);
-    --info: oklch(0.70 0.12 240);
+    --info: oklch(0.7 0.12 240);
     --info-foreground: oklch(0.15 0.04 258);
 }
 

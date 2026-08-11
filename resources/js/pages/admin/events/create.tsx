@@ -8,7 +8,11 @@ export default function EventsCreate() {
             <Head title="New Event" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
                 <h1 className="text-xl font-bold">New Event</h1>
-                <EventForm action="/admin/events" method="post" submitLabel="Create Event" />
+                <EventForm
+                    action="/admin/events"
+                    method="post"
+                    submitLabel="Create Event"
+                />
             </div>
         </>
     );

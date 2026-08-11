@@ -1,6 +1,12 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { Pagination } from '@/components/admin/pagination';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { dashboard } from '@/routes';
 
 const ALL_TYPES = 'all';
@@ -32,19 +38,27 @@ const statusColors: Record<string, string> = {
 
 export default function InquiriesIndex({ inquiries, filters }: Props) {
     function filter(next: Partial<{ type: string; status: string }>) {
-        router.get('/admin/inquiries', { ...filters, ...next }, { preserveState: true, replace: true });
+        router.get(
+            '/admin/inquiries',
+            { ...filters, ...next },
+            { preserveState: true, replace: true },
+        );
     }
 
     return (
         <>
             <Head title="Inquiries" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
-                <h1 className="text-xl font-bold">Volunteer & Partner Inquiries</h1>
+                <h1 className="text-xl font-bold">
+                    Volunteer & Partner Inquiries
+                </h1>
 
                 <div className="flex flex-wrap items-center gap-3">
                     <Select
                         value={filters.type || ALL_TYPES}
-                        onValueChange={(value) => filter({ type: value === ALL_TYPES ? '' : value })}
+                        onValueChange={(value) =>
+                            filter({ type: value === ALL_TYPES ? '' : value })
+                        }
                     >
                         <SelectTrigger className="h-9">
                             <SelectValue />
@@ -57,13 +71,19 @@ export default function InquiriesIndex({ inquiries, filters }: Props) {
                     </Select>
                     <Select
                         value={filters.status || ALL_STATUSES}
-                        onValueChange={(value) => filter({ status: value === ALL_STATUSES ? '' : value })}
+                        onValueChange={(value) =>
+                            filter({
+                                status: value === ALL_STATUSES ? '' : value,
+                            })
+                        }
                     >
                         <SelectTrigger className="h-9">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value={ALL_STATUSES}>All statuses</SelectItem>
+                            <SelectItem value={ALL_STATUSES}>
+                                All statuses
+                            </SelectItem>
                             <SelectItem value="new">New</SelectItem>
                             <SelectItem value="reviewed">Reviewed</SelectItem>
                             <SelectItem value="converted">Converted</SelectItem>
@@ -74,7 +94,9 @@ export default function InquiriesIndex({ inquiries, filters }: Props) {
                 <div className="rounded-xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">
                     <div className="divide-y divide-sidebar-border/70 dark:divide-sidebar-border">
                         {inquiries.data.length === 0 ? (
-                            <p className="px-5 py-8 text-center text-sm text-muted-foreground">No inquiries found.</p>
+                            <p className="px-5 py-8 text-center text-sm text-muted-foreground">
+                                No inquiries found.
+                            </p>
                         ) : (
                             inquiries.data.map((inquiry) => (
                                 <Link
@@ -84,16 +106,23 @@ export default function InquiriesIndex({ inquiries, filters }: Props) {
                                 >
                                     <div className="min-w-0 flex-1">
                                         <div className="flex items-center gap-2">
-                                            <p className="truncate text-sm font-medium">{inquiry.name}</p>
-                                            <span className="shrink-0 rounded-full bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase text-muted-foreground">
+                                            <p className="truncate text-sm font-medium">
+                                                {inquiry.name}
+                                            </p>
+                                            <span className="shrink-0 rounded-full bg-secondary px-2 py-0.5 text-[10px] font-bold text-muted-foreground uppercase">
                                                 {inquiry.type}
                                             </span>
                                         </div>
                                         <p className="truncate text-xs text-muted-foreground">
-                                            {inquiry.email} {inquiry.organisation ? `· ${inquiry.organisation}` : ''}
+                                            {inquiry.email}{' '}
+                                            {inquiry.organisation
+                                                ? `· ${inquiry.organisation}`
+                                                : ''}
                                         </p>
                                     </div>
-                                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold capitalize ${statusColors[inquiry.status] ?? 'bg-secondary'}`}>
+                                    <span
+                                        className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold capitalize ${statusColors[inquiry.status] ?? 'bg-secondary'}`}
+                                    >
                                         {inquiry.status}
                                     </span>
                                 </Link>

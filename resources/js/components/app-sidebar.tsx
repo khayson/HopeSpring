@@ -1,5 +1,14 @@
 import { Link, usePage } from '@inertiajs/react';
-import { CircleDollarSign, Handshake, LayoutGrid, Mail, Newspaper, Settings, Sparkles, Users } from 'lucide-react';
+import {
+    CircleDollarSign,
+    Handshake,
+    LayoutGrid,
+    Mail,
+    Newspaper,
+    Settings,
+    Sparkles,
+    Users,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -31,7 +40,11 @@ export function AppSidebar() {
     }
 
     if (role === 'admin' || role === 'finance') {
-        mainNavItems.push({ title: 'Donations', href: '/admin/donations', icon: CircleDollarSign });
+        mainNavItems.push({
+            title: 'Donations',
+            href: '/admin/donations',
+            icon: CircleDollarSign,
+        });
     }
 
     if (role === 'admin') {

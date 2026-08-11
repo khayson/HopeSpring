@@ -6,7 +6,11 @@ type BrushEdgeProps = {
     flip?: boolean;
 };
 
-export function BrushEdge({ className, fill = 'currentColor', flip = false }: BrushEdgeProps) {
+export function BrushEdge({
+    className,
+    fill = 'currentColor',
+    flip = false,
+}: BrushEdgeProps) {
     return (
         <svg
             viewBox="0 0 1440 60"

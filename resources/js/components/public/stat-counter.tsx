@@ -12,14 +12,21 @@ function formatStat(value: number): string {
     return value.toLocaleString('en-GB');
 }
 
-export function StatCounter({ value, suffix = '+', label, className }: StatCounterProps) {
+export function StatCounter({
+    value,
+    suffix = '+',
+    label,
+    className,
+}: StatCounterProps) {
     // Start at the final value so SSR and the first client render match.
     const [count, setCount] = useState(value);
     const ref = useRef<HTMLDivElement>(null);
     const hasAnimated = useRef(false);
 
     useEffect(() => {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const prefersReducedMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)',
+        ).matches;
 
         if (prefersReducedMotion) {
             return;
@@ -65,11 +72,13 @@ export function StatCounter({ value, suffix = '+', label, className }: StatCount
 
     return (
         <div ref={ref} className={cn('text-center', className)}>
-            <p className="font-serif text-4xl font-bold leading-none md:text-5xl">
+            <p className="font-serif text-4xl leading-none font-bold md:text-5xl">
                 {formatStat(count)}
                 {suffix}
             </p>
-            <p className="mt-2 text-sm font-semibold uppercase tracking-wider opacity-80">{label}</p>
+            <p className="mt-2 text-sm font-semibold tracking-wider uppercase opacity-80">
+                {label}
+            </p>
         </div>
     );
 }

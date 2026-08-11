@@ -3,6 +3,7 @@ import { Eye, Heart, Shield, Users } from 'lucide-react';
 import { BrushEdge } from '@/components/public/brush-edge';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
+import { PartnerShowcase } from '@/components/public/partner-showcase';
 import { ScrollReveal } from '@/components/public/scroll-reveal';
 import { StatsBar } from '@/components/public/stats-bar';
 import { TeamCard } from '@/components/public/team-card';
@@ -22,7 +23,12 @@ type TeamMember = {
 
 type Milestone = { year: string; title: string; description: string };
 type Stat = { label: string; value: number; suffix: string | null };
-type Partner = { name: string; logo: string | null; url: string | null };
+type Partner = {
+    id: number;
+    name: string;
+    logo: string | null;
+    url: string | null;
+};
 
 type AboutProps = {
     team: TeamMember[];
@@ -223,24 +229,7 @@ export default function About({
                 </section>
             )}
 
-            {/* Partners */}
-            {partners.length > 0 && (
-                <section className="mx-auto max-w-7xl px-4 py-16 md:px-6">
-                    <h2 className="mb-8 text-center font-serif text-2xl font-bold text-navy">
-                        Our Partners
-                    </h2>
-                    <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-                        {partners.map((partner) => (
-                            <div
-                                key={partner.name}
-                                className="text-lg font-bold text-muted-foreground/50"
-                            >
-                                {partner.name}
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            )}
+            <PartnerShowcase partners={partners} settings={settings} />
 
             <DonationBand />
         </PublicLayout>

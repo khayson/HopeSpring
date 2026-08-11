@@ -33,6 +33,8 @@ const textareaKeys = new Set([
     'home_banner_text',
     'about_mission',
     'about_vision',
+    'about_partners_intro',
+    'about_partners_empty_message',
     'home_value_1_description',
     'home_value_2_description',
     'home_value_3_description',

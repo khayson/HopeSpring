@@ -268,3 +268,58 @@
         @apply bg-background text-foreground;
     }
 }
+
+@layer components {
+    @keyframes partner-marquee {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+    .partner-marquee {
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+    }
+
+    .partner-marquee-track {
+        display: flex;
+        flex-wrap: nowrap;
+        width: max-content;
+        animation: partner-marquee 40s linear infinite;
+        will-change: transform;
+    }
+
+    .partner-marquee:hover .partner-marquee-track {
+        animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .partner-marquee {
+            overflow-x: auto;
+            mask-image: none;
+            -webkit-mask-image: none;
+        }
+
+        .partner-marquee-track {
+            animation: none;
+            flex-wrap: nowrap;
+            width: max-content;
+        }
+    }
+}

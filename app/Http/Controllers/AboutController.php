@@ -21,11 +21,19 @@ class AboutController extends Controller
             'milestones' => Milestone::orderBy('sort_order')
                 ->get(['year', 'title', 'description']),
             'stats' => ImpactStat::orderBy('sort_order')->get(['label', 'value', 'suffix']),
-            'partners' => Partner::where('is_active', true)
+            'partners' => Partner::query()
+                ->where('is_active', true)
                 ->orderBy('sort_order')
-                ->get(['name', 'logo', 'url']),
+                ->get(['id', 'name', 'logo', 'url']),
             'settings' => SiteSetting::whereIn('key', [
-                'about_mission', 'about_vision',
+                'about_mission',
+                'about_vision',
+                'about_partners_eyebrow',
+                'about_partners_heading',
+                'about_partners_intro',
+                'about_partners_empty_title',
+                'about_partners_empty_message',
+                'about_partners_cta_label',
             ])->pluck('value', 'key'),
         ]);
     }

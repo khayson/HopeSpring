@@ -11,13 +11,13 @@ use App\Models\ImpactStat;
 use App\Models\Inquiry;
 use App\Models\Milestone;
 use App\Models\NewsletterSubscriber;
-use App\Models\Partner;
 use App\Models\Post;
 use App\Models\Programme;
 use App\Models\Project;
 use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use App\Models\User;
+use App\Support\AboutPageSettings;
 use App\Support\HomePageSettings;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -71,7 +71,6 @@ class DatabaseSeeder extends Seeder
         $this->seedInquiries();
         $this->seedImpactStats();
         $this->seedMilestones();
-        $this->seedPartners();
         $this->seedSiteSettings();
     }
 
@@ -552,23 +551,6 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function seedPartners(): void
-    {
-        $partners = [
-            ['name' => 'UNICEF Ghana', 'logo' => 'partners/unicef-ghana.jpg', 'sort_order' => 1],
-            ['name' => 'World Vision', 'logo' => 'partners/world-vision.jpg', 'sort_order' => 2],
-            ['name' => 'Ghana Health Service', 'logo' => 'partners/ghana-health-service.jpg', 'sort_order' => 3],
-            ['name' => 'WaterAid', 'logo' => 'partners/wateraid.jpg', 'sort_order' => 4],
-            ['name' => 'Ghana Education Service', 'logo' => 'partners/ghana-education-service.jpg', 'sort_order' => 5],
-            ['name' => 'MTN Ghana Foundation', 'logo' => 'partners/mtn-ghana-foundation.jpg', 'sort_order' => 6],
-        ];
-
-        foreach ($partners as $partner) {
-            $partner['logo'] = $this->storageUrl($partner['logo']);
-            Partner::create($partner);
-        }
-    }
-
     private function seedSiteSettings(): void
     {
         $settings = [
@@ -586,6 +568,7 @@ class DatabaseSeeder extends Seeder
             ['key' => 'paystack_public_key', 'value' => '', 'group' => 'payment'],
             ['key' => 'donation_goal', 'value' => '500000', 'group' => 'payment'],
             ...HomePageSettings::defaults(),
+            ...AboutPageSettings::defaults(),
         ];
 
         foreach ($settings as $setting) {

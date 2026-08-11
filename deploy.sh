@@ -163,6 +163,7 @@ export PATH="/tmp/php84-shim:\$PATH"
 \${PHP} artisan migrate --force
 \${PHP} artisan db:seed --force 2>&1 || echo "Seeding note: check output above."
 \${PHP} artisan storage:link 2>/dev/null || true
+\${PHP} artisan app:download-seed-images 2>&1 || echo "Image download note: check output above."
 \${PHP} artisan optimize
 \${PHP} artisan view:cache
 \${PHP} artisan event:cache

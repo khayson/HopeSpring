@@ -12,8 +12,12 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
             refresh: true,
             fonts: [
-                bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
+                bunny('Lora', {
+                    weights: [400, 500, 600, 700],
+                    styles: ['normal', 'italic'],
+                }),
+                bunny('Mulish', {
+                    weights: [400, 500, 600, 700, 800],
                 }),
             ],
         }),
@@ -28,4 +32,24 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    server: {
+        host: '127.0.0.1',
+        port: 5173,
+        strictPort: true,
+        hmr: {
+            host: '127.0.0.1',
+        },
+        watch: {
+            ignored: [
+                '**/vendor/**',
+                '**/storage/**',
+                '**/node_modules/**',
+                '**/.git/**',
+                '**/bootstrap/cache/**',
+                '**/public/build/**',
+                '**/public/build.bak/**',
+                '**/hope-spring-foundation*',
+            ],
+        },
+    },
 });

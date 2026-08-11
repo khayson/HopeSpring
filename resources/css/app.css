@@ -7,16 +7,37 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+/*
+ * ─── HOPESPRING DESIGN TOKENS ───────────────────────────────────
+ *
+ * Direction A — "The Founder's Mark"
+ * Sampled from approved mockup + design files.
+ *
+ * Brand palette (hex reference):
+ *   Navy:       #1a2f5c   Dark navy:  #152447
+ *   Green:      #5fa93d   Light green:#7fc95c
+ *   Gold:       #f0a938   Blue:       #3f8fd9
+ *   Body text:  #1a2540   Muted:      #64748b
+ *
+ * Typography:
+ *   Display/headings: Lora (serif)
+ *   Body/UI:          Mulish (sans-serif)
+ */
 
+@theme {
+    /* ── Typography ───────────────────────────────────── */
+    --font-sans:
+        'Mulish', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif:
+        'Lora', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+
+    /* ── Border radii ────────────────────────────────── */
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
 
+    /* ── Semantic color tokens (shadcn/ui compat) ──── */
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 
@@ -59,77 +80,183 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+
+    /* ── Brand color tokens ───────────────────────── */
+    --color-navy: var(--navy);
+    --color-navy-dark: var(--navy-dark);
+    --color-navy-light: var(--navy-light);
+    --color-brand-green: var(--brand-green);
+    --color-brand-green-light: var(--brand-green-light);
+    --color-brand-green-dark: var(--brand-green-dark);
+    --color-brand-gold: var(--brand-gold);
+    --color-brand-gold-light: var(--brand-gold-light);
+    --color-brand-blue: var(--brand-blue);
+    --color-brand-blue-light: var(--brand-blue-light);
+
+    /* ── Success / Warning / Info semantic ─────────── */
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-info: var(--info);
+    --color-info-foreground: var(--info-foreground);
 }
 
+/* ── LIGHT THEME (default) ──────────────────────────────────── */
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+    /* Surface */
+    --background: oklch(0.985 0.002 247);
+    --foreground: oklch(0.2 0.04 260);
+
+    /* Cards */
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
+    --card-foreground: oklch(0.2 0.04 260);
+
+    /* Popovers */
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.2 0.04 260);
+
+    /* Primary: Navy #1a2f5c */
+    --primary: oklch(0.305 0.07 260);
     --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
+
+    /* Secondary: Light navy tint */
+    --secondary: oklch(0.95 0.015 260);
+    --secondary-foreground: oklch(0.305 0.07 260);
+
+    /* Muted */
+    --muted: oklch(0.955 0.01 260);
+    --muted-foreground: oklch(0.5 0.02 260);
+
+    /* Accent: Gold #f0a938 */
+    --accent: oklch(0.79 0.15 75);
+    --accent-foreground: oklch(0.25 0.05 75);
+
+    /* Destructive */
     --destructive: oklch(0.577 0.245 27.325);
     --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.87 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
+
+    /* Borders & inputs */
+    --border: oklch(0.9 0.01 260);
+    --input: oklch(0.9 0.01 260);
+    --ring: oklch(0.305 0.07 260);
+
+    /* Charts — brand palette */
+    --chart-1: oklch(0.305 0.07 260);
+    --chart-2: oklch(0.56 0.15 145);
+    --chart-3: oklch(0.79 0.15 75);
+    --chart-4: oklch(0.6 0.14 240);
+    --chart-5: oklch(0.65 0.16 145);
+
+    /* Radius */
+    --radius: 0.5rem;
+
+    /* Sidebar (admin) */
+    --sidebar: oklch(0.26 0.06 258);
+    --sidebar-foreground: oklch(0.92 0.01 260);
+    --sidebar-primary: oklch(0.56 0.15 145);
     --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.87 0 0);
+    --sidebar-accent: oklch(0.32 0.06 258);
+    --sidebar-accent-foreground: oklch(0.92 0.01 260);
+    --sidebar-border: oklch(0.35 0.05 258);
+    --sidebar-ring: oklch(0.56 0.15 145);
+
+    /* ── Brand palette ─────────────────────────── */
+    --navy: oklch(0.305 0.07 260);
+    --navy-dark: oklch(0.24 0.06 258);
+    --navy-light: oklch(0.4 0.07 260);
+    --brand-green: oklch(0.56 0.15 145);
+    --brand-green-light: oklch(0.65 0.16 145);
+    --brand-green-dark: oklch(0.45 0.13 145);
+    --brand-gold: oklch(0.79 0.15 75);
+    --brand-gold-light: oklch(0.86 0.12 75);
+    --brand-blue: oklch(0.6 0.14 240);
+    --brand-blue-light: oklch(0.72 0.12 240);
+
+    /* Semantic states */
+    --success: oklch(0.56 0.15 145);
+    --success-foreground: oklch(0.985 0 0);
+    --warning: oklch(0.79 0.15 75);
+    --warning-foreground: oklch(0.25 0.05 75);
+    --info: oklch(0.6 0.14 240);
+    --info-foreground: oklch(0.985 0 0);
 }
 
+/* ── DARK THEME (admin dashboard) ───────────────────────────── */
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
+    /* Surface */
+    --background: oklch(0.18 0.04 258);
+    --foreground: oklch(0.95 0.01 260);
+
+    /* Cards */
+    --card: oklch(0.22 0.05 258);
+    --card-foreground: oklch(0.95 0.01 260);
+
+    /* Popovers */
+    --popover: oklch(0.22 0.05 258);
+    --popover-foreground: oklch(0.95 0.01 260);
+
+    /* Primary: brighter navy for dark bg */
+    --primary: oklch(0.7 0.1 240);
+    --primary-foreground: oklch(0.15 0.04 258);
+
+    /* Secondary */
+    --secondary: oklch(0.28 0.05 258);
+    --secondary-foreground: oklch(0.92 0.01 260);
+
+    /* Muted */
+    --muted: oklch(0.28 0.05 258);
+    --muted-foreground: oklch(0.65 0.02 260);
+
+    /* Accent: Gold */
+    --accent: oklch(0.79 0.15 75);
+    --accent-foreground: oklch(0.15 0.04 258);
+
+    /* Destructive */
     --destructive: oklch(0.396 0.141 25.723);
     --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
+
+    /* Borders & inputs */
+    --border: oklch(0.32 0.04 258);
+    --input: oklch(0.28 0.05 258);
+    --ring: oklch(0.56 0.15 145);
+
+    /* Charts */
+    --chart-1: oklch(0.6 0.14 240);
+    --chart-2: oklch(0.65 0.16 145);
+    --chart-3: oklch(0.79 0.15 75);
+    --chart-4: oklch(0.7 0.1 240);
+    --chart-5: oklch(0.56 0.15 145);
+
+    /* Sidebar (admin dark) */
+    --sidebar: oklch(0.16 0.04 258);
+    --sidebar-foreground: oklch(0.92 0.01 260);
+    --sidebar-primary: oklch(0.65 0.16 145);
     --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
+    --sidebar-accent: oklch(0.24 0.05 258);
+    --sidebar-accent-foreground: oklch(0.92 0.01 260);
+    --sidebar-border: oklch(0.28 0.04 258);
+    --sidebar-ring: oklch(0.65 0.16 145);
+
+    /* Brand palette (adjusted for dark — navy must be readable as text on dark surfaces) */
+    --navy: oklch(0.78 0.05 260);
+    --navy-dark: oklch(0.24 0.06 258);
+    --navy-light: oklch(0.85 0.04 260);
+    --brand-green: oklch(0.65 0.16 145);
+    --brand-green-light: oklch(0.72 0.14 145);
+    --brand-green-dark: oklch(0.56 0.15 145);
+    --brand-gold: oklch(0.82 0.14 75);
+    --brand-gold-light: oklch(0.88 0.1 75);
+    --brand-blue: oklch(0.7 0.12 240);
+    --brand-blue-light: oklch(0.78 0.1 240);
+
+    /* Semantic states (dark) */
+    --success: oklch(0.65 0.16 145);
+    --success-foreground: oklch(0.15 0.04 258);
+    --warning: oklch(0.82 0.14 75);
+    --warning-foreground: oklch(0.15 0.04 258);
+    --info: oklch(0.7 0.12 240);
+    --info-foreground: oklch(0.15 0.04 258);
 }
 
 @layer base {

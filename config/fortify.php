@@ -161,7 +161,10 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Registration is intentionally disabled: this application has no public
+        // self-registration. Staff, volunteer, and partner accounts are created by
+        // an admin via /admin/users and activated through an emailed invite link.
+        // Features::registration(),
         Features::resetPasswords(),
         Features::emailVerification(),
         Features::twoFactorAuthentication([

@@ -589,7 +589,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            SiteSetting::create($setting);
+            SiteSetting::updateOrCreate(
+                ['key' => $setting['key']],
+                ['value' => $setting['value'], 'group' => $setting['group']],
+            );
         }
     }
 }

@@ -54,8 +54,12 @@ const categoryTone: Record<Post['category'], string> = {
     relief: 'text-brand-gold',
 };
 
-function estimateReadingTime(text: string): number {
-    const words = text.trim().split(/\s+/).length;
+function estimateReadingTime(html: string): number {
+    const words = html
+        .replace(/<[^>]+>/g, ' ')
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean).length;
 
     return Math.max(1, Math.ceil(words / 200));
 }
@@ -68,17 +72,9 @@ function formatDate(date: string): string {
     });
 }
 
-function articleParagraphs(body: string): string[] {
-    return body
-        .split(/\n{2,}/)
-        .map((paragraph) => paragraph.trim())
-        .filter(Boolean);
-}
-
 export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
     const [copied, setCopied] = useState(false);
     const readingTime = estimateReadingTime(post.body);
-    const paragraphs = articleParagraphs(post.body);
     const heroImage = post.featured_image || pageHeroes.news;
     const encodedUrl = encodeURIComponent(shareUrl);
     const shareText = encodeURIComponent(post.title);
@@ -137,16 +133,10 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                 </ScrollReveal>
 
                 <ScrollReveal delay={60}>
-                    <div className="mt-10 space-y-6">
-                        {paragraphs.map((paragraph, index) => (
-                            <p
-                                key={index}
-                                className="text-lg leading-relaxed text-muted-foreground"
-                            >
-                                {paragraph}
-                            </p>
-                        ))}
-                    </div>
+                    <div
+                        className="rich-content mt-10 text-lg leading-relaxed text-muted-foreground"
+                        dangerouslySetInnerHTML={{ __html: post.body }}
+                    />
                 </ScrollReveal>
 
                 <ScrollReveal delay={100}>

@@ -1,9 +1,14 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { ArrowLeft, UserPlus } from 'lucide-react';
+import { ArrowLeft, Mail, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
+import {
+    index as inquiriesIndex,
+    invite as inquiriesInvite,
+} from '@/routes/admin/inquiries';
 
 type Inquiry = {
     id: number;
@@ -20,6 +25,20 @@ type Inquiry = {
 
 type Props = { inquiry: Inquiry };
 
+function formatDate(value: string): string {
+    return new Date(value).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    });
+}
+
+const statusColors: Record<string, string> = {
+    new: 'bg-blue-100 text-blue-800',
+    reviewed: 'bg-amber-100 text-amber-800',
+    converted: 'bg-emerald-100 text-emerald-800',
+};
+
 export default function InquiryShow({ inquiry }: Props) {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [processing, setProcessing] = useState(false);
@@ -27,7 +46,7 @@ export default function InquiryShow({ inquiry }: Props) {
     function invite() {
         setProcessing(true);
         router.post(
-            `/admin/inquiries/${inquiry.id}/invite`,
+            inquiriesInvite.url(inquiry.id),
             {},
             {
                 onFinish: () => {
@@ -42,23 +61,39 @@ export default function InquiryShow({ inquiry }: Props) {
         <>
             <Head title={`Inquiry — ${inquiry.name}`} />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
-                <Button asChild variant="outline" className="w-fit">
-                    <Link href="/admin/inquiries">
-                        <ArrowLeft className="size-4" />
-                        Back to Inquiries
+                <div>
+                    <Link
+                        href={inquiriesIndex.url()}
+                        className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition hover:text-foreground"
+                    >
+                        <ArrowLeft className="size-3.5" />
+                        Back to inquiries
                     </Link>
-                </Button>
-
-                <div className="max-w-2xl rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
-                    <div className="mb-6 flex items-center justify-between">
-                        <h1 className="text-lg font-bold capitalize">
-                            {inquiry.type} Inquiry — {inquiry.name}
-                        </h1>
-                        <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold capitalize">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                        <div>
+                            <h1 className="font-serif text-2xl font-bold capitalize text-navy dark:text-foreground">
+                                {inquiry.type} Inquiry — {inquiry.name}
+                            </h1>
+                            <p className="mt-1 text-sm text-muted-foreground">
+                                {inquiry.email}
+                                {inquiry.organisation
+                                    ? ` · ${inquiry.organisation}`
+                                    : ''}{' '}
+                                · {formatDate(inquiry.created_at)}
+                            </p>
+                        </div>
+                        <span
+                            className={cn(
+                                'rounded-full px-3 py-1 text-xs font-bold uppercase',
+                                statusColors[inquiry.status] ?? 'bg-secondary',
+                            )}
+                        >
                             {inquiry.status}
                         </span>
                     </div>
+                </div>
 
+                <div className="max-w-2xl rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
                     <dl className="grid gap-4 sm:grid-cols-2">
                         <div>
                             <dt className="text-xs font-medium text-muted-foreground uppercase">
@@ -95,9 +130,10 @@ export default function InquiryShow({ inquiry }: Props) {
                         </dd>
                     </div>
 
-                    <div className="mt-6 flex items-center gap-3">
+                    <div className="mt-6 flex flex-wrap items-center gap-3">
                         <Button asChild variant="outline">
                             <a href={`mailto:${inquiry.email}`}>
+                                <Mail className="size-4" />
                                 Reply by Email
                             </a>
                         </Button>
@@ -134,7 +170,7 @@ export default function InquiryShow({ inquiry }: Props) {
 InquiryShow.layout = {
     breadcrumbs: [
         { title: 'Dashboard', href: dashboard() },
-        { title: 'Inquiries', href: '/admin/inquiries' },
+        { title: 'Inquiries', href: inquiriesIndex.url() },
         { title: 'Detail', href: '#' },
     ],
 };

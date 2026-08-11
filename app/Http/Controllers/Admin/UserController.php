@@ -13,13 +13,50 @@ use Inertia\Response;
 
 class UserController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $filters = [
+            'search' => $request->string('search')->trim()->toString(),
+            'role' => $request->string('role')->trim()->toString(),
+            'status' => $request->string('status')->trim()->toString(),
+        ];
+
+        $users = User::query()
+            ->select(['id', 'name', 'email', 'role', 'email_verified_at', 'created_at'])
+            ->when($filters['search'] !== '', function ($query) use ($filters): void {
+                $query->where(function ($searchQuery) use ($filters): void {
+                    $searchQuery
+                        ->where('name', 'like', '%'.$filters['search'].'%')
+                        ->orWhere('email', 'like', '%'.$filters['search'].'%');
+                });
+            })
+            ->when(
+                in_array($filters['role'], array_column(UserRole::cases(), 'value'), true),
+                fn ($query) => $query->where('role', $filters['role']),
+            )
+            ->when($filters['status'] === 'pending', fn ($query) => $query->whereNull('email_verified_at'))
+            ->when($filters['status'] === 'active', fn ($query) => $query->whereNotNull('email_verified_at'))
+            ->latest()
+            ->paginate(20)
+            ->withQueryString();
+
         return Inertia::render('admin/users/index', [
-            'users' => User::query()
-                ->select(['id', 'name', 'email', 'role', 'email_verified_at', 'created_at'])
-                ->latest()
-                ->paginate(20),
+            'users' => $users,
+            'filters' => $filters,
+            'stats' => [
+                'total' => User::query()->count(),
+                'active' => User::query()->whereNotNull('email_verified_at')->count(),
+                'pending' => User::query()->whereNull('email_verified_at')->count(),
+                'staff' => User::query()->whereIn('role', [
+                    UserRole::Admin->value,
+                    UserRole::Editor->value,
+                    UserRole::Finance->value,
+                ])->count(),
+            ],
+            'roles' => array_map(
+                fn (UserRole $role) => ['value' => $role->value, 'label' => $role->label()],
+                UserRole::cases(),
+            ),
         ]);
     }
 

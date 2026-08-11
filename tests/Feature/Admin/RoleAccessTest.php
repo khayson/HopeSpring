@@ -36,6 +36,7 @@ test('editors can manage events and posts but not donations, messages, or users'
 
     $this->actingAs($editor)->get('/admin/events')->assertOk();
     $this->actingAs($editor)->get('/admin/posts')->assertOk();
+    $this->actingAs($editor)->get('/admin/partners')->assertOk();
     $this->actingAs($editor)->get('/admin/donations')->assertForbidden();
     $this->actingAs($editor)->get('/admin/messages')->assertForbidden();
     $this->actingAs($editor)->get('/admin/users')->assertForbidden();
@@ -55,6 +56,7 @@ test('admin can access everything', function () {
     $this->actingAs($admin)->get('/admin/donations')->assertOk();
     $this->actingAs($admin)->get('/admin/events')->assertOk();
     $this->actingAs($admin)->get('/admin/posts')->assertOk();
+    $this->actingAs($admin)->get('/admin/partners')->assertOk();
     $this->actingAs($admin)->get('/admin/messages')->assertOk();
     $this->actingAs($admin)->get('/admin/newsletter')->assertOk();
     $this->actingAs($admin)->get('/admin/users')->assertOk();

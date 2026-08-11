@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactMessage;
-use App\Models\Donation;
-use App\Models\NewsletterSubscriber;
-use App\Models\Post;
-use App\Models\Project;
+use App\Support\AdminDashboard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -22,34 +18,6 @@ class DashboardController extends Controller
             return to_route('portal.index');
         }
 
-        $canSeeFinances = in_array($user->role->value, ['admin', 'finance'], true);
-
-        $subscriberCount = NewsletterSubscriber::whereNull('unsubscribed_at')->count();
-        $messageCount = ContactMessage::where('is_read', false)->count();
-        $projectCount = Project::count();
-        $postCount = Post::published()->count();
-
-        return Inertia::render('dashboard', [
-            'stats' => [
-                'totalDonations' => $canSeeFinances ? Donation::where('status', 'success')->sum('amount') : null,
-                'donationCount' => $canSeeFinances ? Donation::where('status', 'success')->count() : null,
-                'subscriberCount' => $subscriberCount,
-                'unreadMessages' => $messageCount,
-                'projectCount' => $projectCount,
-                'postCount' => $postCount,
-            ],
-            'recentDonations' => $canSeeFinances
-                ? Donation::where('status', 'success')
-                    ->latest()
-                    ->take(5)
-                    ->get(['id', 'donor_name', 'donor_email', 'amount', 'currency', 'programme', 'is_anonymous', 'created_at'])
-                : [],
-            'recentMessages' => ContactMessage::latest()
-                ->take(5)
-                ->get(['id', 'name', 'email', 'subject', 'is_read', 'created_at']),
-            'recentPosts' => Post::latest('published_at')
-                ->take(5)
-                ->get(['id', 'title', 'slug', 'published_at', 'is_featured']),
-        ]);
+        return Inertia::render('dashboard', AdminDashboard::for($user));
     }
 }

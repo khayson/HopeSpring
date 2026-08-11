@@ -1,7 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
+import {
+    index as donationsIndex,
+} from '@/routes/admin/donations';
 
 type Donation = {
     id: number;
@@ -26,6 +29,20 @@ function formatCurrency(pesewas: number): string {
     return `GHS ${(pesewas / 100).toLocaleString('en-GH', { minimumFractionDigits: 2 })}`;
 }
 
+function formatDate(value: string): string {
+    return new Date(value).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    });
+}
+
+const statusColors: Record<string, string> = {
+    success: 'bg-emerald-100 text-emerald-800',
+    pending: 'bg-amber-100 text-amber-800',
+    failed: 'bg-rose-100 text-rose-800',
+};
+
 const rows: { label: string; key: keyof Donation }[] = [
     { label: 'Donor Name', key: 'donor_name' },
     { label: 'Email', key: 'donor_email' },
@@ -36,27 +53,44 @@ const rows: { label: string; key: keyof Donation }[] = [
 ];
 
 export default function DonationShow({ donation }: Props) {
+    const displayName = donation.is_anonymous
+        ? 'Anonymous Donor'
+        : donation.donor_name;
+
     return (
         <>
             <Head title={`Donation — ${donation.reference}`} />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
-                <Button asChild variant="outline" className="w-fit">
-                    <Link href="/admin/donations">
-                        <ArrowLeft className="size-4" />
-                        Back to Donations
+                <div>
+                    <Link
+                        href={donationsIndex.url()}
+                        className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition hover:text-foreground"
+                    >
+                        <ArrowLeft className="size-3.5" />
+                        Back to donations
                     </Link>
-                </Button>
-
-                <div className="rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
-                    <div className="mb-6 flex items-center justify-between">
-                        <h1 className="text-xl font-bold">
-                            {formatCurrency(donation.amount)}
-                        </h1>
-                        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 capitalize">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                        <div>
+                            <h1 className="font-serif text-2xl font-bold text-navy dark:text-foreground">
+                                {formatCurrency(donation.amount)}
+                            </h1>
+                            <p className="mt-1 text-sm text-muted-foreground">
+                                {displayName} · {donation.reference} ·{' '}
+                                {formatDate(donation.created_at)}
+                            </p>
+                        </div>
+                        <span
+                            className={cn(
+                                'rounded-full px-3 py-1 text-xs font-bold uppercase',
+                                statusColors[donation.status] ?? 'bg-secondary',
+                            )}
+                        >
                             {donation.status}
                         </span>
                     </div>
+                </div>
 
+                <div className="max-w-2xl rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
                     <dl className="grid gap-4 sm:grid-cols-2">
                         {rows.map(({ label, key }) => (
                             <div key={key}>
@@ -64,10 +98,20 @@ export default function DonationShow({ donation }: Props) {
                                     {label}
                                 </dt>
                                 <dd className="mt-1 text-sm">
-                                    {donation[key]?.toString() || '—'}
+                                    {key === 'donor_name'
+                                        ? displayName
+                                        : donation[key]?.toString() || '—'}
                                 </dd>
                             </div>
                         ))}
+                        <div>
+                            <dt className="text-xs font-medium text-muted-foreground uppercase">
+                                Recurring
+                            </dt>
+                            <dd className="mt-1 text-sm">
+                                {donation.is_recurring ? 'Yes' : 'No'}
+                            </dd>
+                        </div>
                     </dl>
 
                     {donation.message && (
@@ -75,7 +119,9 @@ export default function DonationShow({ donation }: Props) {
                             <dt className="text-xs font-medium text-muted-foreground uppercase">
                                 Message
                             </dt>
-                            <dd className="mt-1 text-sm">{donation.message}</dd>
+                            <dd className="mt-1 text-sm leading-relaxed whitespace-pre-line">
+                                {donation.message}
+                            </dd>
                         </div>
                     )}
                 </div>
@@ -87,7 +133,7 @@ export default function DonationShow({ donation }: Props) {
 DonationShow.layout = {
     breadcrumbs: [
         { title: 'Dashboard', href: dashboard() },
-        { title: 'Donations', href: '/admin/donations' },
+        { title: 'Donations', href: donationsIndex.url() },
         { title: 'Detail', href: '#' },
     ],
 };

@@ -12,13 +12,19 @@ class DonationController extends Controller
 {
     public function index(Request $request): Response
     {
+        $filters = [
+            'status' => $request->string('status')->trim()->toString(),
+            'search' => $request->string('search')->trim()->toString(),
+        ];
+
         $donations = Donation::query()
-            ->when($request->string('status')->toString(), fn ($query, $status) => $query->where('status', $status))
-            ->when($request->string('search')->toString(), function ($query, $search) {
-                $query->where(function ($query) use ($search) {
-                    $query->where('donor_name', 'like', "%{$search}%")
-                        ->orWhere('donor_email', 'like', "%{$search}%")
-                        ->orWhere('reference', 'like', "%{$search}%");
+            ->when($filters['status'] !== '', fn ($query) => $query->where('status', $filters['status']))
+            ->when($filters['search'] !== '', function ($query) use ($filters): void {
+                $query->where(function ($searchQuery) use ($filters): void {
+                    $searchQuery
+                        ->where('donor_name', 'like', '%'.$filters['search'].'%')
+                        ->orWhere('donor_email', 'like', '%'.$filters['search'].'%')
+                        ->orWhere('reference', 'like', '%'.$filters['search'].'%');
                 });
             })
             ->latest()
@@ -27,10 +33,12 @@ class DonationController extends Controller
 
         return Inertia::render('admin/donations/index', [
             'donations' => $donations,
-            'filters' => $request->only(['status', 'search']),
-            'totals' => [
-                'successful' => Donation::where('status', 'success')->sum('amount'),
-                'count' => Donation::where('status', 'success')->count(),
+            'filters' => $filters,
+            'stats' => [
+                'raised' => (int) Donation::query()->where('status', 'success')->sum('amount'),
+                'successful' => Donation::query()->where('status', 'success')->count(),
+                'pending' => Donation::query()->where('status', 'pending')->count(),
+                'failed' => Donation::query()->where('status', 'failed')->count(),
             ],
         ]);
     }

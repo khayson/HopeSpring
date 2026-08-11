@@ -1,49 +1,48 @@
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
-import { EventForm } from '@/components/admin/event-form';
+import { PartnerForm } from '@/components/admin/partner-form';
 import { dashboard } from '@/routes';
 import {
-    create as eventsCreate,
-    index as eventsIndex,
-    store as eventsStore,
-} from '@/routes/admin/events';
+    create as partnersCreate,
+    index as partnersIndex,
+    store as partnersStore,
+} from '@/routes/admin/partners';
 
-export default function EventsCreate() {
+export default function PartnersCreate() {
     return (
         <>
-            <Head title="New Event" />
+            <Head title="New Partner" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
                 <div>
                     <Link
-                        href={eventsIndex.url()}
+                        href={partnersIndex.url()}
                         className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition hover:text-foreground"
                     >
                         <ArrowLeft className="size-3.5" />
-                        Back to events
+                        Back to partners
                     </Link>
                     <h1 className="font-serif text-2xl font-bold text-navy dark:text-foreground">
-                        New Event
+                        New Partner
                     </h1>
                     <p className="mt-1 text-sm text-muted-foreground">
-                        Create an event for the public calendar and donate
-                        destination links.
+                        Add a partner logo and link for the About page.
                     </p>
                 </div>
-                <EventForm
-                    action={eventsStore.url()}
+                <PartnerForm
+                    action={partnersStore.url()}
                     method="post"
-                    submitLabel="Create Event"
-                    cancelHref={eventsIndex.url()}
+                    submitLabel="Create Partner"
+                    cancelHref={partnersIndex.url()}
                 />
             </div>
         </>
     );
 }
 
-EventsCreate.layout = {
+PartnersCreate.layout = {
     breadcrumbs: [
         { title: 'Dashboard', href: dashboard() },
-        { title: 'Events', href: eventsIndex.url() },
-        { title: 'New', href: eventsCreate.url() },
+        { title: 'Partners', href: partnersIndex.url() },
+        { title: 'New', href: partnersCreate.url() },
     ],
 };

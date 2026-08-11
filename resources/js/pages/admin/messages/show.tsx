@@ -1,9 +1,13 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { ArrowLeft, Trash2 } from 'lucide-react';
+import { ArrowLeft, Mail, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
+import {
+    destroy as messagesDestroy,
+    index as messagesIndex,
+} from '@/routes/admin/messages';
 
 type Message = {
     id: number;
@@ -16,14 +20,22 @@ type Message = {
 
 type Props = { message: Message };
 
+function formatDate(value: string): string {
+    return new Date(value).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    });
+}
+
 export default function MessageShow({ message }: Props) {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [processing, setProcessing] = useState(false);
 
     function destroy() {
         setProcessing(true);
-        router.delete(`/admin/messages/${message.id}`, {
-            onSuccess: () => router.visit('/admin/messages'),
+        router.delete(messagesDestroy.url(message.id), {
+            onSuccess: () => router.visit(messagesIndex.url()),
             onFinish: () => setProcessing(false),
         });
     }
@@ -32,32 +44,35 @@ export default function MessageShow({ message }: Props) {
         <>
             <Head title={message.subject} />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
-                <div className="flex items-center justify-between">
-                    <Button asChild variant="outline" className="w-fit">
-                        <Link href="/admin/messages">
-                            <ArrowLeft className="size-4" />
-                            Back to Messages
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                        <Link
+                            href={messagesIndex.url()}
+                            className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition hover:text-foreground"
+                        >
+                            <ArrowLeft className="size-3.5" />
+                            Back to messages
                         </Link>
-                    </Button>
+                        <h1 className="font-serif text-2xl font-bold text-navy dark:text-foreground">
+                            {message.subject}
+                        </h1>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                            {message.name} · {message.email} ·{' '}
+                            {formatDate(message.created_at)}
+                        </p>
+                    </div>
                     <button
+                        type="button"
                         onClick={() => setConfirmOpen(true)}
-                        className="flex items-center gap-1.5 text-sm text-rose-600 hover:text-rose-800"
+                        className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-800"
                     >
                         <Trash2 className="size-4" />
                         Delete
                     </button>
                 </div>
 
-                <div className="max-w-2xl rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
-                    <h1 className="text-lg font-bold">{message.subject}</h1>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                        {message.name} &middot; {message.email} &middot;{' '}
-                        {new Date(message.created_at).toLocaleDateString(
-                            'en-GB',
-                            { day: 'numeric', month: 'long', year: 'numeric' },
-                        )}
-                    </p>
-                    <p className="mt-6 text-sm leading-relaxed whitespace-pre-line">
+                <div className="max-w-2xl rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <p className="text-sm leading-relaxed whitespace-pre-line text-foreground">
                         {message.message}
                     </p>
 
@@ -66,8 +81,9 @@ export default function MessageShow({ message }: Props) {
                         className="mt-6 bg-brand-green font-bold hover:bg-brand-green-dark"
                     >
                         <a
-                            href={`mailto:${message.email}?subject=Re: ${message.subject}`}
+                            href={`mailto:${message.email}?subject=Re: ${encodeURIComponent(message.subject)}`}
                         >
+                            <Mail className="size-4" />
                             Reply by Email
                         </a>
                     </Button>
@@ -91,7 +107,7 @@ export default function MessageShow({ message }: Props) {
 MessageShow.layout = {
     breadcrumbs: [
         { title: 'Dashboard', href: dashboard() },
-        { title: 'Messages', href: '/admin/messages' },
+        { title: 'Messages', href: messagesIndex.url() },
         { title: 'Detail', href: '#' },
     ],
 };

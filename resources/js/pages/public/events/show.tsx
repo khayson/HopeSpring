@@ -47,7 +47,7 @@ export default function EventShow({ event }: Props) {
 
             <PageHero
                 title={event.title}
-                image={pageHeroes.events}
+                image={event.photo || pageHeroes.events}
                 breadcrumbs={[
                     { label: 'Home', href: '/' },
                     { label: 'Events', href: '/events' },
@@ -79,12 +79,17 @@ export default function EventShow({ event }: Props) {
                     </div>
                 </div>
 
-                <div className="prose prose-lg max-w-none text-muted-foreground">
-                    <p className="text-lg leading-relaxed">
+                <div className="max-w-none text-muted-foreground">
+                    <p className="text-lg leading-relaxed text-foreground/80">
                         {event.description}
                     </p>
                     {event.long_description && (
-                        <div className="mt-6">{event.long_description}</div>
+                        <div
+                            className="rich-content mt-6"
+                            dangerouslySetInnerHTML={{
+                                __html: event.long_description,
+                            }}
+                        />
                     )}
                 </div>
 

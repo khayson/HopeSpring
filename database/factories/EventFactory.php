@@ -34,6 +34,26 @@ class EventFactory extends Factory
     {
         return $this->state(fn () => [
             'starts_at' => fake()->dateTimeBetween('+1 day', '+6 months'),
+            'ends_at' => fake()->dateTimeBetween('+2 days', '+7 months'),
+        ]);
+    }
+
+    public function past(): static
+    {
+        return $this->state(function (): array {
+            $startsAt = fake()->dateTimeBetween('-6 months', '-1 day');
+
+            return [
+                'starts_at' => $startsAt,
+                'ends_at' => (clone $startsAt)->modify('+2 hours'),
+            ];
+        });
+    }
+
+    public function featured(): static
+    {
+        return $this->state(fn (): array => [
+            'is_featured' => true,
         ]);
     }
 }

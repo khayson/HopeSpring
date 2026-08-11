@@ -1,4 +1,5 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,6 +12,11 @@ import {
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { dashboard } from '@/routes';
+import {
+    create as usersCreate,
+    index as usersIndex,
+    store as usersStore,
+} from '@/routes/admin/users';
 
 type Role = { value: string; label: string };
 
@@ -25,22 +31,33 @@ export default function UsersCreate({ roles }: Props) {
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        post('/admin/users');
+        post(usersStore.url());
     }
 
     return (
         <>
             <Head title="Invite User" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
-                <h1 className="text-xl font-bold">Invite User</h1>
-                <p className="max-w-md text-sm text-muted-foreground">
-                    We'll email them a secure link to set their own password and
-                    activate the account.
-                </p>
+                <div>
+                    <Link
+                        href={usersIndex.url()}
+                        className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition hover:text-foreground"
+                    >
+                        <ArrowLeft className="size-3.5" />
+                        Back to users
+                    </Link>
+                    <h1 className="font-serif text-2xl font-bold text-navy dark:text-foreground">
+                        Invite User
+                    </h1>
+                    <p className="mt-1 max-w-md text-sm text-muted-foreground">
+                        We'll email them a secure link to set their own password
+                        and activate the account.
+                    </p>
+                </div>
 
                 <form
                     onSubmit={handleSubmit}
-                    className="max-w-md space-y-5 rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900"
+                    className="max-w-md space-y-5 rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900"
                 >
                     <div className="space-y-2">
                         <Label htmlFor="name">Full Name</Label>
@@ -117,7 +134,7 @@ export default function UsersCreate({ roles }: Props) {
 UsersCreate.layout = {
     breadcrumbs: [
         { title: 'Dashboard', href: dashboard() },
-        { title: 'Users', href: '/admin/users' },
-        { title: 'Invite', href: '/admin/users/create' },
+        { title: 'Users', href: usersIndex.url() },
+        { title: 'Invite', href: usersCreate.url() },
     ],
 };

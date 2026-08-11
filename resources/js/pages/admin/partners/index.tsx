@@ -1,15 +1,15 @@
 import { Head, Link, router } from '@inertiajs/react';
 import {
+    Building2,
     ExternalLink,
-    Newspaper,
     Plus,
     Search,
-    Sparkles,
     Trash2,
 } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -22,96 +22,42 @@ import {
 import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import {
-    create as postsCreate,
-    destroy as postsDestroy,
-    edit as postsEdit,
-    index as postsIndex,
-} from '@/routes/admin/posts';
-import { show as newsShow } from '@/routes/news';
+    create as partnersCreate,
+    destroy as partnersDestroy,
+    edit as partnersEdit,
+    index as partnersIndex,
+} from '@/routes/admin/partners';
 
 const ALL = 'all';
 
-type Post = {
+type Partner = {
     id: number;
-    title: string;
-    slug: string;
-    excerpt: string;
-    featured_image: string | null;
-    category: string;
-    published_at: string | null;
-    is_featured: boolean;
-    is_published: boolean;
-    author: { name: string };
+    name: string;
+    logo: string | null;
+    url: string | null;
+    sort_order: number;
+    is_active: boolean;
 };
 
 type Props = {
-    posts: {
-        data: Post[];
+    partners: {
+        data: Partner[];
         links: { url: string | null; label: string; active: boolean }[];
     };
-    filters: { search?: string; status?: string; category?: string };
-    stats: {
-        total: number;
-        published: number;
-        drafts: number;
-        featured: number;
-    };
+    filters: { search?: string; status?: string };
+    stats: { total: number; active: number; hidden: number };
 };
 
-function formatDate(value: string): string {
-    return new Date(value).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-    });
-}
-
-function StatCard({
-    label,
-    value,
-    hint,
-    active = false,
-    onClick,
-}: {
-    label: string;
-    value: number;
-    hint: string;
-    active?: boolean;
-    onClick: () => void;
-}) {
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            className={cn(
-                'rounded-2xl border bg-white p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md dark:bg-neutral-900',
-                active
-                    ? 'border-brand-green/50 ring-2 ring-brand-green/20'
-                    : 'border-sidebar-border/70 dark:border-sidebar-border',
-            )}
-        >
-            <p className="text-sm font-medium text-muted-foreground">{label}</p>
-            <p className="mt-2 font-serif text-3xl font-bold tracking-tight text-navy dark:text-foreground">
-                {value}
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">{hint}</p>
-        </button>
-    );
-}
-
-export default function PostsIndex({ posts, filters, stats }: Props) {
+export default function PartnersIndex({ partners, filters, stats }: Props) {
     const [pendingDelete, setPendingDelete] = useState<number | null>(null);
     const [processing, setProcessing] = useState(false);
 
-    function filter(
-        next: Partial<{ search: string; status: string; category: string }>,
-    ) {
+    function filter(next: Partial<{ search: string; status: string }>) {
         router.get(
-            postsIndex.url(),
+            partnersIndex.url(),
             {
                 search: next.search ?? filters.search ?? '',
                 status: next.status ?? filters.status ?? '',
-                category: next.category ?? filters.category ?? '',
             },
             { preserveState: true, replace: true },
         );
@@ -123,7 +69,7 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
         }
 
         setProcessing(true);
-        router.delete(postsDestroy.url(pendingDelete), {
+        router.delete(partnersDestroy.url(pendingDelete), {
             onFinish: () => {
                 setProcessing(false);
                 setPendingDelete(null);
@@ -132,60 +78,52 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
     }
 
     const activeStatus = filters.status || ALL;
-    const activeCategory = filters.category || ALL;
 
     return (
         <>
-            <Head title="Blog Posts" />
+            <Head title="Partners" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4 lg:p-6">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                         <h1 className="font-serif text-2xl font-bold text-navy dark:text-foreground">
-                            Blog Posts
+                            Our Partners
                         </h1>
                         <p className="mt-1 text-sm text-muted-foreground">
-                            Write, feature, and publish HopeSpring stories.
+                            Manage partner logos shown on the About page.
                         </p>
                     </div>
                     <Button
                         asChild
                         className="bg-brand-green font-bold hover:bg-brand-green-dark"
                     >
-                        <Link href={postsCreate.url()}>
+                        <Link href={partnersCreate.url()}>
                             <Plus className="size-4" />
-                            New Post
+                            New Partner
                         </Link>
                     </Button>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    <StatCard
-                        label="All posts"
+                <div className="grid gap-4 sm:grid-cols-3">
+                    <AdminStatCard
+                        label="All partners"
                         value={stats.total}
-                        hint="Published and drafts"
+                        hint="Active and hidden"
                         active={activeStatus === ALL}
                         onClick={() => filter({ status: '' })}
                     />
-                    <StatCard
-                        label="Published"
-                        value={stats.published}
-                        hint="Live on the news page"
-                        active={activeStatus === 'published'}
-                        onClick={() => filter({ status: 'published' })}
+                    <AdminStatCard
+                        label="Active"
+                        value={stats.active}
+                        hint="Visible on About page"
+                        active={activeStatus === 'active'}
+                        onClick={() => filter({ status: 'active' })}
                     />
-                    <StatCard
-                        label="Drafts"
-                        value={stats.drafts}
-                        hint="Not scheduled yet"
-                        active={activeStatus === 'draft'}
-                        onClick={() => filter({ status: 'draft' })}
-                    />
-                    <StatCard
-                        label="Featured"
-                        value={stats.featured}
-                        hint="Homepage highlights"
-                        active={activeStatus === 'featured'}
-                        onClick={() => filter({ status: 'featured' })}
+                    <AdminStatCard
+                        label="Hidden"
+                        value={stats.hidden}
+                        hint="Not shown publicly"
+                        active={activeStatus === 'hidden'}
+                        onClick={() => filter({ status: 'hidden' })}
                     />
                 </div>
 
@@ -193,7 +131,7 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
                     <div className="relative min-w-[220px] flex-1 sm:max-w-sm">
                         <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
-                            placeholder="Search title or excerpt"
+                            placeholder="Search name or website"
                             defaultValue={filters.search}
                             onChange={(e) => filter({ search: e.target.value })}
                             className="pl-9"
@@ -212,132 +150,101 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value={ALL}>All statuses</SelectItem>
-                            <SelectItem value="published">Published</SelectItem>
-                            <SelectItem value="draft">Drafts</SelectItem>
-                            <SelectItem value="featured">Featured</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <Select
-                        value={activeCategory}
-                        onValueChange={(value) =>
-                            filter({
-                                category: value === ALL ? '' : value,
-                            })
-                        }
-                    >
-                        <SelectTrigger className="h-9 w-[160px] capitalize">
-                            <SelectValue placeholder="Category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value={ALL}>All categories</SelectItem>
-                            <SelectItem value="education">Education</SelectItem>
-                            <SelectItem value="healthcare">
-                                Healthcare
-                            </SelectItem>
-                            <SelectItem value="community">Community</SelectItem>
-                            <SelectItem value="relief">Relief</SelectItem>
+                            <SelectItem value="active">Active</SelectItem>
+                            <SelectItem value="hidden">Hidden</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
                 <div className="overflow-hidden rounded-2xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">
-                    {posts.data.length === 0 ? (
+                    {partners.data.length === 0 ? (
                         <div className="flex flex-col items-center px-6 py-16 text-center">
                             <div className="mb-4 rounded-2xl bg-brand-green/10 p-4 text-brand-green">
-                                <Newspaper className="size-8" />
+                                <Building2 className="size-8" />
                             </div>
                             <h2 className="font-serif text-xl font-semibold text-navy dark:text-foreground">
-                                No posts match
+                                No partners match
                             </h2>
                             <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                                Adjust filters or create a new story for the
-                                news page.
+                                Adjust filters or add a partner logo for the
+                                About page.
                             </p>
                             <Button
                                 asChild
                                 className="mt-6 bg-brand-green font-bold hover:bg-brand-green-dark"
                             >
-                                <Link href={postsCreate.url()}>
+                                <Link href={partnersCreate.url()}>
                                     <Plus className="size-4" />
-                                    New Post
+                                    New Partner
                                 </Link>
                             </Button>
                         </div>
                     ) : (
                         <div className="divide-y divide-sidebar-border/70 dark:divide-sidebar-border">
-                            {posts.data.map((post) => (
+                            {partners.data.map((partner) => (
                                 <div
-                                    key={post.id}
+                                    key={partner.id}
                                     className="flex flex-col gap-4 px-5 py-4 transition hover:bg-secondary/40 sm:flex-row sm:items-center"
                                 >
                                     <div className="flex min-w-0 flex-1 items-start gap-4">
-                                        <div className="size-20 shrink-0 overflow-hidden rounded-xl border border-sidebar-border/70 bg-muted/40">
-                                            {post.featured_image ? (
+                                        <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-sidebar-border/70 bg-muted/40 p-2">
+                                            {partner.logo ? (
                                                 <img
-                                                    src={post.featured_image}
-                                                    alt=""
-                                                    className="h-full w-full object-cover"
+                                                    src={partner.logo}
+                                                    alt={`${partner.name} logo`}
+                                                    className="max-h-full max-w-full object-contain"
                                                 />
                                             ) : (
-                                                <div className="flex h-full items-center justify-center text-muted-foreground">
-                                                    <Newspaper className="size-6 opacity-50" />
-                                                </div>
+                                                <Building2 className="size-6 text-muted-foreground opacity-50" />
                                             )}
                                         </div>
 
                                         <div className="min-w-0 flex-1">
                                             <div className="flex flex-wrap items-center gap-2">
                                                 <Link
-                                                    href={postsEdit.url(
-                                                        post.id,
+                                                    href={partnersEdit.url(
+                                                        partner.id,
                                                     )}
                                                     className="truncate text-sm font-semibold text-navy hover:underline dark:text-foreground"
                                                 >
-                                                    {post.title}
+                                                    {partner.name}
                                                 </Link>
                                                 <span
                                                     className={cn(
                                                         'rounded-full px-2 py-0.5 text-[10px] font-bold uppercase',
-                                                        post.is_published
+                                                        partner.is_active
                                                             ? 'bg-emerald-100 text-emerald-800'
                                                             : 'bg-slate-100 text-slate-700',
                                                     )}
                                                 >
-                                                    {post.is_published
-                                                        ? 'Published'
-                                                        : 'Draft'}
+                                                    {partner.is_active
+                                                        ? 'Active'
+                                                        : 'Hidden'}
                                                 </span>
-                                                {post.is_featured && (
-                                                    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800 uppercase">
-                                                        <Sparkles className="size-3" />
-                                                        Featured
-                                                    </span>
-                                                )}
                                             </div>
-                                            <p className="mt-2 line-clamp-1 text-xs text-muted-foreground capitalize">
-                                                {post.category} · by{' '}
-                                                {post.author.name}
-                                                {post.published_at
-                                                    ? ` · ${formatDate(post.published_at)}`
+                                            <p className="mt-2 truncate text-xs text-muted-foreground">
+                                                Order {partner.sort_order}
+                                                {partner.url
+                                                    ? ` · ${partner.url}`
                                                     : ''}
                                             </p>
                                         </div>
                                     </div>
 
                                     <div className="flex shrink-0 items-center gap-2 sm:self-center">
-                                        {post.is_published && (
+                                        {partner.url && (
                                             <a
-                                                href={newsShow.url(post.slug)}
+                                                href={partner.url}
                                                 target="_blank"
                                                 rel="noreferrer"
                                                 className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground transition hover:bg-secondary hover:text-foreground"
                                             >
-                                                View
+                                                Visit
                                                 <ExternalLink className="size-3.5" />
                                             </a>
                                         )}
                                         <Link
-                                            href={postsEdit.url(post.id)}
+                                            href={partnersEdit.url(partner.id)}
                                             className="rounded-md px-2 py-1.5 text-xs font-semibold text-blue-600 transition hover:bg-blue-50"
                                         >
                                             Edit
@@ -345,10 +252,10 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
                                         <button
                                             type="button"
                                             onClick={() =>
-                                                setPendingDelete(post.id)
+                                                setPendingDelete(partner.id)
                                             }
                                             className="rounded-md p-1.5 text-rose-600 transition hover:bg-rose-50 hover:text-rose-800"
-                                            aria-label={`Delete ${post.title}`}
+                                            aria-label={`Delete ${partner.name}`}
                                         >
                                             <Trash2 className="size-4" />
                                         </button>
@@ -357,15 +264,15 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
                             ))}
                         </div>
                     )}
-                    <Pagination links={posts.links} />
+                    <Pagination links={partners.links} />
                 </div>
             </div>
 
             <ConfirmDialog
                 open={pendingDelete !== null}
                 onOpenChange={(open) => !open && setPendingDelete(null)}
-                title="Delete this post?"
-                description="It will disappear from the news page. This cannot be undone."
+                title="Delete this partner?"
+                description="They will no longer appear on the About page. This cannot be undone."
                 confirmLabel="Delete"
                 variant="destructive"
                 processing={processing}
@@ -375,9 +282,9 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
     );
 }
 
-PostsIndex.layout = {
+PartnersIndex.layout = {
     breadcrumbs: [
         { title: 'Dashboard', href: dashboard() },
-        { title: 'Blog Posts', href: postsIndex.url() },
+        { title: 'Partners', href: partnersIndex.url() },
     ],
 };

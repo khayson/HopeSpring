@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DonationController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\NewsletterSubscriberController;
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
@@ -19,6 +20,7 @@ Route::middleware(['auth', 'verified', 'role:admin,editor,finance'])->prefix('ad
     Route::middleware('role:admin,editor')->group(function () {
         Route::resource('events', EventController::class)->except('show');
         Route::resource('posts', PostController::class)->except('show');
+        Route::resource('partners', PartnerController::class)->except('show');
     });
 
     Route::middleware('role:admin')->group(function () {

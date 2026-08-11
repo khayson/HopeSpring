@@ -16,14 +16,36 @@ class InquiryController extends Controller
 {
     public function index(Request $request): Response
     {
+        $filters = [
+            'type' => $request->string('type')->trim()->toString(),
+            'status' => $request->string('status')->trim()->toString(),
+            'search' => $request->string('search')->trim()->toString(),
+        ];
+
+        $inquiries = Inquiry::query()
+            ->when($filters['type'] !== '', fn ($query) => $query->where('type', $filters['type']))
+            ->when($filters['status'] !== '', fn ($query) => $query->where('status', $filters['status']))
+            ->when($filters['search'] !== '', function ($query) use ($filters): void {
+                $query->where(function ($searchQuery) use ($filters): void {
+                    $searchQuery
+                        ->where('name', 'like', '%'.$filters['search'].'%')
+                        ->orWhere('email', 'like', '%'.$filters['search'].'%')
+                        ->orWhere('organisation', 'like', '%'.$filters['search'].'%');
+                });
+            })
+            ->latest()
+            ->paginate(20)
+            ->withQueryString();
+
         return Inertia::render('admin/inquiries/index', [
-            'inquiries' => Inquiry::query()
-                ->when($request->string('type')->toString(), fn ($query, $type) => $query->where('type', $type))
-                ->when($request->string('status')->toString(), fn ($query, $status) => $query->where('status', $status))
-                ->latest()
-                ->paginate(20)
-                ->withQueryString(),
-            'filters' => $request->only(['type', 'status']),
+            'inquiries' => $inquiries,
+            'filters' => $filters,
+            'stats' => [
+                'total' => Inquiry::query()->count(),
+                'new' => Inquiry::query()->where('status', 'new')->count(),
+                'reviewed' => Inquiry::query()->where('status', 'reviewed')->count(),
+                'converted' => Inquiry::query()->where('status', 'converted')->count(),
+            ],
         ]);
     }
 
@@ -34,7 +56,7 @@ class InquiryController extends Controller
         }
 
         return Inertia::render('admin/inquiries/show', [
-            'inquiry' => $inquiry,
+            'inquiry' => $inquiry->fresh(),
         ]);
     }
 

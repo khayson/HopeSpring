@@ -1,13 +1,15 @@
 import { BrushEdge } from '@/components/public/brush-edge';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
+import { ScrollReveal } from '@/components/public/scroll-reveal';
 import { StatsBar } from '@/components/public/stats-bar';
 import { TeamCard } from '@/components/public/team-card';
 import { TimelineItem } from '@/components/public/timeline-item';
 import { ValueCard } from '@/components/public/value-card';
 import PublicLayout from '@/layouts/public/public-layout';
+import { pageHeroes } from '@/lib/page-heroes';
 import { Head } from '@inertiajs/react';
-import { Eye, HandHeart, Heart, Shield, Users } from 'lucide-react';
+import { Eye, Heart, Shield, Users } from 'lucide-react';
 
 type TeamMember = {
     id: number;
@@ -39,7 +41,11 @@ export default function About({ team, milestones, stats, partners, settings }: A
         <PublicLayout currentPath="/about">
             <Head title="About Us — HopeSpring Foundation" />
 
-            <PageHero title="About Us" />
+            <PageHero
+                title="About Us"
+                subtitle="Born from a simple act of compassion — a torn school bag held with pride."
+                image={pageHeroes.about}
+            />
             <BrushEdge className="h-8 text-background md:h-12" />
             {stats.length > 0 && (
                 <StatsBar stats={stats.map((s) => ({ value: s.value, suffix: s.suffix ?? undefined, label: s.label }))} />
@@ -68,10 +74,16 @@ export default function About({ team, milestones, stats, partners, settings }: A
                 <div className="mx-auto max-w-7xl">
                     <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">Our Core Values</h2>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        <ValueCard icon={Heart} title="Compassion" description="We lead with empathy and genuine care for every individual and community we serve." />
-                        <ValueCard icon={Shield} title="Integrity" description="We uphold the highest standards of transparency and accountability in all our work." />
-                        <ValueCard icon={Users} title="Community" description="We believe in the power of communities to drive their own sustainable development." />
-                        <ValueCard icon={Eye} title="Impact" description="We measure our success by the lasting, positive change we create in people's lives." />
+                        {([
+                            { icon: Heart, title: 'Compassion', description: 'We lead with empathy and genuine care for every individual and community we serve.' },
+                            { icon: Shield, title: 'Integrity', description: 'We uphold the highest standards of transparency and accountability in all our work.' },
+                            { icon: Users, title: 'Community', description: 'We believe in the power of communities to drive their own sustainable development.' },
+                            { icon: Eye, title: 'Impact', description: 'We measure our success by the lasting, positive change we create in people\'s lives.' },
+                        ] as const).map((v, i) => (
+                            <ScrollReveal key={v.title} delay={i * 50}>
+                                <ValueCard icon={v.icon} title={v.title} description={v.description} />
+                            </ScrollReveal>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -100,13 +112,15 @@ export default function About({ team, milestones, stats, partners, settings }: A
                     <div className="mx-auto max-w-7xl">
                         <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">Leadership Team</h2>
                         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-                            {leadership.map((member) => (
-                                <div key={member.id} className="text-center">
-                                    <TeamCard name={member.name} role={member.role} image={member.photo ?? undefined} />
-                                    {member.bio && (
-                                        <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">{member.bio}</p>
-                                    )}
-                                </div>
+                            {leadership.map((member, i) => (
+                                <ScrollReveal key={member.id} delay={i * 50}>
+                                    <div className="text-center">
+                                        <TeamCard name={member.name} role={member.role} image={member.photo ?? undefined} />
+                                        {member.bio && (
+                                            <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">{member.bio}</p>
+                                        )}
+                                    </div>
+                                </ScrollReveal>
                             ))}
                         </div>
                     </div>

@@ -13,13 +13,13 @@ type ProjectCardProps = {
 
 export function ProjectCard({ title, description, location, image, href, className }: ProjectCardProps) {
     const card = (
-        <div className={cn('group overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl', className)}>
+        <div className={cn('group overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-card', className)}>
             {image && (
                 <div className="overflow-hidden">
                     <img
                         src={image}
                         alt={title}
-                        className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="h-48 w-full object-cover"
                         width={400}
                         height={192}
                         loading="lazy"
@@ -31,7 +31,7 @@ export function ProjectCard({ title, description, location, image, href, classNa
                     <MapPin className="size-3.5" />
                     {location}
                 </div>
-                <h3 className="font-serif text-base font-semibold text-navy">{title}</h3>
+                <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
             </div>
         </div>

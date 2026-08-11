@@ -21,12 +21,12 @@ export function TeamCard({ name, role, image, className }: TeamCardProps) {
                         loading="lazy"
                     />
                 ) : (
-                    <div className="flex size-full items-center justify-center bg-navy/10 font-serif text-3xl font-bold text-navy/40">
+                    <div className="flex size-full items-center justify-center bg-navy/10 font-serif text-3xl font-bold text-navy/40 dark:bg-secondary dark:text-foreground/40">
                         {name.charAt(0)}
                     </div>
                 )}
             </div>
-            <h3 className="font-serif text-base font-semibold text-navy">{name}</h3>
+            <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">{name}</h3>
             <p className="mt-1 text-sm text-muted-foreground">{role}</p>
         </div>
     );

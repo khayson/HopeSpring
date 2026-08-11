@@ -27,11 +27,11 @@ export function ContactForm({ className }: ContactFormProps) {
 
     if (recentlySuccessful) {
         return (
-            <div className={cn('flex flex-col items-center justify-center rounded-xl bg-white p-12 text-center shadow-md', className)}>
+            <div className={cn('flex flex-col items-center justify-center rounded-xl bg-white p-12 text-center shadow-md dark:bg-card', className)}>
                 <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-brand-green/10">
                     <Check className="size-6 text-brand-green" />
                 </div>
-                <h3 className="font-serif text-xl font-semibold text-navy">Message Sent!</h3>
+                <h3 className="font-serif text-xl font-semibold text-navy dark:text-foreground">Message Sent!</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                     Thank you for reaching out. We&apos;ll get back to you within 24 hours.
                 </p>
@@ -40,7 +40,7 @@ export function ContactForm({ className }: ContactFormProps) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={cn('space-y-5 rounded-xl bg-white p-8 shadow-md', className)}>
+        <form onSubmit={handleSubmit} className={cn('space-y-5 rounded-xl bg-white p-8 shadow-md dark:bg-card', className)}>
             <div className="space-y-2">
                 <Label htmlFor="contact-name">Full Name</Label>
                 <Input

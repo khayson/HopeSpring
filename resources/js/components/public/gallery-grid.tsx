@@ -1,67 +1,75 @@
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { X } from 'lucide-react';
+import { show as galleryShow } from '@/routes/gallery';
+import { Link } from '@inertiajs/react';
 
 type GalleryImage = {
+    id: number;
     src: string;
     alt: string;
+    caption?: string | null;
+    category?: string | null;
 };
 
 type GalleryGridProps = {
     images: GalleryImage[];
     className?: string;
+    /** Pinterest-style: title sits under the image instead of a hover overlay */
+    captionBelow?: boolean;
+    columns?: '2' | '3' | '4' | '5';
 };
 
-export function GalleryGrid({ images, className }: GalleryGridProps) {
-    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+const columnClasses = {
+    '2': 'columns-1 sm:columns-2',
+    '3': 'columns-2 sm:columns-3',
+    '4': 'columns-1 sm:columns-2 md:columns-3 lg:columns-4',
+    '5': 'columns-2 sm:columns-3 md:columns-4 xl:columns-5',
+};
 
+export function GalleryGrid({ images, className, captionBelow = false, columns = '4' }: GalleryGridProps) {
     return (
-        <>
-            <div className={cn('grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4', className)}>
-                {images.map((image, index) => (
-                    <button
-                        key={index}
-                        type="button"
-                        onClick={() => setLightboxIndex(index)}
-                        className="group overflow-hidden rounded-lg"
-                    >
-                        <img
-                            src={image.src}
-                            alt={image.alt}
-                            className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                            width={300}
-                            height={300}
-                            loading="lazy"
-                        />
-                    </button>
-                ))}
-            </div>
-
-            {/* Lightbox */}
-            {lightboxIndex !== null && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
-                    onClick={() => setLightboxIndex(null)}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label="Image lightbox"
+        <div className={cn(columnClasses[columns], 'gap-4', className)}>
+            {images.map((image) => (
+                <Link
+                    key={image.id}
+                    href={galleryShow.url(image.id)}
+                    className="group mb-4 block w-full break-inside-avoid text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2"
+                    prefetch
                 >
-                    <button
-                        type="button"
-                        onClick={() => setLightboxIndex(null)}
-                        className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
-                        aria-label="Close lightbox"
-                    >
-                        <X className="size-6" />
-                    </button>
-                    <img
-                        src={images[lightboxIndex].src}
-                        alt={images[lightboxIndex].alt}
-                        className="max-h-[85vh] max-w-full rounded-lg object-contain"
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                </div>
-            )}
-        </>
+                    <figure>
+                        <div className="relative overflow-hidden rounded-2xl bg-secondary">
+                            <img
+                                src={image.src}
+                                alt={image.alt}
+                                className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                                loading="lazy"
+                            />
+                            {!captionBelow && (
+                                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/50 to-transparent px-3 pb-3 pt-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                    {image.category && (
+                                        <span className="mb-1.5 inline-block rounded bg-brand-green px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                                            {image.category}
+                                        </span>
+                                    )}
+                                    {image.caption && (
+                                        <p className="font-serif text-sm font-semibold leading-snug text-white">{image.caption}</p>
+                                    )}
+                                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/70">{image.alt}</p>
+                                </figcaption>
+                            )}
+                        </div>
+                        {captionBelow && (
+                            <figcaption className="mt-2 px-0.5">
+                                <p className="line-clamp-2 text-sm font-semibold leading-snug text-foreground">
+                                    {image.caption ?? image.alt}
+                                </p>
+                                {image.category && (
+                                    <p className="mt-0.5 text-xs capitalize text-muted-foreground">{image.category}</p>
+                                )}
+                            </figcaption>
+                        )}
+                    </figure>
+                </Link>
+            ))}
+        </div>
     );
 }

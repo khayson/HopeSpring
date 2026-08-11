@@ -22,11 +22,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $status
  * @property string|null $paystack_reference
  * @property bool $is_recurring
+ * @property int|null $programme_id
+ * @property int|null $event_id
  * @property string|null $programme
  * @property string|null $message
  * @property bool $is_anonymous
  */
-#[Fillable(['user_id', 'donor_name', 'donor_email', 'donor_phone', 'amount', 'currency', 'reference', 'method', 'status', 'paystack_reference', 'is_recurring', 'programme', 'message', 'is_anonymous'])]
+#[Fillable([
+    'user_id',
+    'donor_name',
+    'donor_email',
+    'donor_phone',
+    'amount',
+    'currency',
+    'reference',
+    'method',
+    'status',
+    'paystack_reference',
+    'is_recurring',
+    'programme_id',
+    'event_id',
+    'programme',
+    'message',
+    'is_anonymous',
+])]
 #[Hidden(['paystack_reference'])]
 class Donation extends Model
 {
@@ -45,5 +64,15 @@ class Donation extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function fundedProgramme(): BelongsTo
+    {
+        return $this->belongsTo(Programme::class, 'programme_id');
+    }
+
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(Event::class);
     }
 }

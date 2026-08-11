@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -44,5 +45,10 @@ class Event extends Model
     public function scopePast(Builder $query): void
     {
         $query->where('starts_at', '<', now())->orderByDesc('starts_at');
+    }
+
+    public function donations(): HasMany
+    {
+        return $this->hasMany(Donation::class);
     }
 }

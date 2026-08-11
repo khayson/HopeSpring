@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDonationRequest;
 use App\Models\Donation;
+use App\Models\Event;
 use App\Models\Programme;
 use App\Models\SiteSetting;
 use Illuminate\Http\JsonResponse;
@@ -15,34 +17,69 @@ use Inertia\Response;
 
 class DonateController extends Controller
 {
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
+        $programmeSlug = $request->string('programme')->toString();
+        $eventSlug = $request->string('event')->toString();
+
+        $selectedProgramme = $programmeSlug !== ''
+            ? Programme::query()
+                ->where('is_active', true)
+                ->where('slug', $programmeSlug)
+                ->first(['id', 'title', 'slug', 'description', 'photo'])
+            : null;
+
+        $selectedEvent = $selectedProgramme === null && $eventSlug !== ''
+            ? Event::query()
+                ->where('slug', $eventSlug)
+                ->first(['id', 'title', 'slug', 'description', 'photo'])
+            : null;
+
         return Inertia::render('public/donate', [
-            'programmes' => Programme::where('is_active', true)
+            'programmes' => Programme::query()
+                ->where('is_active', true)
                 ->orderBy('sort_order')
-                ->get(['id', 'title', 'slug']),
+                ->get(['id', 'title', 'slug', 'description', 'photo']),
+            'events' => Event::query()
+                ->upcoming()
+                ->limit(20)
+                ->get(['id', 'title', 'slug', 'description', 'photo', 'starts_at']),
+            'selectedProgrammeId' => $selectedProgramme?->id,
+            'selectedEventId' => $selectedEvent?->id,
+            'defaultHeroImage' => '/images/donate-hero.jpg',
             'settings' => SiteSetting::whereIn('key', [
                 'paystack_public_key', 'donation_goal',
             ])->pluck('value', 'key'),
         ]);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreDonationRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'donor_name' => ['required', 'string', 'max:255'],
-            'donor_email' => ['required', 'email', 'max:255'],
-            'donor_phone' => ['nullable', 'string', 'max:20'],
-            'amount' => ['required', 'integer', 'min:100'],
-            'programme' => ['nullable', 'string', 'max:255'],
-            'message' => ['nullable', 'string', 'max:1000'],
-            'is_anonymous' => ['boolean'],
-        ]);
+        $validated = $request->validated();
+
+        $programme = isset($validated['programme_id'])
+            ? Programme::query()->find($validated['programme_id'])
+            : null;
+
+        $event = isset($validated['event_id'])
+            ? Event::query()->find($validated['event_id'])
+            : null;
+
+        $destinationLabel = $programme?->title
+            ?? ($event !== null ? 'Event: '.$event->title : null);
 
         $reference = 'HS-'.strtoupper(Str::random(12));
 
         $donation = Donation::create([
-            ...$validated,
+            'donor_name' => $validated['donor_name'],
+            'donor_email' => $validated['donor_email'],
+            'donor_phone' => $validated['donor_phone'] ?? null,
+            'amount' => $validated['amount'],
+            'programme_id' => $programme?->id,
+            'event_id' => $event?->id,
+            'programme' => $destinationLabel,
+            'message' => $validated['message'] ?? null,
+            'is_anonymous' => $validated['is_anonymous'] ?? false,
             'currency' => 'GHS',
             'reference' => $reference,
             'method' => 'card',
@@ -53,6 +90,8 @@ class DonateController extends Controller
             ?: SiteSetting::getValue('paystack_secret_key', '');
 
         $response = Http::withToken($paystackKey)
+            ->timeout(10)
+            ->connectTimeout(3)
             ->post('https://api.paystack.co/transaction/initialize', [
                 'email' => $validated['donor_email'],
                 'amount' => $validated['amount'],
@@ -62,7 +101,9 @@ class DonateController extends Controller
                 'metadata' => [
                     'donation_id' => $donation->id,
                     'donor_name' => $validated['donor_name'],
-                    'programme' => $validated['programme'] ?? null,
+                    'programme_id' => $programme?->id,
+                    'event_id' => $event?->id,
+                    'programme' => $destinationLabel,
                 ],
             ]);
 
@@ -92,6 +133,8 @@ class DonateController extends Controller
             ?: SiteSetting::getValue('paystack_secret_key', '');
 
         $response = Http::withToken($paystackKey)
+            ->timeout(10)
+            ->connectTimeout(3)
             ->get("https://api.paystack.co/transaction/verify/{$reference}");
 
         $donation = Donation::where('reference', $reference)->first();

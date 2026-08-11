@@ -6,6 +6,7 @@ use Database\Factories\GalleryImageFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -20,6 +21,16 @@ class GalleryImage extends Model
 {
     /** @use HasFactory<GalleryImageFactory> */
     use HasFactory;
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(GalleryImageLike::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(GalleryImageComment::class)->latest();
+    }
 
     protected function casts(): array
     {

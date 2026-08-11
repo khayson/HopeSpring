@@ -29,11 +29,11 @@ export function InquiryForm({ type, className }: InquiryFormProps) {
 
     if (recentlySuccessful) {
         return (
-            <div className={cn('flex flex-col items-center justify-center rounded-xl bg-white p-12 text-center shadow-md', className)}>
+            <div className={cn('flex flex-col items-center justify-center rounded-xl bg-white p-12 text-center shadow-md dark:bg-card', className)}>
                 <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-brand-green/10">
                     <Check className="size-6 text-brand-green" />
                 </div>
-                <h3 className="font-serif text-xl font-semibold text-navy">Thanks for reaching out!</h3>
+                <h3 className="font-serif text-xl font-semibold text-navy dark:text-foreground">Thanks for reaching out!</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                     We&apos;ve received your details and our team will be in touch soon.
                 </p>
@@ -42,7 +42,7 @@ export function InquiryForm({ type, className }: InquiryFormProps) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={cn('space-y-5 rounded-xl bg-white p-8 shadow-md', className)}>
+        <form onSubmit={handleSubmit} className={cn('space-y-5 rounded-xl bg-white p-8 shadow-md dark:bg-card', className)}>
             <div className="space-y-2">
                 <Label htmlFor="inquiry-name">Full Name</Label>
                 <Input

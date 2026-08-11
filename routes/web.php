@@ -6,6 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\GalleryImageCommentController;
+use App\Http\Controllers\GalleryImageLikeController;
 use App\Http\Controllers\GetInvolvedController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
@@ -39,7 +41,14 @@ Route::get('/news/{post:slug}', [NewsController::class, 'show'])->name('news.sho
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event:slug}', [EventController::class, 'show'])->name('events.show');
 
-Route::get('/gallery', GalleryController::class)->name('gallery');
+Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/gallery/{galleryImage}', [GalleryController::class, 'show'])->name('gallery.show');
+Route::post('/gallery/{galleryImage}/like', [GalleryImageLikeController::class, 'store'])
+    ->middleware('throttle:30,1')
+    ->name('gallery.like');
+Route::post('/gallery/{galleryImage}/comments', [GalleryImageCommentController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('gallery.comments.store');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/donate', DonateController::class)->name('donate');

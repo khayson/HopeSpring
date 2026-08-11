@@ -1,8 +1,10 @@
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
 import { ProjectCard } from '@/components/public/project-card';
+import { ScrollReveal } from '@/components/public/scroll-reveal';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
+import { pageHeroes } from '@/lib/page-heroes';
 import { Head, Link } from '@inertiajs/react';
 
 type Project = {
@@ -33,19 +35,24 @@ export default function ProjectsIndex({ projects }: Props) {
         <PublicLayout currentPath="/projects">
             <Head title="Our Projects — HopeSpring Foundation" />
 
-            <PageHero title="Our Projects" />
+            <PageHero
+                title="Our Projects"
+                subtitle="See the impact of your support on the ground — real projects, real communities, real change."
+                image={pageHeroes.projects}
+            />
 
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {projects.data.map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            title={project.title}
-                            description={project.description}
-                            location={project.location}
-                            image={project.photo ?? undefined}
-                            href={`/projects/${project.slug}`}
-                        />
+                    {projects.data.map((project, i) => (
+                        <ScrollReveal key={project.id} delay={i * 50}>
+                            <ProjectCard
+                                title={project.title}
+                                description={project.description}
+                                location={project.location}
+                                image={project.photo ?? undefined}
+                                href={`/projects/${project.slug}`}
+                            />
+                        </ScrollReveal>
                     ))}
                 </div>
 

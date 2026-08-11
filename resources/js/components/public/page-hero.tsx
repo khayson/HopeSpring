@@ -1,45 +1,87 @@
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { Heart } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 type PageHeroProps = {
     title: string;
+    subtitle?: string;
     image?: string;
+    breadcrumbs?: { label: string; href?: string }[];
     className?: string;
 };
 
-export function PageHero({ title, image, className }: PageHeroProps) {
+export function PageHero({ title, subtitle, image, breadcrumbs, className }: PageHeroProps) {
+    const crumbs = breadcrumbs ?? [{ label: 'Home', href: '/' }, { label: title }];
+
     return (
-        <div className={cn('relative flex min-h-[260px] items-center overflow-hidden bg-navy-dark', className)}>
-            {image && (
+        <div className={cn('relative flex min-h-[260px] items-end overflow-hidden bg-navy-dark md:min-h-[320px]', className)}>
+            {image ? (
                 <img
                     src={image}
                     alt=""
-                    className="absolute inset-0 size-full object-cover opacity-[0.28]"
+                    className="absolute inset-0 size-full scale-105 object-cover"
                     width={1440}
                     height={400}
                 />
+            ) : (
+                <div
+                    className="pointer-events-none absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+                        backgroundSize: '24px 24px',
+                    }}
+                />
             )}
+
             <div
-                className="absolute inset-0 pointer-events-none"
+                className="pointer-events-none absolute inset-0"
                 style={{
-                    background:
-                        'linear-gradient(120deg, oklch(0.24 0.06 258) 0%, oklch(0.24 0.06 258 / 0.85) 55%, oklch(0.60 0.14 240 / 0.35) 100%)',
+                    background: image
+                        ? 'linear-gradient(115deg, oklch(0.18 0.05 258 / 0.88) 0%, oklch(0.22 0.06 258 / 0.7) 48%, oklch(0.24 0.06 258 / 0.45) 100%)'
+                        : 'linear-gradient(135deg, oklch(0.24 0.06 258) 0%, oklch(0.28 0.07 258) 50%, oklch(0.24 0.06 258) 100%)',
                 }}
             />
-            <div className="relative z-10 w-full px-4 text-center md:px-6">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-green-light/40 bg-brand-green-light/15 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-brand-green-light">
-                    <Heart className="size-3" fill="currentColor" />
-                    HopeSpring Foundation
-                </div>
-                <h1 className="font-serif text-3xl font-semibold text-white md:text-5xl">{title}</h1>
-                <div className="mt-4 flex items-center justify-center gap-2 text-sm font-bold">
-                    <Link href="/" className="text-white/50 transition-colors hover:text-white/70">
-                        Home
-                    </Link>
-                    <span className="text-brand-green">/</span>
-                    <span className="text-brand-green-light">{title}</span>
-                </div>
+            {image && (
+                <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                        background: 'linear-gradient(to top, oklch(0.18 0.05 258 / 0.72) 0%, transparent 55%)',
+                    }}
+                />
+            )}
+
+            <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-8 pt-12 md:px-6 md:pb-10">
+                <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-1.5 text-xs font-medium">
+                    {crumbs.map((crumb, i) => {
+                        const isLast = i === crumbs.length - 1;
+                        return (
+                            <span key={i} className="flex items-center gap-1.5">
+                                {i > 0 && <ChevronRight className="size-3 text-white/30" aria-hidden="true" />}
+                                {crumb.href && !isLast ? (
+                                    <Link href={crumb.href} className="text-white/50 transition-colors hover:text-white/80">
+                                        {crumb.label}
+                                    </Link>
+                                ) : (
+                                    <span className={isLast ? 'text-brand-green-light' : 'text-white/50'} aria-current={isLast ? 'page' : undefined}>
+                                        {crumb.label}
+                                    </span>
+                                )}
+                            </span>
+                        );
+                    })}
+                </nav>
+
+                <h1 className="font-serif text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
+                    {title}
+                </h1>
+
+                <div className="mt-4 h-1 w-16 rounded-full bg-brand-green" />
+
+                {subtitle && (
+                    <p className="mt-4 max-w-xl text-base leading-relaxed text-white/65 md:text-lg">
+                        {subtitle}
+                    </p>
+                )}
             </div>
         </div>
     );

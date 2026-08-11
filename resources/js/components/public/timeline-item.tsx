@@ -22,7 +22,7 @@ export function TimelineItem({ year, title, description, isLast = false, classNa
             {/* Content */}
             <div className="pt-0.5">
                 <span className="text-sm font-bold text-brand-green">{year}</span>
-                <h3 className="mt-1 font-serif text-base font-semibold text-navy">{title}</h3>
+                <h3 className="mt-1 font-serif text-base font-semibold text-navy dark:text-foreground">{title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{description}</p>
             </div>
         </div>

@@ -1,14 +1,11 @@
-import { BrushEdge } from '@/components/public/brush-edge';
-import { DonationBand } from '@/components/public/donation-band';
-import { NewsCard } from '@/components/public/news-card';
-import { ProgrammeCard } from '@/components/public/programme-card';
-import { ProjectCard } from '@/components/public/project-card';
-import { StatsBar } from '@/components/public/stats-bar';
+import { ScrollReveal } from '@/components/public/scroll-reveal';
+import { StatCounter } from '@/components/public/stat-counter';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
 import { getIcon } from '@/lib/icon-map';
+import { pageHeroes } from '@/lib/page-heroes';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowRight, Calendar, Heart, MapPin } from 'lucide-react';
+import { Droplets, GraduationCap, HandHeart, Heart, MapPin, Users } from 'lucide-react';
 
 type Programme = {
     id: number;
@@ -19,240 +16,303 @@ type Programme = {
     photo: string | null;
 };
 
-type Project = {
-    id: number;
-    title: string;
-    slug: string;
-    description: string;
-    location: string;
-    photo: string | null;
-    programme: { id: number; title: string } | null;
-};
-
 type Stat = { label: string; value: number; suffix: string | null };
-
-type Post = {
-    id: number;
-    title: string;
-    slug: string;
-    excerpt: string;
-    featured_image: string | null;
-    category: 'education' | 'healthcare' | 'community' | 'relief';
-    published_at: string;
-};
-
-type Event = {
-    id: number;
-    title: string;
-    slug: string;
-    description: string;
-    location: string;
-    starts_at: string;
-};
-
-type Partner = { name: string; logo: string | null; url: string | null };
 
 type HomeProps = {
     programmes: Programme[];
-    featuredProjects: Project[];
     stats: Stat[];
-    latestPosts: Post[];
-    upcomingEvents: Event[];
-    partners: Partner[];
-    settings: Record<string, string>;
+    settings: Record<string, string | null | undefined>;
 };
 
-export default function Home({ programmes, featuredProjects, stats, latestPosts, upcomingEvents, partners, settings }: HomeProps) {
+const statIcons = [Users, Droplets, GraduationCap, MapPin];
+
+function setting(settings: HomeProps['settings'], key: string, fallback = ''): string {
+    return settings[key]?.trim() || fallback;
+}
+
+export default function Home({ programmes, stats, settings }: HomeProps) {
+    const mission = setting(
+        settings,
+        'about_mission',
+        'To empower underserved communities in Ghana through sustainable clean water, education, healthcare, and community development programmes.',
+    );
+
+    const values = [1, 2, 3, 4]
+        .map((index) => ({
+            title: setting(settings, `home_value_${index}_title`),
+            description: setting(settings, `home_value_${index}_description`),
+            icon: getIcon(setting(settings, `home_value_${index}_icon`, 'Heart')),
+        }))
+        .filter((value) => value.title !== '');
+
+    const heroImage = setting(settings, 'home_hero_image', pageHeroes.home);
+    const aboutImage = setting(settings, 'home_about_image', pageHeroes.homeAbout);
+    const bannerImage = setting(settings, 'home_banner_image', '/images/home-banner.jpg');
+
     return (
         <PublicLayout currentPath="/">
             <Head title="Home — HopeSpring Foundation" />
 
-            {/* Hero */}
-            <section className="relative flex min-h-[520px] items-center overflow-hidden bg-navy-dark md:min-h-[600px]">
+            <section className="relative overflow-hidden bg-navy-dark">
+                <img
+                    src={heroImage}
+                    alt=""
+                    className="absolute inset-0 size-full object-cover"
+                    width={1920}
+                    height={1080}
+                />
                 <div
                     className="pointer-events-none absolute inset-0"
                     style={{
                         background:
-                            'linear-gradient(120deg, oklch(0.24 0.06 258) 0%, oklch(0.24 0.06 258 / 0.85) 55%, oklch(0.60 0.14 240 / 0.35) 100%)',
+                            'linear-gradient(115deg, oklch(0.18 0.05 258 / 0.88) 0%, oklch(0.22 0.06 258 / 0.72) 50%, oklch(0.24 0.06 258 / 0.45) 100%)',
                     }}
                 />
-                <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 md:px-6">
-                    <div className="max-w-2xl">
-                        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-green-light/40 bg-brand-green-light/15 px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest text-brand-green-light">
-                            <Heart className="size-3" fill="currentColor" />
-                            HopeSpring Foundation
-                        </div>
-                        <h1 className="font-serif text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
-                            {settings.site_tagline || 'Transforming Lives, Building Futures'}
-                        </h1>
-                        <p className="mt-6 max-w-lg text-base leading-relaxed text-white/75 md:text-lg">
-                            {settings.about_mission || 'Empowering communities in Ghana through sustainable clean water, education, healthcare, and development programmes.'}
-                        </p>
-                        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                            <Button asChild size="lg" className="bg-brand-green font-bold hover:bg-brand-green-dark">
-                                <Link href="/donate">
-                                    <Heart className="size-4" />
-                                    Donate Now
-                                </Link>
-                            </Button>
-                            <Button asChild variant="outline" size="lg" className="border-white/30 font-bold text-white hover:bg-white/10 hover:text-white">
-                                <Link href="/about">
-                                    Learn More
-                                    <ArrowRight className="size-4" />
-                                </Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                        background: 'linear-gradient(to top, oklch(0.18 0.05 258 / 0.85) 0%, transparent 45%)',
+                    }}
+                />
 
-            {/* Brush Edge + Stats */}
-            <BrushEdge className="h-8 text-background md:h-12" />
-            {stats.length > 0 && (
-                <StatsBar stats={stats.map((s) => ({ value: s.value, suffix: s.suffix ?? undefined, label: s.label }))} />
-            )}
-
-            {/* Programmes */}
-            <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
-                <div className="mb-10 text-center">
-                    <h2 className="font-serif text-3xl font-bold text-navy md:text-4xl">Our Programmes</h2>
-                    <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-                        We focus on four key areas to create lasting, sustainable change in communities across Ghana.
+                <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-7xl flex-col justify-center px-4 pb-16 pt-28 md:min-h-[78vh] md:px-6 md:pb-20 md:pt-32">
+                    <p className="text-sm font-extrabold tracking-[0.18em] text-brand-green-light uppercase animate-in fade-in-0 duration-700">
+                        {setting(settings, 'home_hero_eyebrow', 'Welcome to HopeSpring Foundation')}
                     </p>
-                </div>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {programmes.map((p) => (
-                        <ProgrammeCard
-                            key={p.id}
-                            title={p.title}
-                            description={p.description}
-                            icon={getIcon(p.icon)}
-                            image={p.photo ?? undefined}
-                            href={`/programmes/${p.slug}`}
-                        />
-                    ))}
-                </div>
-            </section>
-
-            {/* Featured Projects */}
-            {featuredProjects.length > 0 && (
-                <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
-                    <div className="mx-auto max-w-7xl">
-                        <div className="mb-10 flex items-end justify-between">
-                            <div>
-                                <h2 className="font-serif text-3xl font-bold text-navy md:text-4xl">Featured Projects</h2>
-                                <p className="mt-3 text-muted-foreground">See the impact of your support on the ground.</p>
-                            </div>
-                            <Button asChild variant="outline" className="hidden border-navy font-semibold text-navy hover:bg-navy hover:text-white sm:inline-flex">
-                                <Link href="/projects">
-                                    View All
-                                    <ArrowRight className="size-4" />
-                                </Link>
-                            </Button>
-                        </div>
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {featuredProjects.map((project) => (
-                                <ProjectCard
-                                    key={project.id}
-                                    title={project.title}
-                                    description={project.description}
-                                    location={project.location}
-                                    image={project.photo ?? undefined}
-                                    href={`/projects/${project.slug}`}
-                                />
-                            ))}
-                        </div>
-                        <div className="mt-8 text-center sm:hidden">
-                            <Button asChild variant="outline" className="border-navy font-semibold text-navy hover:bg-navy hover:text-white">
-                                <Link href="/projects">View All Projects</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </section>
-            )}
-
-            {/* Latest News */}
-            {latestPosts.length > 0 && (
-                <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
-                    <div className="mb-10 flex items-end justify-between">
-                        <div>
-                            <h2 className="font-serif text-3xl font-bold text-navy md:text-4xl">Latest News & Stories</h2>
-                            <p className="mt-3 text-muted-foreground">Updates from the field and our community.</p>
-                        </div>
-                        <Button asChild variant="ghost" className="hidden font-semibold text-brand-green-dark sm:inline-flex">
-                            <Link href="/news">
-                                All Stories
-                                <ArrowRight className="size-4" />
+                    <h1 className="mt-4 max-w-3xl font-serif text-4xl font-bold leading-[1.08] text-white md:text-5xl lg:text-6xl animate-in fade-in-0 slide-in-from-bottom-3 duration-700">
+                        {setting(settings, 'home_hero_title_prefix', 'We exist to')}{' '}
+                        <span className="text-brand-green-light">
+                            {setting(settings, 'home_hero_title_highlight', 'transform lives')}
+                        </span>
+                    </h1>
+                    <p className="mt-5 max-w-xl text-base leading-relaxed text-white/75 md:text-lg animate-in fade-in-0 slide-in-from-bottom-2 duration-1000">
+                        {setting(
+                            settings,
+                            'home_hero_subtitle',
+                            'We bring hope, restore dignity, and create opportunities for a better tomorrow.',
+                        )}
+                    </p>
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap animate-in fade-in-0 duration-1000">
+                        <Button asChild size="lg" className="bg-brand-green font-bold hover:bg-brand-green-dark">
+                            <Link href="/donate">
+                                <Heart className="size-4" fill="currentColor" />
+                                {setting(settings, 'home_cta_donate_label', 'Donate Now')}
+                            </Link>
+                        </Button>
+                        <Button
+                            asChild
+                            variant="outline"
+                            size="lg"
+                            className="border-white/40 font-bold text-white hover:bg-white/10 hover:text-white"
+                        >
+                            <Link href="/get-involved/volunteer">
+                                <HandHeart className="size-4" />
+                                {setting(settings, 'home_cta_volunteer_label', 'Become a Volunteer')}
+                            </Link>
+                        </Button>
+                        <Button
+                            asChild
+                            variant="outline"
+                            size="lg"
+                            className="border-white/40 font-bold text-white hover:bg-white/10 hover:text-white"
+                        >
+                            <Link href="/get-involved/partner">
+                                {setting(settings, 'home_cta_partner_label', 'Partner With Us')}
                             </Link>
                         </Button>
                     </div>
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {latestPosts.map((post) => (
-                            <NewsCard
-                                key={post.id}
-                                title={post.title}
-                                excerpt={post.excerpt}
-                                date={new Date(post.published_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                category={post.category}
-                                image={post.featured_image ?? undefined}
-                                href={`/news/${post.slug}`}
-                            />
-                        ))}
+                </div>
+            </section>
+
+            {stats.length > 0 && (
+                <div className="relative z-20 -mt-10 px-4 md:-mt-14 md:px-6">
+                    <div className="mx-auto max-w-6xl bg-white px-4 py-6 shadow-xl md:px-8 md:py-8">
+                        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
+                            {stats.map((stat, index) => {
+                                const Icon = statIcons[index] ?? Users;
+
+                                return (
+                                    <div key={stat.label} className="flex flex-col items-center text-center">
+                                        <Icon className="mb-2 size-5 text-brand-green" />
+                                        <StatCounter
+                                            value={stat.value}
+                                            suffix={stat.suffix ?? '+'}
+                                            label={stat.label}
+                                            className="text-navy"
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
-                </section>
+                </div>
             )}
 
-            {/* Upcoming Events */}
-            {upcomingEvents.length > 0 && (
-                <section className="bg-navy-dark px-4 py-16 md:px-6 md:py-24">
-                    <div className="mx-auto max-w-7xl">
-                        <div className="mb-10 text-center">
-                            <h2 className="font-serif text-3xl font-bold text-white md:text-4xl">Upcoming Events</h2>
-                            <p className="mx-auto mt-3 max-w-xl text-white/60">Join us and be part of the change.</p>
-                        </div>
-                        <div className="grid gap-6 sm:grid-cols-2">
-                            {upcomingEvents.map((event) => (
-                                <Link key={event.id} href={`/events/${event.slug}`} className="group rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:bg-white/10">
-                                    <div className="mb-3 flex items-center gap-4 text-sm text-white/50">
-                                        <span className="flex items-center gap-1.5">
-                                            <Calendar className="size-3.5 text-brand-green-light" />
-                                            {new Date(event.starts_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                        </span>
-                                        <span className="flex items-center gap-1.5">
-                                            <MapPin className="size-3.5 text-brand-green-light" />
-                                            {event.location}
-                                        </span>
-                                    </div>
-                                    <h3 className="font-serif text-lg font-semibold text-white">{event.title}</h3>
-                                    <p className="mt-2 text-sm leading-relaxed text-white/60">{event.description}</p>
+            <section className={`bg-background px-4 md:px-6 ${stats.length > 0 ? 'pt-12 pb-16 md:pt-16 md:pb-24' : 'py-16 md:py-24'}`}>
+                <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+                    <ScrollReveal>
+                        <div className="relative">
+                            <img
+                                src={aboutImage}
+                                alt=""
+                                className="aspect-[4/5] w-full object-cover md:aspect-[4/4.5]"
+                                width={800}
+                                height={900}
+                            />
+                            <div className="absolute right-4 bottom-4 left-4 bg-white p-5 shadow-xl md:right-auto md:bottom-8 md:left-8 md:max-w-xs md:p-6">
+                                <p className="text-xs font-bold tracking-[0.16em] text-brand-green uppercase">
+                                    {setting(settings, 'home_about_mission_label', 'Our Mission')}
+                                </p>
+                                <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-muted-foreground">{mission}</p>
+                                <Link
+                                    href="/about"
+                                    className="mt-3 inline-flex text-sm font-bold text-brand-green-dark hover:text-brand-green"
+                                >
+                                    {setting(settings, 'home_about_mission_link_label', 'Read More')}
                                 </Link>
-                            ))}
+                            </div>
                         </div>
-                        <div className="mt-8 text-center">
-                            <Button asChild variant="outline" className="border-white/30 font-semibold text-white hover:bg-white/10 hover:text-white">
-                                <Link href="/events">View All Events</Link>
+                    </ScrollReveal>
+
+                    <ScrollReveal delay={80}>
+                        <div>
+                            <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                                {setting(settings, 'home_about_eyebrow', 'About Us')}
+                            </p>
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
+                                {setting(settings, 'home_about_title', 'Our Story, Our Why')}
+                            </h2>
+                            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+                                {setting(
+                                    settings,
+                                    'home_about_body',
+                                    'HopeSpring began with a simple act of compassion — and grew into a movement for clean water, education, healthcare, and stronger communities across Ghana.',
+                                )}
+                            </p>
+
+                            {values.length > 0 && (
+                                <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                                    {values.map((value) => {
+                                        const Icon = value.icon;
+
+                                        return (
+                                            <div key={value.title} className="flex gap-3">
+                                                <div className="flex size-10 shrink-0 items-center justify-center bg-brand-green/10 text-brand-green">
+                                                    <Icon className="size-5" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="font-serif text-base font-semibold text-navy">{value.title}</h3>
+                                                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                                                        {value.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            <Button asChild size="lg" className="mt-8 bg-brand-green font-bold hover:bg-brand-green-dark">
+                                <Link href="/about">{setting(settings, 'home_about_cta_label', 'Learn More About Us')}</Link>
                             </Button>
                         </div>
-                    </div>
-                </section>
-            )}
+                    </ScrollReveal>
+                </div>
+            </section>
 
-            {/* Partners */}
-            {partners.length > 0 && (
-                <section className="mx-auto max-w-7xl px-4 py-16 md:px-6">
-                    <h2 className="mb-8 text-center font-serif text-2xl font-bold text-navy">Our Partners</h2>
-                    <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-                        {partners.map((partner) => (
-                            <div key={partner.name} className="text-lg font-bold text-muted-foreground/50">
-                                {partner.name}
-                            </div>
-                        ))}
+            <section className="bg-navy px-4 py-16 md:px-6 md:py-24">
+                <div className="mx-auto max-w-7xl">
+                    <div className="mb-10 text-center">
+                        <p className="text-xs font-bold tracking-[0.18em] text-brand-green-light uppercase">
+                            {setting(settings, 'home_programmes_eyebrow', 'Our Programs')}
+                        </p>
+                        <h2 className="mt-3 font-serif text-3xl font-bold text-white md:text-4xl">
+                            {setting(settings, 'home_programmes_title', 'Areas We Focus On')}
+                        </h2>
                     </div>
-                </section>
-            )}
 
-            {/* Donation Band */}
-            <DonationBand />
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        {programmes.map((programme, index) => {
+                            const Icon = getIcon(programme.icon);
+                            const image = programme.photo || pageHeroes.programmes;
+
+                            return (
+                                <ScrollReveal key={programme.id} delay={index * 60}>
+                                    <Link
+                                        href={`/programmes/${programme.slug}`}
+                                        className="group flex h-full flex-col overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1"
+                                    >
+                                        <div className="overflow-hidden">
+                                            <img
+                                                src={image}
+                                                alt={programme.title}
+                                                className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                width={480}
+                                                height={360}
+                                                loading="lazy"
+                                            />
+                                        </div>
+                                        <div className="flex flex-1 flex-col p-5">
+                                            <div className="mb-3 flex size-11 items-center justify-center rounded-full bg-brand-green">
+                                                <Icon className="size-5 text-white" />
+                                            </div>
+                                            <h3 className="font-serif text-lg font-semibold text-navy">{programme.title}</h3>
+                                            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                                                {programme.description}
+                                            </p>
+                                        </div>
+                                    </Link>
+                                </ScrollReveal>
+                            );
+                        })}
+                    </div>
+
+                    <div className="mt-10 text-center">
+                        <Button
+                            asChild
+                            variant="outline"
+                            size="lg"
+                            className="border-white/40 font-bold text-white hover:bg-white/10 hover:text-white"
+                        >
+                            <Link href="/programmes">
+                                {setting(settings, 'home_programmes_cta_label', 'View All Programs')}
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            </section>
+
+            <section className="relative overflow-hidden px-4 py-14 md:px-6 md:py-16">
+                <img
+                    src={bannerImage}
+                    alt=""
+                    className="absolute inset-0 size-full object-cover"
+                    width={1920}
+                    height={640}
+                />
+                <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                        background:
+                            'linear-gradient(90deg, oklch(0.45 0.13 145 / 0.92) 0%, oklch(0.56 0.15 145 / 0.88) 55%, oklch(0.56 0.15 145 / 0.8) 100%)',
+                    }}
+                />
+                <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-6 text-center md:flex-row md:text-left">
+                    <p className="flex-1 font-serif text-2xl font-bold leading-snug text-white md:text-3xl">
+                        {setting(
+                            settings,
+                            'home_banner_text',
+                            "Be the reason someone's life changes today. Your support brings hope, restores dignity, and creates brighter futures.",
+                        )}
+                    </p>
+                    <Button asChild size="lg" className="shrink-0 bg-white font-bold text-brand-green hover:bg-white/90">
+                        <Link href="/donate">
+                            <Heart className="size-4" fill="currentColor" />
+                            {setting(settings, 'home_banner_cta_label', 'Donate Now')}
+                        </Link>
+                    </Button>
+                </div>
+            </section>
         </PublicLayout>
     );
 }

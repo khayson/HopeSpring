@@ -3,6 +3,7 @@ import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
+import { pageHeroes } from '@/lib/page-heroes';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Calendar, MapPin } from 'lucide-react';
 
@@ -37,7 +38,11 @@ export default function ProjectShow({ project }: Props) {
         <PublicLayout currentPath="/projects">
             <Head title={`${project.title} — HopeSpring Foundation`} />
 
-            <PageHero title={project.title} image={project.photo ?? undefined} />
+            <PageHero
+                title={project.title}
+                image={pageHeroes.projects}
+                breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: project.title }]}
+            />
             <BrushEdge className="h-8 text-background md:h-12" />
 
             <article className="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">

@@ -3,6 +3,8 @@ import { PageHero } from '@/components/public/page-hero';
 import { ProjectCard } from '@/components/public/project-card';
 import PublicLayout from '@/layouts/public/public-layout';
 import { getIcon } from '@/lib/icon-map';
+import { pageHeroes } from '@/lib/page-heroes';
+import { donate } from '@/routes';
 import { Head } from '@inertiajs/react';
 
 type Project = {
@@ -32,12 +34,18 @@ type Props = {
 
 export default function ProgrammeShow({ programme }: Props) {
     const Icon = getIcon(programme.icon);
+    const donateHref = donate.url({ query: { programme: programme.slug } });
 
     return (
         <PublicLayout currentPath="/programmes">
             <Head title={`${programme.title} — HopeSpring Foundation`} />
 
-            <PageHero title={programme.title} image={programme.photo ?? undefined} />
+            <PageHero
+                title={programme.title}
+                subtitle={programme.description}
+                image={pageHeroes.programmes}
+                breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Programmes', href: '/programmes' }, { label: programme.title }]}
+            />
 
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-3xl">
@@ -75,7 +83,11 @@ export default function ProgrammeShow({ programme }: Props) {
                 </section>
             )}
 
-            <DonationBand />
+            <DonationBand
+                title={`Support ${programme.title}`}
+                description={`Your gift is directed to ${programme.title}, helping communities across Ghana through this programme.`}
+                donateHref={donateHref}
+            />
         </PublicLayout>
     );
 }

@@ -5,7 +5,7 @@ import { NewsletterForm } from './newsletter-form';
 
 const quickLinks = [
     { label: 'About Us', href: '/about' },
-    { label: 'Our Programs', href: '/programs' },
+    { label: 'Our Programmes', href: '/programmes' },
     { label: 'Projects', href: '/projects' },
     { label: 'Get Involved', href: '/get-involved' },
     { label: 'News & Stories', href: '/news' },
@@ -24,7 +24,7 @@ type FooterProps = {
 
 export function Footer({ className }: FooterProps) {
     return (
-        <footer className={cn('bg-navy-dark text-white', className)}>
+        <footer aria-label="Site footer" className={cn('bg-navy-dark text-white', className)}>
             <div className="mx-auto max-w-7xl px-4 py-16 md:px-6">
                 <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
                     {/* Brand */}
@@ -120,6 +120,9 @@ export function Footer({ className }: FooterProps) {
                         </Link>
                         <Link href="/terms" className="transition-colors hover:text-white/60">
                             Terms of Service
+                        </Link>
+                        <Link href="/login" className="transition-colors hover:text-white/60">
+                            Staff Login
                         </Link>
                     </div>
                 </div>

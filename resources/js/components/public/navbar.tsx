@@ -39,7 +39,7 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav className="hidden items-center gap-1 lg:flex">
+                <nav aria-label="Main navigation" className="hidden items-center gap-1 lg:flex">
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
@@ -69,33 +69,41 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
                     onClick={() => setMobileOpen(!mobileOpen)}
                     className="rounded-md p-2 text-white lg:hidden"
                     aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                    aria-expanded={mobileOpen}
+                    aria-controls="mobile-nav"
                 >
                     {mobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
                 </button>
             </div>
 
-            {/* Mobile menu */}
+            {/* Mobile menu — overlay, never pushes content */}
             {mobileOpen && (
-                <nav className="border-t border-white/10 bg-navy-dark px-4 pb-4 lg:hidden">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            onClick={() => setMobileOpen(false)}
-                            className={cn(
-                                'block rounded-md px-3 py-3 text-sm font-semibold transition-colors',
-                                currentPath === link.href
-                                    ? 'text-brand-green-light'
-                                    : 'text-white/80 hover:text-white',
-                            )}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-                    <div className="mt-3 px-3">
-                        <Button asChild className="w-full bg-brand-green font-bold hover:bg-brand-green-dark">
-                            <Link href="/donate">Donate Now</Link>
-                        </Button>
+                <nav
+                    id="mobile-nav"
+                    aria-label="Mobile navigation"
+                    className="absolute left-0 right-0 top-full z-40 border-t border-white/10 bg-navy-dark shadow-xl lg:hidden"
+                >
+                    <div className="px-4 pb-4">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                onClick={() => setMobileOpen(false)}
+                                className={cn(
+                                    'block rounded-md px-3 py-3 text-sm font-semibold transition-colors',
+                                    currentPath === link.href
+                                        ? 'text-brand-green-light'
+                                        : 'text-white/80 hover:text-white',
+                                )}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                        <div className="mt-3 px-3">
+                            <Button asChild className="w-full bg-brand-green font-bold hover:bg-brand-green-dark">
+                                <Link href="/donate">Donate Now</Link>
+                            </Button>
+                        </div>
                     </div>
                 </nav>
             )}

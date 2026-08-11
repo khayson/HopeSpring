@@ -37,4 +37,9 @@ class Programme extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public function donations(): HasMany
+    {
+        return $this->hasMany(Donation::class);
+    }
 }

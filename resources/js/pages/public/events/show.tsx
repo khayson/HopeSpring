@@ -3,6 +3,8 @@ import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
+import { pageHeroes } from '@/lib/page-heroes';
+import { donate } from '@/routes';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Calendar, Clock, MapPin } from 'lucide-react';
 
@@ -29,11 +31,17 @@ export default function EventShow({ event }: Props) {
     const formatTime = (date: string) =>
         new Date(date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
+    const donateHref = donate.url({ query: { event: event.slug } });
+
     return (
         <PublicLayout currentPath="/get-involved">
             <Head title={`${event.title} — HopeSpring Foundation`} />
 
-            <PageHero title={event.title} image={event.photo ?? undefined} />
+            <PageHero
+                title={event.title}
+                image={pageHeroes.events}
+                breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Events', href: '/events' }, { label: event.title }]}
+            />
             <BrushEdge className="h-8 text-background md:h-12" />
 
             <article className="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">
@@ -62,7 +70,10 @@ export default function EventShow({ event }: Props) {
                     )}
                 </div>
 
-                <div className="mt-12">
+                <div className="mt-12 flex flex-wrap gap-3">
+                    <Button asChild className="bg-brand-green font-bold hover:bg-brand-green-dark">
+                        <Link href={donateHref}>Support this event</Link>
+                    </Button>
                     <Button asChild variant="outline" className="border-navy font-semibold text-navy hover:bg-navy hover:text-white">
                         <Link href="/events">
                             <ArrowLeft className="size-4" />
@@ -72,7 +83,11 @@ export default function EventShow({ event }: Props) {
                 </div>
             </article>
 
-            <DonationBand />
+            <DonationBand
+                title={`Support ${event.title}`}
+                description="Your gift helps make this event possible and extends its impact in the communities we serve."
+                donateHref={donateHref}
+            />
         </PublicLayout>
     );
 }

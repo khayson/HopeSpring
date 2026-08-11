@@ -16,7 +16,7 @@ export function StatsBar({ stats, className }: StatsBarProps) {
     return (
         <div
             className={cn(
-                'relative z-10 mx-auto -mt-12 max-w-5xl rounded-xl bg-white px-6 py-8 shadow-xl md:-mt-16 md:px-12 md:py-10',
+                'relative z-10 mx-auto -mt-12 max-w-5xl rounded-xl bg-white px-6 py-8 shadow-xl dark:bg-card md:-mt-16 md:px-12 md:py-10',
                 className,
             )}
         >
@@ -27,7 +27,7 @@ export function StatsBar({ stats, className }: StatsBarProps) {
                         value={stat.value}
                         suffix={stat.suffix}
                         label={stat.label}
-                        className="text-navy"
+                        className="text-navy dark:text-foreground"
                     />
                 ))}
             </div>

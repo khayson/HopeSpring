@@ -17,10 +17,20 @@ class NewsController extends Controller
             $query->where('category', $request->input('category'));
         }
 
+        $featuredPost = null;
+
+        if (! $request->filled('category')) {
+            $featuredPost = Post::published()->featured()->latest('published_at')
+                ->first(['id', 'title', 'slug', 'excerpt', 'featured_image', 'category', 'is_featured', 'published_at']);
+
+            if ($featuredPost !== null) {
+                $query->whereKeyNot($featuredPost->id);
+            }
+        }
+
         return Inertia::render('public/news/index', [
             'posts' => $query->paginate(9, ['id', 'author_id', 'title', 'slug', 'excerpt', 'featured_image', 'category', 'is_featured', 'published_at']),
-            'featuredPost' => Post::published()->featured()->latest('published_at')
-                ->first(['id', 'title', 'slug', 'excerpt', 'featured_image', 'category', 'published_at']),
+            'featuredPost' => $featuredPost,
             'categories' => Post::published()->distinct()->pluck('category'),
             'currentCategory' => $request->input('category'),
         ]);
@@ -34,10 +44,11 @@ class NewsController extends Controller
             'post' => $post->load('author:id,name'),
             'relatedPosts' => Post::published()
                 ->where('category', $post->category)
-                ->where('id', '!=', $post->id)
+                ->whereKeyNot($post->id)
                 ->latest('published_at')
                 ->take(3)
                 ->get(['id', 'title', 'slug', 'excerpt', 'featured_image', 'category', 'published_at']),
+            'shareUrl' => route('news.show', $post, absolute: true),
         ]);
     }
 }

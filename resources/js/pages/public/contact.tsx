@@ -1,6 +1,7 @@
 import { ContactForm } from '@/components/public/contact-form';
 import { PageHero } from '@/components/public/page-hero';
 import PublicLayout from '@/layouts/public/public-layout';
+import { pageHeroes } from '@/lib/page-heroes';
 import { Head } from '@inertiajs/react';
 import { Mail, MapPin, Phone } from 'lucide-react';
 
@@ -13,7 +14,11 @@ export default function Contact({ settings }: Props) {
         <PublicLayout currentPath="/contact">
             <Head title="Contact Us — HopeSpring Foundation" />
 
-            <PageHero title="Contact Us" />
+            <PageHero
+                title="Contact Us"
+                subtitle="We'd love to hear from you. Reach out with questions, partnership ideas, or just to say hello."
+                image={pageHeroes.contact}
+            />
 
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
                 <div className="grid gap-12 lg:grid-cols-5">

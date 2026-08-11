@@ -1,18 +1,21 @@
+import { BrushEdge } from '@/components/public/brush-edge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { donate } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { Heart } from 'lucide-react';
-import { BrushEdge } from './brush-edge';
 
 type DonationBandProps = {
     title?: string;
     description?: string;
+    donateHref?: string;
     className?: string;
 };
 
 export function DonationBand({
     title = 'Make a Difference Today',
     description = 'Your donation helps provide clean water, education, and healthcare to communities across Ghana. Every contribution, no matter the size, transforms lives.',
+    donateHref,
     className,
 }: DonationBandProps) {
     return (
@@ -31,7 +34,7 @@ export function DonationBand({
                             size="lg"
                             className="bg-white font-bold text-brand-green hover:bg-white/90"
                         >
-                            <Link href="/donate">Donate Now</Link>
+                            <Link href={donateHref ?? donate.url()}>Donate Now</Link>
                         </Button>
                         <Button
                             asChild

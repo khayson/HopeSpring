@@ -2,6 +2,7 @@ import { DonationBand } from '@/components/public/donation-band';
 import { EngagementCard } from '@/components/public/engagement-card';
 import { PageHero } from '@/components/public/page-hero';
 import PublicLayout from '@/layouts/public/public-layout';
+import { pageHeroes } from '@/lib/page-heroes';
 import { Head, Link } from '@inertiajs/react';
 import { Calendar, HandHeart, Heart, MapPin, Megaphone, Users } from 'lucide-react';
 
@@ -32,7 +33,11 @@ export default function GetInvolved({ programmes, upcomingEvents }: Props) {
         <PublicLayout currentPath="/get-involved">
             <Head title="Get Involved — HopeSpring Foundation" />
 
-            <PageHero title="Get Involved" />
+            <PageHero
+                title="Get Involved"
+                subtitle="There are many ways you can support our mission and help transform lives."
+                image={pageHeroes.getInvolved}
+            />
 
             {/* Ways to Help */}
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
@@ -81,7 +86,7 @@ export default function GetInvolved({ programmes, upcomingEvents }: Props) {
                         <h2 className="mb-8 text-center font-serif text-3xl font-bold text-navy">Upcoming Events</h2>
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             {upcomingEvents.map((event) => (
-                                <Link key={event.id} href={`/events/${event.slug}`} className="group rounded-xl bg-white p-6 shadow-md transition-shadow hover:shadow-xl">
+                                <Link key={event.id} href={`/events/${event.slug}`} className="group rounded-xl bg-white p-6 shadow-md transition-shadow hover:shadow-xl dark:bg-card">
                                     <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                                         <span className="flex items-center gap-1.5">
                                             <Calendar className="size-3.5 text-brand-green" />

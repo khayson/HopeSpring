@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/react';
 const cardVariants = cva('group overflow-hidden rounded-xl transition-shadow', {
     variants: {
         variant: {
-            light: 'bg-white shadow-md hover:shadow-xl',
+            light: 'bg-white shadow-md hover:shadow-xl dark:bg-card',
             dark: 'bg-navy text-white shadow-lg hover:shadow-2xl',
         },
     },
@@ -42,7 +42,7 @@ export function ProgrammeCard({
                     <img
                         src={image}
                         alt={title}
-                        className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="h-48 w-full object-cover"
                         width={400}
                         height={192}
                         loading="lazy"

@@ -33,12 +33,14 @@ export function NewsletterForm() {
                     onChange={(e) => setData('email', e.target.value)}
                     placeholder="Your email"
                     required
+                    aria-label="Email address for newsletter"
                     className="h-10 flex-1 rounded-md border border-white/20 bg-white/10 px-3 text-sm text-white placeholder:text-white/40 focus:border-brand-green-light focus:outline-none focus:ring-1 focus:ring-brand-green-light"
                 />
                 <Button
                     type="submit"
                     disabled={processing}
                     size="icon"
+                    aria-label="Subscribe to newsletter"
                     className="size-10 shrink-0 bg-brand-green hover:bg-brand-green-dark"
                 >
                     <ArrowRight className="size-4" />

@@ -240,10 +240,10 @@
     --sidebar-border: oklch(0.28 0.04 258);
     --sidebar-ring: oklch(0.65 0.16 145);
 
-    /* Brand palette (adjusted for dark) */
-    --navy: oklch(0.40 0.07 260);
-    --navy-dark: oklch(0.305 0.07 260);
-    --navy-light: oklch(0.50 0.07 260);
+    /* Brand palette (adjusted for dark — navy must be readable as text on dark surfaces) */
+    --navy: oklch(0.78 0.05 260);
+    --navy-dark: oklch(0.24 0.06 258);
+    --navy-light: oklch(0.85 0.04 260);
     --brand-green: oklch(0.65 0.16 145);
     --brand-green-light: oklch(0.72 0.14 145);
     --brand-green-dark: oklch(0.56 0.15 145);

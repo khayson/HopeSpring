@@ -2,6 +2,7 @@ import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public/public-layout';
+import { pageHeroes } from '@/lib/page-heroes';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 
@@ -26,7 +27,7 @@ function EventCard({ event, isPast = false }: { event: Event; isPast?: boolean }
         new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
     return (
-        <Link href={`/events/${event.slug}`} className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl">
+        <Link href={`/events/${event.slug}`} className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-card">
             {event.photo && (
                 <div className="overflow-hidden">
                     <img src={event.photo} alt={event.title} className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
@@ -60,7 +61,11 @@ export default function EventsIndex({ upcomingEvents, pastEvents }: Props) {
         <PublicLayout currentPath="/get-involved">
             <Head title="Events — HopeSpring Foundation" />
 
-            <PageHero title="Events" />
+            <PageHero
+                title="Events"
+                subtitle="Join us and be part of the change happening across Ghana."
+                image={pageHeroes.events}
+            />
 
             {/* Upcoming */}
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">

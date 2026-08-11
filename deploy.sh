@@ -6,7 +6,6 @@ REMOTE_USER="root"
 REMOTE_HOST="gekymedia.com"
 HESTIA_USER="gekymedia"
 DOMAIN="hopespringfoundation.gekymedia.com"
-APP_DIR="/home/${HESTIA_USER}/web/${DOMAIN}/app"
 PUBLIC_HTML="/home/${HESTIA_USER}/web/${DOMAIN}/public_html"
 REPO="https://github.com/khayson/HopeSpring.git"
 BRANCH="main"
@@ -32,12 +31,19 @@ step "Ensuring domain exists in HestiaCP..."
 ssh "$SSH" bash <<HEOF
 HESTIA_USER="${HESTIA_USER}"
 DOMAIN="${DOMAIN}"
+PHP_TPL="PHP-8_4"
 
 if /usr/local/hestia/bin/v-list-web-domain "\${HESTIA_USER}" "\${DOMAIN}" > /dev/null 2>&1; then
     echo "Domain \${DOMAIN} already exists."
 else
     echo "Creating domain \${DOMAIN}..."
     /usr/local/hestia/bin/v-add-web-domain "\${HESTIA_USER}" "\${DOMAIN}"
+    /usr/local/hestia/bin/v-change-web-domain-backend-tpl "\${HESTIA_USER}" "\${DOMAIN}" "\${PHP_TPL}" 2>/dev/null || true
+    /usr/local/hestia/bin/v-change-web-domain-docroot "\${HESTIA_USER}" "\${DOMAIN}" "\${DOMAIN}" /public 2>/dev/null || true
+
+    # Add DNS A record for the subdomain
+    /usr/local/hestia/bin/v-add-dns-record "\${HESTIA_USER}" gekymedia.com hopespringfoundation A 91.98.200.25 2>/dev/null || true
+
     echo "Domain created."
 fi
 HEOF
@@ -59,90 +65,62 @@ else
 fi
 DBEOF
 
-# ─── Step 3: Enable SSL (if needed) ───────────────────────────
-step "Ensuring SSL is configured..."
-ssh "$SSH" bash <<SEOF
-HESTIA_USER="${HESTIA_USER}"
-DOMAIN="${DOMAIN}"
-
-if /usr/local/hestia/bin/v-list-web-domain "\${HESTIA_USER}" "\${DOMAIN}" | grep -q "SSL"; then
-    echo "SSL already configured."
-else
-    /usr/local/hestia/bin/v-add-letsencrypt-domain "\${HESTIA_USER}" "\${DOMAIN}" "" "yes" 2>/dev/null || echo "SSL setup attempted."
-fi
-SEOF
-
-# ─── Step 4: Clone/pull repository ─────────────────────────────
+# ─── Step 3: Clone/pull repository into public_html ────────────
 step "Syncing repository on server..."
 ssh "$SSH" bash <<REOF
-APP_DIR="${APP_DIR}"
+PUBLIC_HTML="${PUBLIC_HTML}"
 REPO="${REPO}"
 BRANCH="${BRANCH}"
 HESTIA_USER="${HESTIA_USER}"
 
-git config --global --add safe.directory "\${APP_DIR}" 2>/dev/null || true
+git config --global --add safe.directory "\${PUBLIC_HTML}" 2>/dev/null || true
 
-if [ ! -d "\${APP_DIR}/.git" ]; then
-    echo "Cloning repository..."
-    git clone --branch "\${BRANCH}" "\${REPO}" "\${APP_DIR}"
+if [ ! -d "\${PUBLIC_HTML}/.git" ]; then
+    echo "Cloning repository into public_html..."
+    # Back up default public_html if it exists
+    if [ -d "\${PUBLIC_HTML}" ] || [ -L "\${PUBLIC_HTML}" ]; then
+        rm -rf "\${PUBLIC_HTML}"
+    fi
+    git clone --branch "\${BRANCH}" "\${REPO}" "\${PUBLIC_HTML}"
 else
     echo "Pulling latest changes..."
-    cd "\${APP_DIR}"
+    cd "\${PUBLIC_HTML}"
     git fetch origin
     git reset --hard "origin/\${BRANCH}"
 fi
 
-chown -R \${HESTIA_USER}:\${HESTIA_USER} "\${APP_DIR}"
+chown -R \${HESTIA_USER}:\${HESTIA_USER} "\${PUBLIC_HTML}"
 REOF
+
+# ─── Step 4: Set up PHP 8.4 shim ──────────────────────────────
+step "Setting up PHP 8.4 path shim..."
+ssh "$SSH" bash <<PSHIM
+mkdir -p /tmp/php84-shim
+ln -sf ${PHP} /tmp/php84-shim/php
+echo "PHP shim ready: \$(/tmp/php84-shim/php --version | head -1)"
+PSHIM
 
 # ─── Step 5: Install PHP dependencies ──────────────────────────
 step "Installing Composer dependencies..."
 ssh "$SSH" bash <<CEOF
-cd "${APP_DIR}"
-
-# Ensure php8.4 is used by composer and all subprocesses
-mkdir -p /tmp/php84-shim
-ln -sf ${PHP} /tmp/php84-shim/php
+cd "${PUBLIC_HTML}"
 export PATH="/tmp/php84-shim:\$PATH"
-php --version | head -1
-
-${PHP} /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction 2>&1
+${PHP} /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction 2>&1 | tail -5
 CEOF
 
 # ─── Step 6: Build frontend on server ──────────────────────────
 step "Building frontend assets on server..."
 ssh "$SSH" bash <<BEOF
-cd "${APP_DIR}"
-npm ci --prefer-offline 2>&1 | tail -3
-
-# Ensure php8.4 is used by Vite plugins (wayfinder etc.)
-mkdir -p /tmp/php84-shim
-ln -sf ${PHP} /tmp/php84-shim/php
+cd "${PUBLIC_HTML}"
 export PATH="/tmp/php84-shim:\$PATH"
-php --version | head -1
-
+npm ci --prefer-offline 2>&1 | tail -3
 npm run build 2>&1 | tail -10
 BEOF
 
-# ─── Step 7: Symlink public_html → app/public ──────────────────
-step "Linking public_html to Laravel public directory..."
-ssh "$SSH" bash <<LEOF
-PUBLIC_HTML="${PUBLIC_HTML}"
-APP_DIR="${APP_DIR}"
-HESTIA_USER="${HESTIA_USER}"
-
-if [ -d "\${PUBLIC_HTML}" ] && [ ! -L "\${PUBLIC_HTML}" ]; then
-    mv "\${PUBLIC_HTML}" "\${PUBLIC_HTML}_bak_\$(date +%s)"
-fi
-
-ln -sfn "\${APP_DIR}/public" "\${PUBLIC_HTML}"
-chown -h \${HESTIA_USER}:\${HESTIA_USER} "\${PUBLIC_HTML}"
-LEOF
-
-# ─── Step 8: Configure .env (first run only) ───────────────────
+# ─── Step 7: Configure .env (first run only) ───────────────────
 step "Configuring environment..."
 ssh "$SSH" bash <<EEOF
-APP_DIR="${APP_DIR}"
+PUBLIC_HTML="${PUBLIC_HTML}"
 DOMAIN="${DOMAIN}"
 PHP="${PHP}"
 HESTIA_USER="${HESTIA_USER}"
@@ -150,11 +128,11 @@ DB_NAME="${DB_NAME}"
 DB_USER="${DB_USER}"
 DB_PASS="${DB_PASS}"
 
-if [ ! -f "\${APP_DIR}/.env" ]; then
+if [ ! -f "\${PUBLIC_HTML}/.env" ]; then
     echo "Creating .env from .env.example..."
-    cp "\${APP_DIR}/.env.example" "\${APP_DIR}/.env"
+    cp "\${PUBLIC_HTML}/.env.example" "\${PUBLIC_HTML}/.env"
 
-    cd "\${APP_DIR}"
+    cd "\${PUBLIC_HTML}"
     \${PHP} artisan key:generate --force
 
     sed -i "s|APP_NAME=Laravel|APP_NAME=\"HopeSpring Foundation\"|" .env
@@ -175,13 +153,11 @@ else
 fi
 EEOF
 
-# ─── Step 9: Run migrations, seed & optimize ──────────────────
+# ─── Step 8: Run migrations, seed & optimize ──────────────────
 step "Running migrations, seeding, and optimizing..."
 ssh "$SSH" bash <<MEOF
-cd "${APP_DIR}"
+cd "${PUBLIC_HTML}"
 PHP="${PHP}"
-
-# Ensure php8.4 is used for artisan commands
 export PATH="/tmp/php84-shim:\$PATH"
 
 \${PHP} artisan migrate --force
@@ -192,24 +168,51 @@ export PATH="/tmp/php84-shim:\$PATH"
 \${PHP} artisan event:cache
 MEOF
 
-# ─── Step 10: Set permissions ──────────────────────────────────
+# ─── Step 9: Fix open_basedir for Laravel ─────────────────────
+step "Fixing PHP-FPM open_basedir..."
+ssh "$SSH" bash <<OBEOF
+POOL="/etc/php/8.4/fpm/pool.d/${DOMAIN}.conf"
+if [ -f "\${POOL}" ]; then
+    # HestiaCP custom docroot sets open_basedir to public_html/public
+    # but Laravel needs access to the full public_html directory
+    sed -i 's|${DOMAIN}/public_html/public|${DOMAIN}/public_html/|' "\${POOL}"
+    echo "open_basedir fixed."
+else
+    echo "FPM pool not found at \${POOL}, skipping."
+fi
+OBEOF
+
+# ─── Step 10: Set permissions ─────────────────────────────────
 step "Setting file permissions..."
 ssh "$SSH" bash <<PEOF
-APP_DIR="${APP_DIR}"
+PUBLIC_HTML="${PUBLIC_HTML}"
 HESTIA_USER="${HESTIA_USER}"
 
-chown -R \${HESTIA_USER}:\${HESTIA_USER} "\${APP_DIR}"
-find "\${APP_DIR}/storage" -type d -exec chmod 775 {} \;
-find "\${APP_DIR}/storage" -type f -exec chmod 664 {} \;
-find "\${APP_DIR}/bootstrap/cache" -type d -exec chmod 775 {} \;
-find "\${APP_DIR}/bootstrap/cache" -type f -exec chmod 664 {} \;
+chown -R \${HESTIA_USER}:\${HESTIA_USER} "\${PUBLIC_HTML}"
+find "\${PUBLIC_HTML}/storage" -type d -exec chmod 775 {} \;
+find "\${PUBLIC_HTML}/storage" -type f -exec chmod 664 {} \;
+find "\${PUBLIC_HTML}/bootstrap/cache" -type d -exec chmod 775 {} \;
+find "\${PUBLIC_HTML}/bootstrap/cache" -type f -exec chmod 664 {} \;
 PEOF
 
-# ─── Step 11: Reload services ─────────────────────────────────
+# ─── Step 11: Enable SSL (if needed) ──────────────────────────
+step "Ensuring SSL is configured..."
+ssh "$SSH" bash <<SEOF
+HESTIA_USER="${HESTIA_USER}"
+DOMAIN="${DOMAIN}"
+
+if /usr/local/hestia/bin/v-list-web-domain "\${HESTIA_USER}" "\${DOMAIN}" | grep -q "LETSENCRYPT:.*yes"; then
+    echo "SSL already configured."
+else
+    /usr/local/hestia/bin/v-add-letsencrypt-domain "\${HESTIA_USER}" "\${DOMAIN}" 2>/dev/null && echo "SSL installed." || echo "SSL setup attempted."
+fi
+SEOF
+
+# ─── Step 12: Reload services ────────────────────────────────
 step "Reloading services..."
 ssh "$SSH" "systemctl reload php8.4-fpm && systemctl reload apache2 && systemctl reload nginx && echo 'Services reloaded.'"
 
-# ─── Done ──────────────────────────────────────────────────────
+# ─── Done ────────────────────────────────────────────────────────
 echo ""
 echo -e "${GREEN}═══════════════════════════════════════════════════════${NC}"
 echo -e "${GREEN}  Deployed to https://${DOMAIN}${NC}"

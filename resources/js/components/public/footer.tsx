@@ -100,11 +100,11 @@ export function Footer({ className }: FooterProps) {
                             </li>
                             <li>
                                 <a
-                                    href="mailto:info@hopespringfoundation.org"
+                                    href=" info@thehopespringfoundation.org"
                                     className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-brand-green-light"
                                 >
                                     <Mail className="size-4 shrink-0 text-brand-green-light" />
-                                    info@hopespringfoundation.org
+                                    info@thehopespringfoundation.org
                                 </a>
                             </li>
                             <li>

@@ -21,6 +21,7 @@ use App\Models\User;
 use App\Support\HomePageSettings;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -34,22 +35,28 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $admin = User::factory()->create([
+        $admin = User::create([
             'name' => 'Kwame Asante',
             'email' => 'admin@hopespringfoundation.org',
+            'password' => Hash::make('password'),
             'role' => UserRole::Admin,
+            'email_verified_at' => now(),
         ]);
 
-        User::factory()->create([
+        User::create([
             'name' => 'Ama Mensah',
             'email' => 'editor@hopespringfoundation.org',
+            'password' => Hash::make('password'),
             'role' => UserRole::Editor,
+            'email_verified_at' => now(),
         ]);
 
-        User::factory()->create([
+        User::create([
             'name' => 'Kofi Darko',
             'email' => 'finance@hopespringfoundation.org',
+            'password' => Hash::make('password'),
             'role' => UserRole::Finance,
+            'email_verified_at' => now(),
         ]);
 
         $programmes = $this->seedProgrammes();

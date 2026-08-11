@@ -99,6 +99,13 @@ REOF
 step "Installing Composer dependencies..."
 ssh "$SSH" bash <<CEOF
 cd "${APP_DIR}"
+
+# Ensure php8.4 is used by composer and all subprocesses
+mkdir -p /tmp/php84-shim
+ln -sf ${PHP} /tmp/php84-shim/php
+export PATH="/tmp/php84-shim:\$PATH"
+php --version | head -1
+
 ${PHP} /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction 2>&1
 CEOF
 
@@ -107,7 +114,14 @@ step "Building frontend assets on server..."
 ssh "$SSH" bash <<BEOF
 cd "${APP_DIR}"
 npm ci --prefer-offline 2>&1 | tail -3
-npm run build 2>&1 | tail -5
+
+# Ensure php8.4 is used by Vite plugins (wayfinder etc.)
+mkdir -p /tmp/php84-shim
+ln -sf ${PHP} /tmp/php84-shim/php
+export PATH="/tmp/php84-shim:\$PATH"
+php --version | head -1
+
+npm run build 2>&1 | tail -10
 BEOF
 
 # ─── Step 7: Symlink public_html → app/public ──────────────────
@@ -167,8 +181,11 @@ ssh "$SSH" bash <<MEOF
 cd "${APP_DIR}"
 PHP="${PHP}"
 
+# Ensure php8.4 is used for artisan commands
+export PATH="/tmp/php84-shim:\$PATH"
+
 \${PHP} artisan migrate --force
-\${PHP} artisan db:seed --force 2>/dev/null || echo "Seeding skipped (already seeded or error)."
+\${PHP} artisan db:seed --force 2>&1 || echo "Seeding note: check output above."
 \${PHP} artisan storage:link 2>/dev/null || true
 \${PHP} artisan optimize
 \${PHP} artisan view:cache

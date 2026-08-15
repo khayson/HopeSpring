@@ -33,7 +33,7 @@ export default function GalleryIndex({
 
             <PageHero
                 title="Gallery"
-                subtitle="Moments captured from our work across communities in Ghana — water, classrooms, clinics, and the people who make change possible."
+                subtitle="Moments captured from our work in communities around the world."
                 image={pageHeroes.gallery}
             />
 

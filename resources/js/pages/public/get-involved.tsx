@@ -45,7 +45,7 @@ export default function GetInvolved({ upcomingEvents }: Props) {
                     </h2>
                     <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
                         There are many ways you can support our mission and help
-                        transform lives in Ghana.
+                        transform lives.
                     </p>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

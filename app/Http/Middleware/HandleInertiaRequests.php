@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,6 +36,10 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $contact = SiteSetting::query()
+            ->whereIn('key', ['contact_email', 'contact_phone', 'contact_address'])
+            ->pluck('value', 'key');
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -42,6 +47,11 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'contact' => [
+                'email' => $contact->get('contact_email'),
+                'phone' => $contact->get('contact_phone'),
+                'address' => $contact->get('contact_address'),
+            ],
         ];
     }
 }

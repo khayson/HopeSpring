@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import {
     Facebook,
     Heart,
@@ -31,6 +31,14 @@ type FooterProps = {
 };
 
 export function Footer({ className }: FooterProps) {
+    const { contact } = usePage().props;
+    const email = contact.email?.trim() || 'info@hopespringfoundation.org';
+    const phone = contact.phone?.trim() || '+233 24 123 4567';
+    const address =
+        contact.address?.trim() ||
+        '14 Maseru Road, East Legon, Accra, Ghana';
+    const telHref = `tel:${phone.replace(/[^\d+]/g, '')}`;
+
     return (
         <footer
             aria-label="Site footer"
@@ -52,8 +60,9 @@ export function Footer({ className }: FooterProps) {
                             </span>
                         </Link>
                         <p className="text-sm leading-relaxed text-white/60">
-                            Transforming lives through sustainable solutions in
-                            education, health, and clean water across Ghana.
+                            A purpose-driven organization committed to empowering
+                            individuals and transforming communities through
+                            sustainable, people-centered solutions.
                         </p>
                         <div className="flex gap-3">
                             {socialLinks.map((social) => (
@@ -96,24 +105,24 @@ export function Footer({ className }: FooterProps) {
                         <ul className="space-y-3">
                             <li className="flex items-start gap-2.5 text-sm text-white/60">
                                 <MapPin className="mt-0.5 size-4 shrink-0 text-brand-green-light" />
-                                East Legon, Accra, Ghana
+                                {address}
                             </li>
                             <li>
                                 <a
-                                    href=" info@thehopespringfoundation.org"
+                                    href={`mailto:${email}`}
                                     className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-brand-green-light"
                                 >
                                     <Mail className="size-4 shrink-0 text-brand-green-light" />
-                                    info@thehopespringfoundation.org
+                                    {email}
                                 </a>
                             </li>
                             <li>
                                 <a
-                                    href="tel:+233241234567"
+                                    href={telHref}
                                     className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-brand-green-light"
                                 >
                                     <Phone className="size-4 shrink-0 text-brand-green-light" />
-                                    +233 24 123 4567
+                                    {phone}
                                 </a>
                             </li>
                         </ul>

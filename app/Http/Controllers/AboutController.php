@@ -7,6 +7,8 @@ use App\Models\Milestone;
 use App\Models\Partner;
 use App\Models\SiteSetting;
 use App\Models\TeamMember;
+use App\Support\AboutPageSettings;
+use App\Support\HomePageSettings;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -14,6 +16,11 @@ class AboutController extends Controller
 {
     public function __invoke(): Response
     {
+        $homeKeys = array_values(array_filter(
+            array_column(HomePageSettings::defaults(), 'key'),
+            fn (string $key): bool => $key === 'home_about_body' || str_starts_with($key, 'home_value_'),
+        ));
+
         return Inertia::render('public/about', [
             'team' => TeamMember::where('is_active', true)
                 ->orderBy('sort_order')
@@ -28,12 +35,8 @@ class AboutController extends Controller
             'settings' => SiteSetting::whereIn('key', [
                 'about_mission',
                 'about_vision',
-                'about_partners_eyebrow',
-                'about_partners_heading',
-                'about_partners_intro',
-                'about_partners_empty_title',
-                'about_partners_empty_message',
-                'about_partners_cta_label',
+                ...$homeKeys,
+                ...array_column(AboutPageSettings::defaults(), 'key'),
             ])->pluck('value', 'key'),
         ]);
     }

@@ -95,7 +95,7 @@ export default function ProgrammeShow({ programme }: Props) {
 
             <DonationBand
                 title={`Support ${programme.title}`}
-                description={`Your gift is directed to ${programme.title}, helping communities across Ghana through this programme.`}
+                description={`Your gift is directed to ${programme.title}, helping us impact lives globally through this focus area.`}
                 donateHref={donateHref}
             />
         </PublicLayout>

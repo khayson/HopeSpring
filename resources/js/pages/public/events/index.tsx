@@ -84,7 +84,7 @@ export default function EventsIndex({ upcomingEvents, pastEvents }: Props) {
 
             <PageHero
                 title="Events"
-                subtitle="Join us and be part of the change happening across Ghana."
+                subtitle="Join us and be part of the change. Partner with us, support the mission, and help transform lives."
                 image={pageHeroes.events}
             />
 

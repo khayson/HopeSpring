@@ -45,10 +45,10 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
     const mission = setting(
         settings,
         'about_mission',
-        'To empower underserved communities in Ghana through sustainable clean water, education, healthcare, and community development programmes.',
+        'To impact lives globally through empowerment, support, and sustainable development.',
     );
 
-    const values = [1, 2, 3, 4]
+    const values = [1, 2, 3, 4, 5]
         .map((index) => ({
             title: setting(settings, `home_value_${index}_title`),
             description: setting(settings, `home_value_${index}_description`),
@@ -115,7 +115,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             {setting(
                                 settings,
                                 'home_hero_title_highlight',
-                                'transform lives',
+                                'impact lives globally',
                             )}
                         </span>
                     </h1>
@@ -123,7 +123,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                         {setting(
                             settings,
                             'home_hero_subtitle',
-                            'We bring hope, restore dignity, and create opportunities for a better tomorrow.',
+                            'Impacting Lives Globally',
                         )}
                     </p>
                     <div className="mt-8 flex animate-in flex-col gap-3 duration-1000 fade-in-0 sm:flex-row sm:flex-wrap">
@@ -252,14 +252,14 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 {setting(
                                     settings,
                                     'home_about_title',
-                                    'Our Story, Our Why',
+                                    "Founder's Story",
                                 )}
                             </h2>
                             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                                 {setting(
                                     settings,
                                     'home_about_body',
-                                    'HopeSpring began with a simple act of compassion — and grew into a movement for clean water, education, healthcare, and stronger communities across Ghana.',
+                                    'HopeSpring Foundation was born from a moment that could not be ignored. One day, Melina Diamond encountered a woman and her three children on her way back from town. Moved by compassion, she offered them a ride to school. During the ride, she noticed the youngest child holding a torn rubber bag tightly to his chest. Inside were his books. Despite its condition, he held it with pride and said, "This is my school bag." That moment revealed resilience, dignity, and need in its purest form. The next day, Melina returned with a proper school bag. The joy and gratitude the child expressed became a defining moment. It was then she realized: even the smallest act of kindness can transform a life. From that moment, HopeSpring Foundation was born.',
                                 )}
                             </p>
 
@@ -315,14 +315,14 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             {setting(
                                 settings,
                                 'home_programmes_eyebrow',
-                                'Our Programs',
+                                'Focus Areas',
                             )}
                         </p>
                         <h2 className="mt-3 font-serif text-3xl font-bold text-white md:text-4xl">
                             {setting(
                                 settings,
                                 'home_programmes_title',
-                                'Areas We Focus On',
+                                'Areas of Focus',
                             )}
                         </h2>
                     </div>
@@ -380,7 +380,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 {setting(
                                     settings,
                                     'home_programmes_cta_label',
-                                    'View All Programs',
+                                    'View All Programmes',
                                 )}
                             </Link>
                         </Button>

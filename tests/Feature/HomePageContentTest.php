@@ -46,6 +46,11 @@ test('home page content comes from site settings and programmes', function () {
             ->component('public/home')
             ->where('settings.home_hero_eyebrow', 'Custom Welcome Line')
             ->where('settings.about_mission', 'Mission from database.')
+            ->where('settings.home_programmes_eyebrow', 'Focus Areas')
+            ->where('settings.home_programmes_cta_label', 'View All Programmes')
+            ->where('settings.home_value_4_title', 'Sustainability')
+            ->where('settings.home_value_5_title', 'Excellence')
+            ->where('settings.home_banner_text', 'Join us in impacting lives globally. Partner with us, support the mission, and help transform lives.')
             ->where('programmes.0.id', $programme->id)
             ->where('programmes.0.photo', '/images/home-programme-water.jpg')
             ->where('stats.0.label', 'Lives Impacted')
@@ -89,4 +94,26 @@ test('admin can update home settings and impact stats', function () {
     expect(SiteSetting::query()->where('key', 'home_hero_eyebrow')->value('value'))->toBe('Edited From Admin')
         ->and($stat->fresh()->label)->toBe('People Reached')
         ->and($stat->fresh()->value)->toBe(42000);
+});
+
+test('public pages share contact details from site settings', function () {
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'contact_email'],
+        ['value' => 'info@hopespringfoundation.org', 'group' => 'contact'],
+    );
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'contact_phone'],
+        ['value' => '+233 24 123 4567', 'group' => 'contact'],
+    );
+    SiteSetting::query()->updateOrCreate(
+        ['key' => 'contact_address'],
+        ['value' => '14 Maseru Road, East Legon, Accra, Ghana', 'group' => 'contact'],
+    );
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->where('contact.email', 'info@hopespringfoundation.org')
+            ->where('contact.phone', '+233 24 123 4567')
+            ->where('contact.address', '14 Maseru Road, East Legon, Accra, Ghana'));
 });

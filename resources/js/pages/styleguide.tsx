@@ -129,12 +129,9 @@ export default function Styleguide() {
                                 Body — Mulish (sans-serif)
                             </p>
                             <p className="max-w-prose text-base leading-relaxed">
-                                HopeSpring Foundation was born out of a simple
-                                act of compassion — a torn school bag held
-                                together with pride by a child in Accra. Today,
-                                we serve over 25,000 lives across Ghana through
-                                clean water, education, healthcare, and
-                                community development programmes.
+                                HopeSpring Foundation was born from a moment
+                                that could not be ignored. Even the smallest act
+                                of kindness can transform a life.
                             </p>
                         </div>
                         <div>

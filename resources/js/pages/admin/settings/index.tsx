@@ -52,6 +52,8 @@ const textareaKeys = new Set([
     'home_value_2_description',
     'home_value_3_description',
     'home_value_4_description',
+    'home_value_5_description',
+    'about_who_we_are',
     'contact_address',
 ]);
 

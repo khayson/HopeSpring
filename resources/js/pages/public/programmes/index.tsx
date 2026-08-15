@@ -24,20 +24,20 @@ type Props = {
 export default function ProgrammesIndex({ programmes }: Props) {
     return (
         <PublicLayout currentPath="/programmes">
-            <Head title="Our Programmes — HopeSpring Foundation" />
+            <Head title="Areas of Focus — HopeSpring Foundation" />
 
             <PageHero
-                title="Our Programmes"
-                subtitle="Four focus areas creating lasting, sustainable change in communities across Ghana."
+                title="Areas of Focus"
+                subtitle="Community Outreach • Youth Empowerment • Health & Wellness • Education & Development"
                 image={pageHeroes.programmes}
             />
 
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
                 <div className="mb-10 text-center">
                     <p className="mx-auto max-w-2xl text-muted-foreground">
-                        We operate across four key programme areas, each
-                        designed to create lasting, sustainable impact in the
-                        communities we serve.
+                        Our focus areas guide everything we do: empowering
+                        individuals and transforming communities through
+                        sustainable, people-centered solutions.
                     </p>
                 </div>
                 <div className="grid gap-8 md:grid-cols-2">

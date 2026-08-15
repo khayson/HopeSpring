@@ -113,7 +113,7 @@ function resolveHero(
         eyebrow: 'HopeSpring Foundation',
         title: 'Give where hope grows',
         subtitle:
-            'Fund clean water, education, and healthcare for communities across Ghana — or direct your gift to a programme you care about.',
+            'Partner with us, support the mission, and help transform lives. Direct your gift to a focus area you care about.',
         pageTitle: 'Donate — HopeSpring Foundation',
     };
 }
@@ -179,18 +179,18 @@ export default function Donate({
         }
 
         if (amount < 50) {
-            return 'Every cedi joins a larger gift that reaches communities across Ghana.';
+            return 'Every gift joins a larger effort to impact lives globally.';
         }
 
         if (amount < 100) {
-            return 'Helps keep clean water flowing for families who need it most.';
+            return 'Helps strengthen community outreach where need is greatest.';
         }
 
         if (amount < 500) {
-            return 'Supports classrooms, clinics, and local volunteers on the ground.';
+            return 'Supports youth empowerment, health & wellness, and education.';
         }
 
-        return 'Fuels multi-community work in water, education, and healthcare.';
+        return 'Fuels people-centered solutions across our focus areas.';
     })();
 
     function parseDestination(value: string): {
@@ -330,7 +330,7 @@ export default function Donate({
                         </h1>
                         <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-white/70">
                             {flash?.success ||
-                                'Your generosity reaches communities across Ghana — clean water, classrooms, and care that lasts.'}
+                                'Thank you for joining us in impacting lives globally.'}
                         </p>
                         <Button
                             asChild
@@ -781,13 +781,12 @@ export default function Donate({
                                     Why give
                                 </p>
                                 <h2 className="mt-3 font-serif text-2xl leading-snug font-bold md:text-3xl">
-                                    One gift. Lasting change.
+                                    Join us in impacting lives globally
                                 </h2>
                                 <p className="mt-4 text-sm leading-relaxed text-white/70">
-                                    HopeSpring works alongside communities in
-                                    Ghana so your support becomes boreholes that
-                                    stay, classrooms that open, and care that
-                                    reaches the next village.
+                                    Partner with us, support the mission, and
+                                    help transform lives through empowerment,
+                                    support, and sustainable development.
                                 </p>
 
                                 <div className="mt-8 space-y-8 border-t border-white/10 pt-8">
@@ -806,29 +805,30 @@ export default function Donate({
                                     <ul className="space-y-5">
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Water that stays
+                                                Community Outreach
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Boreholes and WASH committees
-                                                built to last 15+ years.
+                                                People-centered support that
+                                                meets real needs where they are.
                                             </p>
                                         </li>
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Learning that sticks
+                                                Youth Empowerment
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Scholarships, classrooms, and
-                                                teachers who stay.
+                                                Skills, confidence, and
+                                                opportunity for the next
+                                                generation.
                                             </p>
                                         </li>
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Care that travels
+                                                Health & Education
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Mobile clinics and medicine
-                                                where hospitals are far.
+                                                Wellness and learning pathways
+                                                that open access to opportunity.
                                             </p>
                                         </li>
                                     </ul>

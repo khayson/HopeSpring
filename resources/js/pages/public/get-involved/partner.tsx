@@ -11,7 +11,7 @@ export default function PartnerInquiry() {
 
             <PageHero
                 title="Partner With Us"
-                subtitle="Collaborate as a corporate or institutional partner to multiply our impact across Ghana."
+                subtitle="Collaborate as a corporate or institutional partner to multiply our impact globally."
                 image={pageHeroes.partner}
                 breadcrumbs={[
                     { label: 'Home', href: '/' },

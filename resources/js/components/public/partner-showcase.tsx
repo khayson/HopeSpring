@@ -90,7 +90,7 @@ export function PartnerShowcase({ partners, settings }: PartnerShowcaseProps) {
     const intro = setting(
         settings,
         'about_partners_intro',
-        'HopeSpring works best alongside institutions, foundations, and mission-aligned organisations that share our commitment to community-led change across Ghana.',
+        'HopeSpring works best alongside institutions, foundations, and mission-aligned organisations that share our commitment to empowering individuals and transforming communities.',
     );
     const emptyTitle = setting(
         settings,

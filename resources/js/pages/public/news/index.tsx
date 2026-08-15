@@ -60,7 +60,7 @@ export default function NewsIndex({
 
             <PageHero
                 title="News & Stories"
-                subtitle="Field updates and impact stories from communities across Ghana."
+                subtitle="Field updates and impact stories from the communities we serve."
                 image={pageHeroes.news}
             />
 

@@ -37,7 +37,7 @@ export default function ProjectsIndex({ projects }: Props) {
 
             <PageHero
                 title="Our Projects"
-                subtitle="See the impact of your support on the ground — real projects, real communities, real change."
+                subtitle="See the impact of your support on the ground: real projects, real communities, real change."
                 image={pageHeroes.projects}
             />
 

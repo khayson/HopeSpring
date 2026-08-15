@@ -212,8 +212,8 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                                     Related stories
                                 </h2>
                                 <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-                                    More from our {post.category} work across
-                                    Ghana.
+                                    More from our {post.category} work around
+                                    the world.
                                 </p>
                             </div>
                         </ScrollReveal>

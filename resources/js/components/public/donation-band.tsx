@@ -13,8 +13,8 @@ type DonationBandProps = {
 };
 
 export function DonationBand({
-    title = 'Make a Difference Today',
-    description = 'Your donation helps provide clean water, education, and healthcare to communities across Ghana. Every contribution, no matter the size, transforms lives.',
+    title = 'Join us in impacting lives globally',
+    description = 'Partner with us, support the mission, and help transform lives.',
     donateHref,
     className,
 }: DonationBandProps) {

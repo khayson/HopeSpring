@@ -19,6 +19,21 @@ test('authenticated staff can visit the dashboard', function () {
     $this->actingAs($user)->get(route('dashboard'))->assertOk();
 });
 
+test('staff dashboard shares sidebar open state from the sidebar cookie', function () {
+    $user = User::factory()->create(['role' => UserRole::Admin]);
+
+    $this->actingAs($user)
+        ->get(route('dashboard'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->where('sidebarOpen', true));
+
+    $this->actingAs($user)
+        ->withUnencryptedCookie('sidebar_state', 'false')
+        ->get(route('dashboard'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->where('sidebarOpen', false));
+});
+
 test('admin dashboard includes advanced analytics payload', function () {
     $admin = User::factory()->create([
         'name' => 'Akosua Mensah',

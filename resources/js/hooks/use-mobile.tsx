@@ -1,6 +1,8 @@
 import { useSyncExternalStore } from 'react';
 
-const MOBILE_BREAKPOINT = 768;
+// Match Tailwind `xl` (1280px) so phones and tablets — including iPad Pro
+// portrait at 1024px — use the slide-out sidebar instead of the icon rail.
+const MOBILE_BREAKPOINT = 1280;
 
 const mql =
     typeof window === 'undefined'

@@ -22,6 +22,8 @@ Route::middleware(['auth', 'verified', 'role:admin,editor,finance'])->prefix('ad
         Route::resource('events', EventController::class)->except('show');
         Route::resource('posts', PostController::class)->except('show');
         Route::resource('partners', PartnerController::class)->except('show');
+        Route::delete('gallery/bulk', [GalleryImageController::class, 'bulkDestroy'])
+            ->name('gallery.bulk-destroy');
         Route::resource('gallery', GalleryImageController::class)
             ->parameters(['gallery' => 'galleryImage'])
             ->except('show');

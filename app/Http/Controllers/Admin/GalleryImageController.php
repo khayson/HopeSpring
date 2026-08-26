@@ -131,10 +131,34 @@ class GalleryImageController extends Controller
 
     public function destroy(GalleryImage $galleryImage): RedirectResponse
     {
-        PublicImage::delete($galleryImage->src);
-        $galleryImage->delete();
+        $this->deleteItem($galleryImage);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Gallery item deleted.')]);
+
+        return to_route('admin.gallery.index');
+    }
+
+    public function bulkDestroy(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1', 'max:200'],
+            'ids.*' => ['integer', 'distinct', 'exists:gallery_images,id'],
+        ]);
+
+        $images = GalleryImage::query()->whereIn('id', $validated['ids'])->get();
+
+        foreach ($images as $image) {
+            $this->deleteItem($image);
+        }
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => trans_choice(
+                '{1} :count gallery item deleted.|[2,*] :count gallery items deleted.',
+                $images->count(),
+                ['count' => $images->count()],
+            ),
+        ]);
 
         return to_route('admin.gallery.index');
     }
@@ -163,5 +187,11 @@ class GalleryImageController extends Controller
             'caption' => ['nullable', 'string', 'max:255'],
             'category' => ['nullable', Rule::in(GalleryMedia::CATEGORIES)],
         ]);
+    }
+
+    private function deleteItem(GalleryImage $galleryImage): void
+    {
+        PublicImage::delete($galleryImage->src);
+        $galleryImage->delete();
     }
 }

@@ -6,7 +6,6 @@ use App\Enums\UserRole;
 use App\Models\ContactMessage;
 use App\Models\Donation;
 use App\Models\Event;
-use App\Models\GalleryImage;
 use App\Models\ImpactStat;
 use App\Models\Inquiry;
 use App\Models\Milestone;
@@ -63,7 +62,6 @@ class DatabaseSeeder extends Seeder
         $this->seedProjects($programmes);
         $this->seedPosts($admin);
         $this->seedTeamMembers();
-        $this->seedGalleryImages();
         $this->seedEvents();
         $this->seedDonations();
         $this->seedContactMessages();
@@ -265,38 +263,6 @@ class DatabaseSeeder extends Seeder
         foreach ($members as $member) {
             $member['photo'] = $this->storageUrl($member['photo']);
             TeamMember::create($member);
-        }
-    }
-
-    private function seedGalleryImages(): void
-    {
-        $images = [
-            ['alt' => 'Children collecting water from a new borehole in Bongo District', 'caption' => 'First water from the Soe borehole, March 2023', 'category' => 'water'],
-            ['alt' => 'WASH committee members learning pump maintenance', 'caption' => 'WASH committee training at Bongo', 'category' => 'water'],
-            ['alt' => 'Water quality testing at a newly drilled borehole', 'caption' => 'E. coli testing confirms safe water', 'category' => 'water'],
-            ['alt' => 'Changli community standpipe with residents queuing for water', 'caption' => 'Changli standpipe inauguration, February 2025', 'category' => 'water'],
-            ['alt' => 'Girls in school uniforms studying in the Yendi scholarship programme', 'caption' => 'Yendi scholarship recipients during exam preparation', 'category' => 'education'],
-            ['alt' => 'New classroom block at Assin Fosu D/A Primary School', 'caption' => 'Completed 6-classroom block at Assin Fosu', 'category' => 'education'],
-            ['alt' => 'Children reading in the Assin Fosu school library', 'caption' => 'Library corner stocked with 600 books', 'category' => 'education'],
-            ['alt' => 'Rural teacher receiving a teaching resource kit', 'caption' => 'Upper West teacher training kick-off', 'category' => 'education'],
-            ['alt' => 'Mobile clinic nurse checking blood pressure in a village', 'caption' => 'Blood-pressure screening in Kparigu', 'category' => 'healthcare'],
-            ['alt' => 'Community health volunteer demonstrating bed-net hanging', 'caption' => 'Bed-net demonstration in the Afram Plains', 'category' => 'healthcare'],
-            ['alt' => 'Mothers and babies at a mobile immunisation clinic', 'caption' => 'Childhood immunisations in Tolon', 'category' => 'healthcare'],
-            ['alt' => 'Women counting savings at the Nkoranza VSLA meeting', 'caption' => 'End-of-cycle share-out at Nkoranza, December 2025', 'category' => 'community'],
-            ['alt' => 'Sefwi Wiawso Community Centre ribbon-cutting ceremony', 'caption' => 'Nana Agyei III opens the new community centre', 'category' => 'community'],
-            ['alt' => 'Adult literacy class in session at the community centre', 'caption' => 'Evening literacy class, Sefwi Wiawso', 'category' => 'community'],
-            ['alt' => 'HopeSpring team at the 2025 annual stakeholder meeting', 'caption' => 'Annual stakeholder meeting, Accra, January 2025', 'category' => 'events'],
-            ['alt' => 'Volunteers sorting school supplies for distribution', 'caption' => 'Back-to-school supply packing day', 'category' => 'events'],
-        ];
-
-        foreach ($images as $i => $img) {
-            GalleryImage::create([
-                'src' => $this->storageUrl('gallery/'.str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT).'.jpg'),
-                'alt' => $img['alt'],
-                'caption' => $img['caption'],
-                'category' => $img['category'],
-                'sort_order' => $i + 1,
-            ]);
         }
     }
 

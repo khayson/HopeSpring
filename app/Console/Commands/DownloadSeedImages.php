@@ -21,24 +21,6 @@ class DownloadSeedImages extends Command
     public static function manifest(): array
     {
         return [
-            // Gallery — varied aspect ratios for masonry
-            'gallery/01.jpg' => [800, 1000],
-            'gallery/02.jpg' => [800, 600],
-            'gallery/03.jpg' => [800, 900],
-            'gallery/04.jpg' => [800, 700],
-            'gallery/05.jpg' => [800, 1100],
-            'gallery/06.jpg' => [800, 600],
-            'gallery/07.jpg' => [800, 850],
-            'gallery/08.jpg' => [800, 750],
-            'gallery/09.jpg' => [800, 950],
-            'gallery/10.jpg' => [800, 650],
-            'gallery/11.jpg' => [800, 800],
-            'gallery/12.jpg' => [800, 1050],
-            'gallery/13.jpg' => [800, 700],
-            'gallery/14.jpg' => [800, 900],
-            'gallery/15.jpg' => [800, 600],
-            'gallery/16.jpg' => [800, 1000],
-
             // Programmes
             'programmes/clean-water-initiative.jpg' => [1200, 800],
             'programmes/education-for-all.jpg' => [1200, 800],

@@ -125,3 +125,63 @@ test('admin can update and delete a gallery item', function () {
     expect(GalleryImage::query()->find($image->id))->toBeNull();
     Storage::disk('public')->assertMissing('gallery/old.jpg');
 });
+
+test('admin can bulk delete selected gallery items', function () {
+    Storage::fake('public');
+
+    $admin = User::factory()->create(['role' => UserRole::Admin]);
+    $keep = GalleryImage::factory()->create([
+        'caption' => 'Visit to Anweem, Komenda District',
+        'src' => '/storage/gallery/keep.jpg',
+    ]);
+    $first = GalleryImage::factory()->create(['src' => '/storage/gallery/01.jpg']);
+    $second = GalleryImage::factory()->create(['src' => '/storage/gallery/02.jpg']);
+
+    Storage::disk('public')->put('gallery/keep.jpg', 'keep-bytes');
+    Storage::disk('public')->put('gallery/01.jpg', 'stock-one');
+    Storage::disk('public')->put('gallery/02.jpg', 'stock-two');
+
+    $this->actingAs($admin)
+        ->delete(route('admin.gallery.bulk-destroy'), [
+            'ids' => [$first->id, $second->id],
+        ])
+        ->assertRedirect(route('admin.gallery.index'));
+
+    expect(GalleryImage::query()->find($keep->id))->not->toBeNull()
+        ->and(GalleryImage::query()->find($first->id))->toBeNull()
+        ->and(GalleryImage::query()->find($second->id))->toBeNull();
+
+    Storage::disk('public')->assertExists('gallery/keep.jpg');
+    Storage::disk('public')->assertMissing('gallery/01.jpg');
+    Storage::disk('public')->assertMissing('gallery/02.jpg');
+});
+
+test('editors can bulk delete gallery items and finance cannot', function () {
+    Storage::fake('public');
+
+    $editor = User::factory()->create(['role' => UserRole::Editor]);
+    $finance = User::factory()->create(['role' => UserRole::Finance]);
+    $image = GalleryImage::factory()->create(['src' => '/storage/gallery/01.jpg']);
+
+    Storage::disk('public')->put('gallery/01.jpg', 'stock');
+
+    $this->actingAs($finance)
+        ->delete(route('admin.gallery.bulk-destroy'), ['ids' => [$image->id]])
+        ->assertForbidden();
+
+    $this->actingAs($editor)
+        ->delete(route('admin.gallery.bulk-destroy'), ['ids' => [$image->id]])
+        ->assertRedirect(route('admin.gallery.index'));
+
+    expect(GalleryImage::query()->find($image->id))->toBeNull();
+});
+
+test('bulk delete requires at least one existing gallery item', function () {
+    $admin = User::factory()->create(['role' => UserRole::Admin]);
+
+    $this->actingAs($admin)
+        ->from(route('admin.gallery.index'))
+        ->delete(route('admin.gallery.bulk-destroy'), ['ids' => []])
+        ->assertRedirect(route('admin.gallery.index'))
+        ->assertSessionHasErrors('ids');
+});

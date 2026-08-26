@@ -27,7 +27,7 @@ export function ValueCard({
             <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
                 {title}
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-2 text-sm leading-relaxed text-navy/75">
                 {description}
             </p>
         </div>

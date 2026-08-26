@@ -239,7 +239,7 @@ function Kpi({
     const body = (
         <>
             <div className="flex items-start justify-between gap-3">
-                <p className="text-sm font-medium text-muted-foreground">
+                <p className="text-sm font-medium text-navy dark:text-foreground">
                     {label}
                 </p>
                 <div className={cn('rounded-lg p-2', tone)}>
@@ -249,7 +249,9 @@ function Kpi({
             <p className="mt-3 font-serif text-2xl font-bold tracking-tight text-navy dark:text-foreground">
                 {value}
             </p>
-            {hint && <div className="mt-2 text-xs text-muted-foreground">{hint}</div>}
+            {hint && (
+                <div className="mt-2 text-xs text-muted-foreground">{hint}</div>
+            )}
         </>
     );
 
@@ -280,7 +282,7 @@ function TrendChart({ points }: { points: TrendPoint[] }) {
         <div className="p-5">
             <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
-                    <p className="text-xs font-bold tracking-[0.16em] text-muted-foreground uppercase">
+                    <p className="text-xs font-bold tracking-[0.16em] text-brand-green uppercase">
                         Last 30 days
                     </p>
                     <p className="mt-1 font-serif text-2xl font-bold text-navy dark:text-foreground">
@@ -336,7 +338,9 @@ function MeterRow({
         <div className="space-y-1.5">
             <div className="flex items-center justify-between gap-3 text-sm">
                 <span className="truncate font-medium">{label}</span>
-                <span className="shrink-0 text-muted-foreground">{display}</span>
+                <span className="shrink-0 text-muted-foreground">
+                    {display}
+                </span>
             </div>
             <div className="h-2 overflow-hidden rounded-full bg-secondary">
                 <div
@@ -655,7 +659,7 @@ export default function Dashboard({
                     <section className="rounded-2xl border border-sidebar-border/70 bg-white p-5 dark:border-sidebar-border dark:bg-neutral-900">
                         <div className="flex flex-wrap items-end justify-between gap-3">
                             <div>
-                                <p className="text-xs font-bold tracking-[0.16em] text-muted-foreground uppercase">
+                                <p className="text-xs font-bold tracking-[0.16em] text-brand-green uppercase">
                                     Fundraising goal
                                 </p>
                                 <p className="mt-1 font-serif text-2xl font-bold text-navy dark:text-foreground">
@@ -681,18 +685,23 @@ export default function Dashboard({
                 <div className="grid gap-6 xl:grid-cols-3">
                     {donationTrend.length > 0 && (
                         <div className="xl:col-span-2">
-                            <Panel title="Donation trend" href="/admin/donations">
+                            <Panel
+                                title="Donation trend"
+                                href="/admin/donations"
+                            >
                                 <TrendChart points={donationTrend} />
                             </Panel>
                         </div>
                     )}
 
-                    {(donationBreakdown || inquiryBreakdown || contentHealth) && (
+                    {(donationBreakdown ||
+                        inquiryBreakdown ||
+                        contentHealth) && (
                         <Panel title="Breakdowns">
                             <div className="space-y-6 p-5">
                                 {donationBreakdown && (
                                     <div className="space-y-3">
-                                        <p className="text-xs font-bold tracking-[0.14em] text-muted-foreground uppercase">
+                                        <p className="text-xs font-bold tracking-[0.14em] text-brand-green uppercase">
                                             Donation status
                                         </p>
                                         <MeterRow
@@ -749,7 +758,7 @@ export default function Dashboard({
 
                                 {inquiryBreakdown && (
                                     <div className="space-y-3">
-                                        <p className="text-xs font-bold tracking-[0.14em] text-muted-foreground uppercase">
+                                        <p className="text-xs font-bold tracking-[0.14em] text-brand-green uppercase">
                                             Inquiries
                                         </p>
                                         <MeterRow
@@ -801,7 +810,7 @@ export default function Dashboard({
 
                                 {contentHealth && (
                                     <div className="space-y-3">
-                                        <p className="text-xs font-bold tracking-[0.14em] text-muted-foreground uppercase">
+                                        <p className="text-xs font-bold tracking-[0.14em] text-brand-green uppercase">
                                             Content health
                                         </p>
                                         <div className="grid grid-cols-2 gap-3 text-sm">
@@ -1035,7 +1044,7 @@ export default function Dashboard({
                                     ))}
                                     {draftPosts.length > 0 && (
                                         <div className="bg-secondary/30 px-5 py-3">
-                                            <p className="mb-2 text-xs font-bold tracking-[0.14em] text-muted-foreground uppercase">
+                                            <p className="mb-2 text-xs font-bold tracking-[0.14em] text-brand-green uppercase">
                                                 Drafts waiting
                                             </p>
                                             <div className="space-y-2">
@@ -1058,7 +1067,10 @@ export default function Dashboard({
 
                     <div className="space-y-6">
                         {topProgrammes.length > 0 && (
-                            <Panel title="Top programmes" href="/admin/donations">
+                            <Panel
+                                title="Top programmes"
+                                href="/admin/donations"
+                            >
                                 <div className="space-y-4 p-5">
                                     {topProgrammes.map((programme) => (
                                         <MeterRow

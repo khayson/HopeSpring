@@ -25,11 +25,13 @@ export function AdminStatCard({
 
     const body = (
         <>
-            <p className="text-sm font-medium text-muted-foreground">{label}</p>
+            <p className="text-sm font-medium text-navy dark:text-foreground">
+                {label}
+            </p>
             <p className="mt-2 font-serif text-3xl font-bold tracking-tight text-navy dark:text-foreground">
                 {value}
             </p>
-            <p className="mt-2 text-xs text-muted-foreground">{hint}</p>
+            <p className="mt-2 text-xs font-medium text-brand-green">{hint}</p>
         </>
     );
 

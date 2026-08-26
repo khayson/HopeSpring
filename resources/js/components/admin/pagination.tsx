@@ -28,8 +28,8 @@ export function Pagination({ links }: PaginationProps) {
                         link.active
                             ? 'bg-brand-green font-semibold text-white'
                             : link.url
-                              ? 'text-muted-foreground hover:bg-secondary'
-                              : 'pointer-events-none text-muted-foreground/40',
+                              ? 'text-navy/70 hover:bg-secondary dark:text-muted-foreground'
+                              : 'pointer-events-none text-navy/30 dark:text-muted-foreground/40',
                     )}
                     dangerouslySetInnerHTML={{ __html: link.label }}
                 />

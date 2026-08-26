@@ -172,12 +172,15 @@ export default function About({
                 </div>
             </section>
 
-            <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
+            <section className="bg-white px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-3xl text-center">
-                    <h2 className="font-serif text-3xl font-bold text-navy">
+                    <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                        About Us
+                    </p>
+                    <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
                         Who We Are
                     </h2>
-                    <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+                    <p className="mt-5 text-base leading-relaxed text-navy/80">
                         {whoWeAre}
                     </p>
                 </div>
@@ -189,7 +192,7 @@ export default function About({
                         <h2 className="font-serif text-3xl font-bold text-navy">
                             Vision
                         </h2>
-                        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                        <p className="mt-4 text-base leading-relaxed text-navy/80">
                             {settings.about_vision ||
                                 'To create a world where access to opportunity is available to all.'}
                         </p>
@@ -198,7 +201,7 @@ export default function About({
                         <h2 className="font-serif text-3xl font-bold text-navy">
                             Mission
                         </h2>
-                        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                        <p className="mt-4 text-base leading-relaxed text-navy/80">
                             {settings.about_mission ||
                                 'To empower communities through sustainable solutions in education, health, clean water and humanitarian support.'}
                         </p>
@@ -206,11 +209,16 @@ export default function About({
                 </div>
             </section>
 
-            <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
+            <section className="bg-white px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-7xl">
-                    <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
-                        Core Values
-                    </h2>
+                    <div className="mb-10 text-center">
+                        <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                            What Guides Us
+                        </p>
+                        <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                            Core Values
+                        </h2>
+                    </div>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {displayedValues.map((v, i) => (
                             <ScrollReveal key={v.title} delay={i * 50}>
@@ -274,11 +282,16 @@ export default function About({
             )}
 
             {leadership.length > 0 && (
-                <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
+                <section className="bg-white px-4 py-16 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
-                        <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
-                            Leadership Team
-                        </h2>
+                        <div className="mb-10 text-center">
+                            <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                                Our People
+                            </p>
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                                Leadership Team
+                            </h2>
+                        </div>
                         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
                             {leadership.map((member, i) => (
                                 <ScrollReveal key={member.id} delay={i * 50}>
@@ -289,7 +302,7 @@ export default function About({
                                             image={member.photo ?? undefined}
                                         />
                                         {member.bio && (
-                                            <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
+                                            <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-navy/75">
                                                 {member.bio}
                                             </p>
                                         )}
@@ -302,29 +315,41 @@ export default function About({
             )}
 
             {staff.length > 0 && (
-                <section className="mx-auto max-w-7xl px-4 py-16 md:px-6">
-                    <h2 className="mb-10 text-center font-serif text-2xl font-bold text-navy">
-                        Our Team
-                    </h2>
-                    <div className="grid gap-8 sm:grid-cols-3 lg:grid-cols-5">
-                        {staff.map((member) => (
-                            <TeamCard
-                                key={member.id}
-                                name={member.name}
-                                role={member.role}
-                                image={member.photo ?? undefined}
-                            />
-                        ))}
+                <section className="bg-white px-4 py-16 md:px-6">
+                    <div className="mx-auto max-w-7xl">
+                        <div className="mb-10 text-center">
+                            <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                                Our People
+                            </p>
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                                Our Team
+                            </h2>
+                        </div>
+                        <div className="grid gap-8 sm:grid-cols-3 lg:grid-cols-5">
+                            {staff.map((member) => (
+                                <TeamCard
+                                    key={member.id}
+                                    name={member.name}
+                                    role={member.role}
+                                    image={member.photo ?? undefined}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </section>
             )}
 
             {board.length > 0 && (
-                <section className="bg-secondary/50 px-4 py-12 md:px-6">
+                <section className="bg-white px-4 py-12 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
-                        <h2 className="mb-10 text-center font-serif text-2xl font-bold text-navy">
-                            Board of Directors
-                        </h2>
+                        <div className="mb-10 text-center">
+                            <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                                Governance
+                            </p>
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                                Board of Directors
+                            </h2>
+                        </div>
                         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                             {board.map((member) => (
                                 <TeamCard

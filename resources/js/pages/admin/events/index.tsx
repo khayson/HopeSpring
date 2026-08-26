@@ -11,6 +11,7 @@ import {
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -73,39 +74,6 @@ function formatTime(value: string): string {
     });
 }
 
-function StatCard({
-    label,
-    value,
-    hint,
-    active = false,
-    onClick,
-}: {
-    label: string;
-    value: number;
-    hint: string;
-    active?: boolean;
-    onClick: () => void;
-}) {
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            className={cn(
-                'rounded-2xl border bg-white p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md dark:bg-neutral-900',
-                active
-                    ? 'border-brand-green/50 ring-2 ring-brand-green/20'
-                    : 'border-sidebar-border/70 dark:border-sidebar-border',
-            )}
-        >
-            <p className="text-sm font-medium text-muted-foreground">{label}</p>
-            <p className="mt-2 font-serif text-3xl font-bold tracking-tight text-navy dark:text-foreground">
-                {value}
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">{hint}</p>
-        </button>
-    );
-}
-
 export default function EventsIndex({ events, filters, stats }: Props) {
     const [pendingDelete, setPendingDelete] = useState<number | null>(null);
     const [processing, setProcessing] = useState(false);
@@ -162,28 +130,28 @@ export default function EventsIndex({ events, filters, stats }: Props) {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    <StatCard
+                    <AdminStatCard
                         label="All events"
                         value={stats.total}
                         hint="Everything in the calendar"
                         active={activeStatus === ALL_STATUSES}
                         onClick={() => filter({ status: '' })}
                     />
-                    <StatCard
+                    <AdminStatCard
                         label="Upcoming"
                         value={stats.upcoming}
                         hint="Still ahead of now"
                         active={activeStatus === 'upcoming'}
                         onClick={() => filter({ status: 'upcoming' })}
                     />
-                    <StatCard
+                    <AdminStatCard
                         label="Past"
                         value={stats.past}
                         hint="Already happened"
                         active={activeStatus === 'past'}
                         onClick={() => filter({ status: 'past' })}
                     />
-                    <StatCard
+                    <AdminStatCard
                         label="Featured"
                         value={stats.featured}
                         hint="Priority listings"
@@ -305,7 +273,10 @@ export default function EventsIndex({ events, filters, stats }: Props) {
                                                     {formatDate(
                                                         event.starts_at,
                                                     )}{' '}
-                                                    · {formatTime(event.starts_at)}
+                                                    ·{' '}
+                                                    {formatTime(
+                                                        event.starts_at,
+                                                    )}
                                                 </span>
                                                 <span className="inline-flex items-center gap-1.5">
                                                     <MapPin className="size-3.5 text-brand-green" />

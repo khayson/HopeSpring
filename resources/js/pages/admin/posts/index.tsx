@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -64,39 +65,6 @@ function formatDate(value: string): string {
         month: 'short',
         year: 'numeric',
     });
-}
-
-function StatCard({
-    label,
-    value,
-    hint,
-    active = false,
-    onClick,
-}: {
-    label: string;
-    value: number;
-    hint: string;
-    active?: boolean;
-    onClick: () => void;
-}) {
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            className={cn(
-                'rounded-2xl border bg-white p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md dark:bg-neutral-900',
-                active
-                    ? 'border-brand-green/50 ring-2 ring-brand-green/20'
-                    : 'border-sidebar-border/70 dark:border-sidebar-border',
-            )}
-        >
-            <p className="text-sm font-medium text-muted-foreground">{label}</p>
-            <p className="mt-2 font-serif text-3xl font-bold tracking-tight text-navy dark:text-foreground">
-                {value}
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">{hint}</p>
-        </button>
-    );
 }
 
 export default function PostsIndex({ posts, filters, stats }: Props) {
@@ -159,28 +127,28 @@ export default function PostsIndex({ posts, filters, stats }: Props) {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    <StatCard
+                    <AdminStatCard
                         label="All posts"
                         value={stats.total}
                         hint="Published and drafts"
                         active={activeStatus === ALL}
                         onClick={() => filter({ status: '' })}
                     />
-                    <StatCard
+                    <AdminStatCard
                         label="Published"
                         value={stats.published}
                         hint="Live on the news page"
                         active={activeStatus === 'published'}
                         onClick={() => filter({ status: 'published' })}
                     />
-                    <StatCard
+                    <AdminStatCard
                         label="Drafts"
                         value={stats.drafts}
                         hint="Not scheduled yet"
                         active={activeStatus === 'draft'}
                         onClick={() => filter({ status: 'draft' })}
                     />
-                    <StatCard
+                    <AdminStatCard
                         label="Featured"
                         value={stats.featured}
                         hint="Homepage highlights"

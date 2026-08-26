@@ -17,7 +17,7 @@
  *   Navy:       #1a2f5c   Dark navy:  #152447
  *   Green:      #5fa93d   Light green:#7fc95c
  *   Gold:       #f0a938   Blue:       #3f8fd9
- *   Body text:  #1a2540   Muted:      #64748b
+ *   Body text:  #1a2540   Muted:      #3d4f72
  *
  * Typography:
  *   Display/headings: Lora (serif)
@@ -105,7 +105,7 @@
 /* ── LIGHT THEME (default) ──────────────────────────────────── */
 :root {
     /* Surface */
-    --background: oklch(0.985 0.002 247);
+    --background: oklch(1 0 0);
     --foreground: oklch(0.2 0.04 260);
 
     /* Cards */
@@ -126,7 +126,7 @@
 
     /* Muted */
     --muted: oklch(0.955 0.01 260);
-    --muted-foreground: oklch(0.5 0.02 260);
+    --muted-foreground: oklch(0.38 0.045 260);
 
     /* Accent: Gold #f0a938 */
     --accent: oklch(0.79 0.15 75);

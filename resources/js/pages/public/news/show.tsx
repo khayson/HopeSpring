@@ -191,7 +191,7 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                     <div className="mt-10">
                         <Link
                             href={newsIndex.url()}
-                            className="inline-flex items-center gap-2 text-sm font-bold text-navy transition-colors hover:text-brand-green-dark"
+                            className="inline-flex items-center gap-2 text-sm font-bold text-navy transition-colors hover:text-brand-green-dark dark:text-foreground"
                         >
                             <ArrowLeft className="size-4" />
                             Back to News & Stories
@@ -208,7 +208,7 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                                 <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                                     Keep reading
                                 </p>
-                                <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
+                                <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground md:text-4xl">
                                     Related stories
                                 </h2>
                                 <p className="mt-3 text-base leading-relaxed text-muted-foreground">

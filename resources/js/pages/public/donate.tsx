@@ -446,7 +446,7 @@ export default function Donate({
                                         className="size-4 shrink-0 text-brand-gold"
                                         fill="currentColor"
                                     />
-                                    <p className="text-sm text-navy">
+                                    <p className="text-sm text-navy dark:text-foreground">
                                         Directing this gift to{' '}
                                         <span className="font-semibold">
                                             {selectedLabel}
@@ -458,7 +458,7 @@ export default function Donate({
                             <div>
                                 <div className="flex items-end justify-between gap-4">
                                     <div>
-                                        <h2 className="font-serif text-2xl font-bold text-navy md:text-3xl">
+                                        <h2 className="font-serif text-2xl font-bold text-navy dark:text-foreground md:text-3xl">
                                             Choose an amount
                                         </h2>
                                         <p className="mt-1 text-sm text-muted-foreground">
@@ -489,8 +489,8 @@ export default function Donate({
                                                 className={cn(
                                                     'group relative overflow-hidden px-4 py-5 text-left transition-all duration-300',
                                                     active
-                                                        ? 'bg-navy text-white shadow-lg shadow-navy/20'
-                                                        : 'bg-secondary/70 text-navy hover:bg-secondary',
+                                                        ? 'bg-navy-dark text-white shadow-lg shadow-navy-dark/20'
+                                                        : 'bg-secondary/70 text-navy hover:bg-secondary dark:text-foreground',
                                                 )}
                                                 style={{
                                                     transitionDelay: `${index * 20}ms`,
@@ -549,7 +549,7 @@ export default function Donate({
 
                             {hasDestinations && (
                                 <div>
-                                    <h3 className="font-serif text-xl font-bold text-navy">
+                                    <h3 className="font-serif text-xl font-bold text-navy dark:text-foreground">
                                         Where should it go?
                                     </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
@@ -567,7 +567,7 @@ export default function Donate({
                                                 'px-4 py-2 text-sm font-semibold transition-colors duration-200',
                                                 destination === GENERAL_FUND
                                                     ? 'bg-brand-green text-white'
-                                                    : 'bg-secondary text-navy hover:bg-secondary/80',
+                                                    : 'bg-secondary text-navy hover:bg-secondary/80 dark:text-foreground',
                                             )}
                                         >
                                             Where it&apos;s needed most
@@ -585,8 +585,8 @@ export default function Donate({
                                                     className={cn(
                                                         'px-4 py-2 text-sm font-semibold transition-colors duration-200',
                                                         destination === value
-                                                            ? 'bg-navy text-white'
-                                                            : 'bg-secondary text-navy hover:bg-secondary/80',
+                                                            ? 'bg-navy-dark text-white'
+                                                            : 'bg-secondary text-navy hover:bg-secondary/80 dark:text-foreground',
                                                     )}
                                                 >
                                                     {programme.title}
@@ -606,8 +606,8 @@ export default function Donate({
                                                     className={cn(
                                                         'px-4 py-2 text-sm font-semibold transition-colors duration-200',
                                                         destination === value
-                                                            ? 'bg-navy text-white'
-                                                            : 'bg-secondary text-navy hover:bg-secondary/80',
+                                                            ? 'bg-navy-dark text-white'
+                                                            : 'bg-secondary text-navy hover:bg-secondary/80 dark:text-foreground',
                                                     )}
                                                 >
                                                     {event.title}
@@ -626,7 +626,7 @@ export default function Donate({
                             )}
 
                             <div>
-                                <h3 className="font-serif text-xl font-bold text-navy">
+                                <h3 className="font-serif text-xl font-bold text-navy dark:text-foreground">
                                     Your details
                                 </h3>
                                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -762,7 +762,7 @@ export default function Donate({
                     </ScrollReveal>
 
                     <ScrollReveal delay={120} className="lg:pt-2">
-                        <aside className="relative overflow-hidden bg-navy px-7 py-8 text-white md:px-8 md:py-10">
+                        <aside className="relative overflow-hidden bg-navy px-7 py-8 text-white md:px-8 md:py-10 dark:bg-navy-dark">
                             <div
                                 className="pointer-events-none absolute -top-20 -right-16 size-48 rounded-full blur-3xl"
                                 style={{

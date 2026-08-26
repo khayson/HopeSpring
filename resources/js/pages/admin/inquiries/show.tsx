@@ -93,7 +93,7 @@ export default function InquiryShow({ inquiry }: Props) {
                     </div>
                 </div>
 
-                <div className="max-w-2xl rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                <div className="max-w-2xl rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                     <dl className="grid gap-4 sm:grid-cols-2">
                         <div>
                             <dt className="text-xs font-medium text-muted-foreground uppercase">

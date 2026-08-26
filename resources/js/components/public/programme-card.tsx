@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils';
 const cardVariants = cva('group overflow-hidden rounded-xl transition-shadow', {
     variants: {
         variant: {
-            light: 'bg-white shadow-md hover:shadow-xl dark:bg-card',
-            dark: 'bg-navy text-white shadow-lg hover:shadow-2xl',
+            light: 'bg-card shadow-md hover:shadow-xl',
+            dark: 'bg-navy-dark text-white shadow-lg hover:shadow-2xl',
         },
     },
     defaultVariants: {
@@ -62,7 +62,7 @@ export function ProgrammeCard({
                 <h3
                     className={cn(
                         'font-serif text-lg font-semibold',
-                        variant === 'dark' ? 'text-white' : 'text-navy',
+                        variant === 'dark' ? 'text-white' : 'text-navy dark:text-foreground',
                     )}
                 >
                     {title}

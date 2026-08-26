@@ -263,11 +263,11 @@ export function PinterestPinLayout({
                         >
                             <figure>
                                 <div
-                                    className={`overflow-hidden rounded-2xl bg-navy ${ASPECTS[index % ASPECTS.length]}`}
+                                    className={`overflow-hidden rounded-2xl bg-navy-dark ${ASPECTS[index % ASPECTS.length]}`}
                                 >
                                     <GalleryMediaThumb
                                         item={item}
-                                        className="size-full bg-navy"
+                                        className="size-full bg-navy-dark"
                                         mediaClassName="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                                     />
                                 </div>

@@ -57,7 +57,7 @@ export default function UsersCreate({ roles }: Props) {
 
                 <form
                     onSubmit={handleSubmit}
-                    className="max-w-md space-y-5 rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900"
+                    className="max-w-md space-y-5 rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border"
                 >
                     <div className="space-y-2">
                         <Label htmlFor="name">Full Name</Label>

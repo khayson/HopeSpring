@@ -242,7 +242,7 @@ export default function GalleryIndex({
                     </Select>
                 </div>
 
-                <div className="overflow-hidden rounded-2xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">
+                <div className="overflow-hidden rounded-2xl border border-sidebar-border/70 bg-card dark:border-sidebar-border">
                     {images.data.length === 0 ? (
                         <div className="flex flex-col items-center gap-3 px-6 py-16 text-center">
                             <Images className="size-8 text-muted-foreground" />

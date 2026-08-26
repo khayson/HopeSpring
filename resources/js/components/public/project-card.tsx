@@ -22,7 +22,7 @@ export function ProjectCard({
     const card = (
         <div
             className={cn(
-                'group overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-card',
+                'group overflow-hidden rounded-xl bg-card shadow-md transition-shadow hover:shadow-xl',
                 className,
             )}
         >

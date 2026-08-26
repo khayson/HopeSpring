@@ -71,7 +71,7 @@ export default function MessageShow({ message }: Props) {
                     </button>
                 </div>
 
-                <div className="max-w-2xl rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                <div className="max-w-2xl rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                     <p className="text-sm leading-relaxed whitespace-pre-line text-foreground">
                         {message.message}
                     </p>

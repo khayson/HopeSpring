@@ -39,7 +39,7 @@ export function InquiryForm({ type, className }: InquiryFormProps) {
         return (
             <div
                 className={cn(
-                    'flex flex-col items-center justify-center rounded-xl bg-white p-12 text-center shadow-md dark:bg-card',
+                    'flex flex-col items-center justify-center rounded-xl bg-card p-12 text-center shadow-md',
                     className,
                 )}
             >
@@ -61,7 +61,7 @@ export function InquiryForm({ type, className }: InquiryFormProps) {
         <form
             onSubmit={handleSubmit}
             className={cn(
-                'space-y-5 rounded-xl bg-white p-8 shadow-md dark:bg-card',
+                'space-y-5 rounded-xl bg-card p-8 shadow-md',
                 className,
             )}
         >

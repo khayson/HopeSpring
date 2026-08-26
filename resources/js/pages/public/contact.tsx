@@ -24,7 +24,7 @@ export default function Contact({ settings }: Props) {
                 <div className="grid gap-12 lg:grid-cols-5">
                     {/* Contact Info */}
                     <div className="lg:col-span-2">
-                        <h2 className="font-serif text-2xl font-bold text-navy">
+                        <h2 className="font-serif text-2xl font-bold text-navy dark:text-foreground">
                             Get In Touch
                         </h2>
                         <p className="mt-3 text-muted-foreground">
@@ -38,7 +38,7 @@ export default function Contact({ settings }: Props) {
                                     <MapPin className="size-5 text-brand-green" />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-bold text-navy">
+                                    <h3 className="text-sm font-bold text-navy dark:text-foreground">
                                         Address
                                     </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
@@ -53,7 +53,7 @@ export default function Contact({ settings }: Props) {
                                     <Mail className="size-5 text-brand-green" />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-bold text-navy">
+                                    <h3 className="text-sm font-bold text-navy dark:text-foreground">
                                         Email
                                     </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
@@ -68,7 +68,7 @@ export default function Contact({ settings }: Props) {
                                     <Phone className="size-5 text-brand-green" />
                                 </div>
                                 <div>
-                                    <h3 className="text-sm font-bold text-navy">
+                                    <h3 className="text-sm font-bold text-navy dark:text-foreground">
                                         Phone
                                     </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">

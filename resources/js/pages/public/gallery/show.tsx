@@ -136,7 +136,7 @@ export default function GalleryShow({
             <div className="min-h-screen bg-navy-dark">
                 <div className="mx-auto max-w-7xl px-4 py-5 md:px-6 md:py-8 lg:px-8">
                     <PinterestPinLayout related={related}>
-                        <article className="overflow-hidden rounded-2xl bg-navy shadow-2xl ring-1 ring-white/10">
+                        <article className="overflow-hidden rounded-2xl bg-navy-dark shadow-2xl ring-1 ring-white/10">
                             <div className="flex flex-col md:flex-row">
                                 <div className="group relative min-w-0 flex-1 bg-navy-dark">
                                     <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-2">

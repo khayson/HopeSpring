@@ -51,7 +51,7 @@ export default function GalleryIndex({
                                 className={cn(
                                     'rounded-full px-4 py-1.5 text-sm font-semibold capitalize transition-colors',
                                     !currentCategory
-                                        ? 'bg-navy text-white'
+                                        ? 'bg-navy-dark text-white'
                                         : 'bg-secondary text-muted-foreground hover:bg-secondary/80',
                                 )}
                             >
@@ -66,7 +66,7 @@ export default function GalleryIndex({
                                     className={cn(
                                         'rounded-full px-4 py-1.5 text-sm font-semibold capitalize transition-colors',
                                         currentCategory === cat
-                                            ? 'bg-navy text-white'
+                                            ? 'bg-navy-dark text-white'
                                             : 'bg-secondary text-muted-foreground hover:bg-secondary/80',
                                     )}
                                 >

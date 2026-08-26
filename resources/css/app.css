@@ -238,8 +238,9 @@
     --sidebar-border: oklch(0.28 0.04 258);
     --sidebar-ring: oklch(0.65 0.16 145);
 
-    /* Brand palette (adjusted for dark — navy must be readable as text on dark surfaces) */
-    --navy: oklch(0.78 0.05 260);
+    /* Brand palette — navy stays the brand surface in both themes.
+     * Pair bg-navy with white/green type. Body copy on cards uses foreground. */
+    --navy: oklch(0.305 0.07 260);
     --navy-dark: oklch(0.24 0.06 258);
     --navy-light: oklch(0.85 0.04 260);
     --brand-green: oklch(0.65 0.16 145);
@@ -339,14 +340,14 @@
         font-family: var(--font-serif);
         font-size: 1.25rem;
         font-weight: 700;
-        color: var(--color-navy, #1a2f5c);
+        color: var(--foreground);
     }
 
     .rich-text-editor :where(h3) {
         font-family: var(--font-serif);
         font-size: 1.05rem;
         font-weight: 700;
-        color: var(--color-navy, #1a2f5c);
+        color: var(--foreground);
     }
 
     .rich-text-editor :where(ul) {
@@ -373,14 +374,14 @@
         font-family: var(--font-serif);
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--color-navy, #1a2f5c);
+        color: var(--foreground);
     }
 
     .rich-content :where(h3) {
         font-family: var(--font-serif);
         font-size: 1.2rem;
         font-weight: 700;
-        color: var(--color-navy, #1a2f5c);
+        color: var(--foreground);
     }
 
     .rich-content :where(ul) {
@@ -403,5 +404,11 @@
         color: var(--brand-green, #5fa93d);
         text-decoration: underline;
         text-underline-offset: 2px;
+    }
+}
+
+@layer utilities {
+    .dark .text-navy {
+        color: var(--foreground);
     }
 }

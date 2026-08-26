@@ -194,7 +194,7 @@ export default function Styleguide() {
                                 bg-card
                             </p>
                         </div>
-                        <div className="rounded-xl bg-navy p-6">
+                        <div className="rounded-xl bg-navy p-6 dark:bg-navy-dark">
                             <p className="text-sm font-semibold text-white">
                                 Navy Surface
                             </p>
@@ -240,7 +240,7 @@ export default function Styleguide() {
                         Brush Edge — Signature Motif
                     </h2>
                     <div className="overflow-hidden rounded-xl">
-                        <div className="bg-navy px-6 py-12 text-center">
+                        <div className="bg-navy px-6 py-12 text-center dark:bg-navy-dark">
                             <p className="font-serif text-2xl font-bold text-white">
                                 Hero Section
                             </p>
@@ -259,7 +259,7 @@ export default function Styleguide() {
                         Stats Bar
                     </h2>
                     <div className="overflow-hidden rounded-xl">
-                        <div className="bg-navy px-6 py-16" />
+                        <div className="bg-navy px-6 py-16 dark:bg-navy-dark" />
                         <StatsBar
                             stats={[
                                 { value: 25000, label: 'Lives Impacted' },
@@ -288,7 +288,7 @@ export default function Styleguide() {
                         <Button
                             asChild
                             variant="outline"
-                            className="border-navy font-semibold text-navy hover:bg-navy hover:text-white"
+                            className="border-navy font-semibold text-navy hover:bg-navy-dark hover:text-white dark:border-foreground/40 dark:text-foreground"
                         >
                             <Link href="#">Get Involved</Link>
                         </Button>

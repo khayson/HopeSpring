@@ -38,7 +38,7 @@ function EventCard({
     return (
         <Link
             href={`/events/${event.slug}`}
-            className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-md transition-shadow hover:shadow-xl dark:bg-card"
+            className="group flex flex-col overflow-hidden rounded-xl bg-card shadow-md transition-shadow hover:shadow-xl"
         >
             {event.photo && (
                 <div className="overflow-hidden">
@@ -61,7 +61,7 @@ function EventCard({
                         {event.location}
                     </span>
                 </div>
-                <h3 className="font-serif text-base font-semibold text-navy">
+                <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
                     {event.title}
                 </h3>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
@@ -90,7 +90,7 @@ export default function EventsIndex({ upcomingEvents, pastEvents }: Props) {
 
             {/* Upcoming */}
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
-                <h2 className="mb-8 font-serif text-3xl font-bold text-navy">
+                <h2 className="mb-8 font-serif text-3xl font-bold text-navy dark:text-foreground">
                     Upcoming Events
                 </h2>
                 {upcomingEvents.length > 0 ? (
@@ -110,7 +110,7 @@ export default function EventsIndex({ upcomingEvents, pastEvents }: Props) {
             {pastEvents.length > 0 && (
                 <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
-                        <h2 className="mb-8 font-serif text-3xl font-bold text-navy">
+                        <h2 className="mb-8 font-serif text-3xl font-bold text-navy dark:text-foreground">
                             Past Events
                         </h2>
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

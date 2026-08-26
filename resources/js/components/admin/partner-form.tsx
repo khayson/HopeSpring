@@ -88,7 +88,7 @@ export function PartnerForm({
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
                 <div className="space-y-6">
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                         <div className="mb-5">
                             <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                                 Partner details
@@ -159,7 +159,7 @@ export function PartnerForm({
                 </div>
 
                 <div className="space-y-6">
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                         <ImageUpload
                             label="Logo"
                             value={data.logo}
@@ -188,7 +188,7 @@ export function PartnerForm({
                         />
                     </section>
 
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                         <div className="mb-5">
                             <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                                 Visibility

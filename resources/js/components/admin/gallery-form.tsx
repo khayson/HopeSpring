@@ -103,7 +103,7 @@ export function GalleryForm({
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
-                <section className="space-y-6 rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                <section className="space-y-6 rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                     <div>
                         <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                             Caption
@@ -192,7 +192,7 @@ export function GalleryForm({
                     </div>
                 </section>
 
-                <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                     <MediaUpload
                         label={creating ? 'Files' : 'Replace file'}
                         files={

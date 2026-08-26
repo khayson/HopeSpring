@@ -89,7 +89,7 @@ export default function NewsIndex({
                             <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                                 From the field
                             </p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground md:text-4xl">
                                 {listHeading}
                             </h2>
                             <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
@@ -110,8 +110,8 @@ export default function NewsIndex({
                                     className={cn(
                                         '-mb-px border-b-2 px-3 py-2 text-sm font-semibold capitalize transition-colors',
                                         !currentCategory
-                                            ? 'border-navy text-navy'
-                                            : 'border-transparent text-muted-foreground hover:text-navy',
+                                            ? 'border-navy text-navy dark:border-foreground dark:text-foreground'
+                                            : 'border-transparent text-muted-foreground hover:text-navy dark:hover:text-foreground',
                                     )}
                                 >
                                     All
@@ -125,8 +125,8 @@ export default function NewsIndex({
                                         className={cn(
                                             '-mb-px border-b-2 px-3 py-2 text-sm font-semibold capitalize transition-colors',
                                             currentCategory === cat
-                                                ? 'border-navy text-navy'
-                                                : 'border-transparent text-muted-foreground hover:text-navy',
+                                                ? 'border-navy text-navy dark:border-foreground dark:text-foreground'
+                                                : 'border-transparent text-muted-foreground hover:text-navy dark:hover:text-foreground',
                                         )}
                                     >
                                         {cat}

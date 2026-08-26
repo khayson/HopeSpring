@@ -60,7 +60,7 @@ export default function EventShow({ event }: Props) {
                 <div className="mb-8 flex flex-wrap gap-4 rounded-xl border border-border bg-secondary/50 p-6">
                     <div className="flex items-center gap-2 text-sm">
                         <Calendar className="size-4 text-brand-green" />
-                        <span className="font-semibold text-navy">
+                        <span className="font-semibold text-navy dark:text-foreground">
                             {formatDate(event.starts_at)}
                         </span>
                     </div>
@@ -103,7 +103,7 @@ export default function EventShow({ event }: Props) {
                     <Button
                         asChild
                         variant="outline"
-                        className="border-navy font-semibold text-navy hover:bg-navy hover:text-white"
+                        className="border-navy font-semibold text-navy hover:bg-navy-dark hover:text-white dark:border-foreground/40 dark:text-foreground"
                     >
                         <Link href="/events">
                             <ArrowLeft className="size-4" />

@@ -42,7 +42,7 @@ export function NewsCard({
     if (featured) {
         return (
             <Link href={href} className={cn('group block', className)}>
-                <article className="grid overflow-hidden bg-navy lg:grid-cols-2">
+                <article className="grid overflow-hidden bg-navy lg:grid-cols-2 dark:bg-navy-dark">
                     <div className="relative min-h-[280px] overflow-hidden lg:min-h-[420px]">
                         {image ? (
                             <img
@@ -97,7 +97,7 @@ export function NewsCard({
             href={href}
             className={cn('group flex h-full flex-col', className)}
         >
-            <article className="flex h-full flex-col overflow-hidden bg-white transition-transform duration-300 group-hover:-translate-y-1 dark:bg-card">
+            <article className="flex h-full flex-col overflow-hidden bg-card transition-transform duration-300 group-hover:-translate-y-1">
                 <div className="relative overflow-hidden bg-secondary">
                     {image ? (
                         <img

@@ -137,7 +137,7 @@ export function ImageUpload({
 
                 {shownUrl && (
                     <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-gradient-to-t from-black/55 to-transparent p-3 pt-10">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-navy">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-navy-dark">
                             <CalendarDays className="size-3.5" />
                             Change photo
                         </span>

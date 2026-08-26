@@ -32,7 +32,7 @@ function PartnerLogo({ partner }: { partner: Partner }) {
                     className="max-h-12 max-w-full object-contain opacity-70 grayscale transition duration-300 group-hover/logo:scale-105 group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
                 />
             ) : (
-                <span className="text-center font-serif text-xs font-semibold tracking-wide text-navy/50 uppercase transition duration-300 group-hover/logo:text-navy">
+                <span className="text-center font-serif text-xs font-semibold tracking-wide text-navy/50 uppercase transition duration-300 group-hover/logo:text-navy-dark">
                     {partner.name}
                 </span>
             )}
@@ -109,7 +109,7 @@ export function PartnerShowcase({ partners, settings }: PartnerShowcaseProps) {
     );
 
     return (
-        <section className="bg-navy px-4 py-16 md:px-6 md:py-24">
+        <section className="bg-navy px-4 py-16 md:px-6 md:py-24 dark:bg-navy-dark">
             <div className="mx-auto max-w-7xl">
                 <div className="mx-auto max-w-3xl text-center">
                     <p className="text-xs font-bold tracking-[0.18em] text-brand-green-light uppercase">

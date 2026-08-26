@@ -268,7 +268,7 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
                 {orderedGroups.map(([group, fields]) => (
                     <section
                         key={group}
-                        className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900"
+                        className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border"
                     >
                         <div className="mb-5">
                             <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
@@ -391,7 +391,7 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
                 ))}
 
                 {data.impact_stats.length > 0 && (
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                         <div className="mb-5">
                             <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                                 Impact Stats

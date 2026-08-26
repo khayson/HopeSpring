@@ -40,7 +40,7 @@ export default function GetInvolved({ upcomingEvents }: Props) {
             {/* Ways to Help */}
             <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
                 <div className="mb-10 text-center">
-                    <h2 className="font-serif text-3xl font-bold text-navy">
+                    <h2 className="font-serif text-3xl font-bold text-navy dark:text-foreground">
                         Ways to Make a Difference
                     </h2>
                     <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
@@ -84,7 +84,7 @@ export default function GetInvolved({ upcomingEvents }: Props) {
             {upcomingEvents.length > 0 && (
                 <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
-                        <h2 className="mb-8 text-center font-serif text-3xl font-bold text-navy">
+                        <h2 className="mb-8 text-center font-serif text-3xl font-bold text-navy dark:text-foreground">
                             Upcoming Events
                         </h2>
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -92,7 +92,7 @@ export default function GetInvolved({ upcomingEvents }: Props) {
                                 <Link
                                     key={event.id}
                                     href={`/events/${event.slug}`}
-                                    className="group rounded-xl bg-white p-6 shadow-md transition-shadow hover:shadow-xl dark:bg-card"
+                                    className="group rounded-xl bg-card p-6 shadow-md transition-shadow hover:shadow-xl"
                                 >
                                     <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                                         <span className="flex items-center gap-1.5">
@@ -110,7 +110,7 @@ export default function GetInvolved({ upcomingEvents }: Props) {
                                             {event.location}
                                         </span>
                                     </div>
-                                    <h3 className="font-serif text-base font-semibold text-navy">
+                                    <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
                                         {event.title}
                                     </h3>
                                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

@@ -74,7 +74,7 @@ export default function ProgrammeShow({ programme }: Props) {
             {programme.projects.length > 0 && (
                 <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
-                        <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
+                        <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy dark:text-foreground">
                             Projects Under {programme.title}
                         </h2>
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

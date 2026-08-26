@@ -98,7 +98,7 @@ export default function ProjectShow({ project }: Props) {
                     <Button
                         asChild
                         variant="outline"
-                        className="border-navy font-semibold text-navy hover:bg-navy hover:text-white"
+                        className="border-navy font-semibold text-navy hover:bg-navy-dark hover:text-white dark:border-foreground/40 dark:text-foreground"
                     >
                         <Link href="/projects">
                             <ArrowLeft className="size-4" />

@@ -178,7 +178,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
 
             {stats.length > 0 && (
                 <div className="relative z-20 -mt-10 px-4 md:-mt-14 md:px-6">
-                    <div className="mx-auto max-w-6xl bg-white px-4 py-6 shadow-xl md:px-8 md:py-8">
+                    <div className="mx-auto max-w-6xl bg-card px-4 py-6 shadow-xl ring-1 ring-border md:px-8 md:py-8">
                         <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
                             {stats.map((stat, index) => {
                                 const Icon = statIcons[index] ?? Users;
@@ -193,7 +193,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                             value={stat.value}
                                             suffix={stat.suffix ?? '+'}
                                             label={stat.label}
-                                            className="text-navy"
+                                            className="text-navy dark:text-foreground"
                                         />
                                     </div>
                                 );
@@ -216,7 +216,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 width={800}
                                 height={900}
                             />
-                            <div className="absolute right-4 bottom-4 left-4 bg-white p-5 shadow-xl md:right-auto md:bottom-8 md:left-8 md:max-w-xs md:p-6">
+                            <div className="absolute right-4 bottom-4 left-4 bg-card p-5 shadow-xl ring-1 ring-border md:right-auto md:bottom-8 md:left-8 md:max-w-xs md:p-6">
                                 <p className="text-xs font-bold tracking-[0.16em] text-brand-green uppercase">
                                     {setting(
                                         settings,
@@ -250,7 +250,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                     'About Us',
                                 )}
                             </p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl">
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground md:text-4xl">
                                 {setting(
                                     settings,
                                     'home_about_title',
@@ -279,7 +279,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                                     <Icon className="size-5" />
                                                 </div>
                                                 <div>
-                                                    <h3 className="font-serif text-base font-semibold text-navy">
+                                                    <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
                                                         {value.title}
                                                     </h3>
                                                     <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
@@ -310,7 +310,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                 </div>
             </section>
 
-            <section className="bg-navy px-4 py-16 md:px-6 md:py-24">
+            <section className="bg-navy px-4 py-16 md:px-6 md:py-24 dark:bg-navy-dark">
                 <div className="mx-auto max-w-7xl">
                     <div className="mb-10 text-center">
                         <p className="text-xs font-bold tracking-[0.18em] text-brand-green-light uppercase">
@@ -349,7 +349,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 >
                                     <Link
                                         href={`/programmes/${programme.slug}`}
-                                        className="group flex h-full flex-col overflow-hidden bg-white transition-transform duration-300 hover:-translate-y-1"
+                                        className="group flex h-full flex-col overflow-hidden bg-card transition-transform duration-300 hover:-translate-y-1"
                                     >
                                         <div className="overflow-hidden">
                                             <img
@@ -365,7 +365,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                             <div className="mb-3 flex size-11 items-center justify-center rounded-full bg-brand-green">
                                                 <Icon className="size-5 text-white" />
                                             </div>
-                                            <h3 className="font-serif text-lg font-semibold text-navy">
+                                            <h3 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                                                 {programme.title}
                                             </h3>
                                             <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">

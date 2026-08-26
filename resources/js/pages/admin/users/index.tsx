@@ -199,7 +199,7 @@ export default function UsersIndex({ users, filters, stats, roles }: Props) {
                     </Select>
                 </div>
 
-                <div className="overflow-hidden rounded-2xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">
+                <div className="overflow-hidden rounded-2xl border border-sidebar-border/70 bg-card dark:border-sidebar-border">
                     {users.data.length === 0 ? (
                         <div className="flex flex-col items-center px-6 py-16 text-center">
                             <div className="mb-4 rounded-2xl bg-brand-green/10 p-4 text-brand-green">

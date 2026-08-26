@@ -23,11 +23,11 @@ export function EngagementCard({
     return (
         <div
             className={cn(
-                'flex flex-col items-center rounded-xl bg-white p-8 text-center shadow-md transition-shadow hover:shadow-xl dark:bg-card',
+                'flex flex-col items-center rounded-xl bg-card p-8 text-center shadow-md transition-shadow hover:shadow-xl',
                 className,
             )}
         >
-            <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-navy">
+            <div className="mb-5 flex size-14 items-center justify-center rounded-full bg-navy dark:bg-navy-dark">
                 <Icon className="size-6 text-brand-green-light" />
             </div>
             <h3 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
@@ -39,7 +39,7 @@ export function EngagementCard({
             <Button
                 asChild
                 variant="outline"
-                className="mt-6 border-navy font-semibold text-navy hover:bg-navy hover:text-white dark:border-foreground/30 dark:text-foreground"
+                className="mt-6 border-navy font-semibold text-navy hover:bg-navy hover:text-white dark:border-foreground/30 dark:text-foreground dark:hover:bg-navy-dark"
             >
                 <Link href={href}>{buttonLabel}</Link>
             </Button>

@@ -26,7 +26,7 @@ export function TeamCard({ name, role, image, className }: TeamCardProps) {
                     </div>
                 )}
             </div>
-            <h3 className="font-serif text-base font-semibold text-navy">
+            <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
                 {name}
             </h3>
             <p className="mt-1 text-sm font-semibold text-brand-green">

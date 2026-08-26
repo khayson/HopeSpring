@@ -192,7 +192,7 @@ function Panel({
     action?: ReactNode;
 }) {
     return (
-        <section className="overflow-hidden rounded-2xl border border-sidebar-border/70 bg-white dark:border-sidebar-border dark:bg-neutral-900">
+        <section className="overflow-hidden rounded-2xl border border-sidebar-border/70 bg-card dark:border-sidebar-border">
             <div className="flex items-center justify-between gap-3 border-b border-sidebar-border/70 px-5 py-4 dark:border-sidebar-border">
                 <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                     {title}
@@ -259,7 +259,7 @@ function Kpi({
         return (
             <Link
                 href={href}
-                className="rounded-2xl border border-sidebar-border/70 bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand-green/40 hover:shadow-md dark:border-sidebar-border dark:bg-neutral-900"
+                className="rounded-2xl border border-sidebar-border/70 bg-card p-5 transition hover:-translate-y-0.5 hover:border-brand-green/40 hover:shadow-md dark:border-sidebar-border"
             >
                 {body}
             </Link>
@@ -267,7 +267,7 @@ function Kpi({
     }
 
     return (
-        <div className="rounded-2xl border border-sidebar-border/70 bg-white p-5 dark:border-sidebar-border dark:bg-neutral-900">
+        <div className="rounded-2xl border border-sidebar-border/70 bg-card p-5 dark:border-sidebar-border">
             {body}
         </div>
     );
@@ -451,7 +451,7 @@ export default function Dashboard({
         <>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4 lg:p-6">
-                <section className="relative overflow-hidden rounded-2xl bg-navy px-6 py-7 text-white md:px-8">
+                <section className="relative overflow-hidden rounded-2xl bg-navy px-6 py-7 text-white md:px-8 dark:bg-navy-dark">
                     <div
                         className="pointer-events-none absolute inset-0 opacity-40"
                         style={{
@@ -656,7 +656,7 @@ export default function Dashboard({
                 </section>
 
                 {goal && (
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-5 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-5 dark:border-sidebar-border">
                         <div className="flex flex-wrap items-end justify-between gap-3">
                             <div>
                                 <p className="text-xs font-bold tracking-[0.16em] text-brand-green uppercase">
@@ -869,9 +869,9 @@ export default function Dashboard({
                                     <Link
                                         key={action.href}
                                         href={action.href}
-                                        className="group flex items-start gap-4 rounded-2xl border border-sidebar-border/70 bg-white p-4 transition hover:border-brand-green/40 hover:shadow-md dark:border-sidebar-border dark:bg-neutral-900"
+                                        className="group flex items-start gap-4 rounded-2xl border border-sidebar-border/70 bg-card p-4 transition hover:border-brand-green/40 hover:shadow-md dark:border-sidebar-border"
                                     >
-                                        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-navy text-brand-green-light">
+                                        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-navy text-brand-green-light dark:bg-navy-dark">
                                             <Icon className="size-4" />
                                         </div>
                                         <div>

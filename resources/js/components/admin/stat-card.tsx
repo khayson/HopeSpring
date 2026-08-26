@@ -16,7 +16,7 @@ export function AdminStatCard({
     onClick,
 }: AdminStatCardProps) {
     const className = cn(
-        'rounded-2xl border bg-white p-5 text-left transition dark:bg-neutral-900',
+        'rounded-2xl border bg-card p-5 text-left transition',
         onClick && 'hover:-translate-y-0.5 hover:shadow-md',
         active
             ? 'border-brand-green/50 ring-2 ring-brand-green/20'

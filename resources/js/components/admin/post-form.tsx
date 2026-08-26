@@ -116,7 +116,7 @@ export function PostForm({
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
                 <div className="space-y-6">
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                         <div className="mb-5">
                             <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                                 Story details
@@ -186,7 +186,7 @@ export function PostForm({
                 </div>
 
                 <div className="space-y-6">
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                         <ImageUpload
                             label="Featured image"
                             value={data.featured_image}
@@ -214,7 +214,7 @@ export function PostForm({
                         />
                     </section>
 
-                    <section className="rounded-2xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-neutral-900">
+                    <section className="rounded-2xl border border-sidebar-border/70 bg-card p-6 dark:border-sidebar-border">
                         <div className="mb-5">
                             <h2 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                                 Publishing

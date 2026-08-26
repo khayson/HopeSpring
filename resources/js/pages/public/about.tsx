@@ -163,7 +163,7 @@ export default function About({
                     <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                         About Us
                     </p>
-                    <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                    <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
                         Founder&apos;s Story
                     </h2>
                     <p className="mt-5 text-base leading-relaxed text-muted-foreground">
@@ -172,15 +172,15 @@ export default function About({
                 </div>
             </section>
 
-            <section className="bg-white px-4 py-16 md:px-6 md:py-24">
+            <section className="bg-card px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-3xl text-center">
                     <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                         About Us
                     </p>
-                    <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                    <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
                         Who We Are
                     </h2>
-                    <p className="mt-5 text-base leading-relaxed text-navy/80">
+                    <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                         {whoWeAre}
                     </p>
                 </div>
@@ -189,19 +189,19 @@ export default function About({
             <section className="px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
                     <div>
-                        <h2 className="font-serif text-3xl font-bold text-navy">
+                        <h2 className="font-serif text-3xl font-bold text-navy dark:text-foreground">
                             Vision
                         </h2>
-                        <p className="mt-4 text-base leading-relaxed text-navy/80">
+                        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                             {settings.about_vision ||
                                 'To create a world where access to opportunity is available to all.'}
                         </p>
                     </div>
                     <div>
-                        <h2 className="font-serif text-3xl font-bold text-navy">
+                        <h2 className="font-serif text-3xl font-bold text-navy dark:text-foreground">
                             Mission
                         </h2>
-                        <p className="mt-4 text-base leading-relaxed text-navy/80">
+                        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                             {settings.about_mission ||
                                 'To empower communities through sustainable solutions in education, health, clean water and humanitarian support.'}
                         </p>
@@ -209,13 +209,13 @@ export default function About({
                 </div>
             </section>
 
-            <section className="bg-white px-4 py-16 md:px-6 md:py-24">
+            <section className="bg-card px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-7xl">
                     <div className="mb-10 text-center">
                         <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                             What Guides Us
                         </p>
-                        <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                        <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
                             Core Values
                         </h2>
                     </div>
@@ -235,7 +235,7 @@ export default function About({
 
             <section className="px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-7xl">
-                    <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
+                    <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy dark:text-foreground">
                         Areas We Focus On
                     </h2>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -246,12 +246,12 @@ export default function About({
                                 <ScrollReveal key={area.slug} delay={i * 50}>
                                     <Link
                                         href={`/programmes/${area.slug}`}
-                                        className="flex flex-col items-center rounded-xl border border-border bg-white p-6 text-center transition-shadow hover:shadow-lg"
+                                        className="flex flex-col items-center rounded-xl border border-border bg-card p-6 text-center transition-shadow hover:shadow-lg"
                                     >
                                         <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-brand-green/10">
                                             <Icon className="size-6 text-brand-green" />
                                         </div>
-                                        <h3 className="font-serif text-base font-semibold text-navy">
+                                        <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
                                             {area.title}
                                         </h3>
                                     </Link>
@@ -264,7 +264,7 @@ export default function About({
 
             {milestones.length > 0 && (
                 <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
-                    <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
+                    <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy dark:text-foreground">
                         Our Journey
                     </h2>
                     <div className="mx-auto max-w-2xl">
@@ -282,13 +282,13 @@ export default function About({
             )}
 
             {leadership.length > 0 && (
-                <section className="bg-white px-4 py-16 md:px-6 md:py-24">
+                <section className="bg-card px-4 py-16 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-10 text-center">
                             <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                                 Our People
                             </p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
                                 Leadership Team
                             </h2>
                         </div>
@@ -302,7 +302,7 @@ export default function About({
                                             image={member.photo ?? undefined}
                                         />
                                         {member.bio && (
-                                            <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-navy/75">
+                                            <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
                                                 {member.bio}
                                             </p>
                                         )}
@@ -315,13 +315,13 @@ export default function About({
             )}
 
             {staff.length > 0 && (
-                <section className="bg-white px-4 py-16 md:px-6">
+                <section className="bg-card px-4 py-16 md:px-6">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-10 text-center">
                             <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                                 Our People
                             </p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
                                 Our Team
                             </h2>
                         </div>
@@ -340,13 +340,13 @@ export default function About({
             )}
 
             {board.length > 0 && (
-                <section className="bg-white px-4 py-12 md:px-6 md:py-24">
+                <section className="bg-card px-4 py-12 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
                         <div className="mb-10 text-center">
                             <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                                 Governance
                             </p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy">
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
                                 Board of Directors
                             </h2>
                         </div>

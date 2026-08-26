@@ -14,6 +14,7 @@ type GalleryImage = {
     alt: string;
     caption: string | null;
     category: string | null;
+    media_type: 'image' | 'video';
 };
 
 type Props = {

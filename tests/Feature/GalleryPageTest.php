@@ -28,7 +28,8 @@ test('gallery page renders seeded images', function () {
             ->where('currentCategory', null)
             ->where('images.0.src', '/storage/gallery/01.jpg')
             ->where('images.0.caption', 'First water from the Soe borehole')
-            ->where('images.0.category', 'water'));
+            ->where('images.0.category', 'water')
+            ->where('images.0.media_type', 'image'));
 });
 
 test('gallery page filters by category', function () {
@@ -89,6 +90,7 @@ test('gallery show page displays image details and related images', function () 
             ->where('image.id', $image->id)
             ->where('image.caption', 'First water from the Soe borehole')
             ->where('image.category', 'water')
+            ->where('image.media_type', 'image')
             ->has('related', 2)
             ->where('related.0.category', 'water')
             ->where('position', 1)
@@ -162,4 +164,18 @@ test('gallery show provides previous and next navigation', function () {
             ->where('total', 3)
             ->where('previous.id', $first->id)
             ->where('next.id', $third->id));
+});
+
+test('gallery show includes video media type', function () {
+    $video = GalleryImage::factory()->video()->create([
+        'caption' => 'Donation to Save Them Young Orphanage',
+        'category' => 'community',
+    ]);
+
+    $this->get(route('gallery.show', $video))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->where('image.media_type', 'video')
+            ->where('image.caption', 'Donation to Save Them Young Orphanage')
+            ->where('donateProgrammeSlug', 'community-development'));
 });

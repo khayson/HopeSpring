@@ -1,17 +1,13 @@
 import { Link } from '@inertiajs/react';
+import {
+    GalleryMediaThumb,
+    type GalleryMediaItem,
+} from '@/components/public/gallery-media-thumb';
 import { cn } from '@/lib/utils';
 import { show as galleryShow } from '@/routes/gallery';
 
-type GalleryImage = {
-    id: number;
-    src: string;
-    alt: string;
-    caption?: string | null;
-    category?: string | null;
-};
-
 type GalleryGridProps = {
-    images: GalleryImage[];
+    images: GalleryMediaItem[];
     className?: string;
     /** Pinterest-style: title sits under the image instead of a hover overlay */
     captionBelow?: boolean;
@@ -41,12 +37,11 @@ export function GalleryGrid({
                     prefetch
                 >
                     <figure>
-                        <div className="relative overflow-hidden rounded-2xl bg-secondary">
-                            <img
-                                src={image.src}
-                                alt={image.alt}
-                                className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                                loading="lazy"
+                        <div className="relative overflow-hidden rounded-2xl">
+                            <GalleryMediaThumb
+                                item={image}
+                                className="rounded-2xl"
+                                mediaClassName="transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                             />
                             {!captionBelow && (
                                 <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/50 to-transparent px-3 pt-10 pb-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">

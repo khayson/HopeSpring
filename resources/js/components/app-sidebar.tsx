@@ -4,6 +4,7 @@ import {
     CalendarDays,
     CircleDollarSign,
     Handshake,
+    Images,
     LayoutGrid,
     Mail,
     Megaphone,
@@ -26,6 +27,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as donationsIndex } from '@/routes/admin/donations';
 import { index as eventsIndex } from '@/routes/admin/events';
+import { index as galleryIndex } from '@/routes/admin/gallery';
 import { index as inquiriesIndex } from '@/routes/admin/inquiries';
 import { index as messagesIndex } from '@/routes/admin/messages';
 import { index as newsletterIndex } from '@/routes/admin/newsletter';
@@ -46,6 +48,7 @@ export function AppSidebar() {
     if (role === 'admin' || role === 'editor') {
         mainNavItems.push(
             { title: 'Events', href: eventsIndex.url(), icon: CalendarDays },
+            { title: 'Gallery', href: galleryIndex.url(), icon: Images },
             { title: 'Blog Posts', href: postsIndex.url(), icon: Newspaper },
             { title: 'Partners', href: partnersIndex.url(), icon: Building2 },
         );

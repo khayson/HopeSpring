@@ -13,6 +13,7 @@ import {
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { DonationBand } from '@/components/public/donation-band';
+import { isGalleryVideo } from '@/components/public/gallery-media-thumb';
 import { PinterestPinLayout } from '@/components/public/pinterest-pin-layout';
 import PublicLayout from '@/layouts/public/public-layout';
 import { donate } from '@/routes';
@@ -29,6 +30,7 @@ type GalleryImage = {
     alt: string;
     caption: string | null;
     category: string | null;
+    media_type: 'image' | 'video';
 };
 
 type GalleryComment = {
@@ -64,6 +66,7 @@ export default function GalleryShow({
     donateProgrammeSlug,
 }: Props) {
     const title = image.caption ?? image.alt;
+    const isVideo = isGalleryVideo(image);
     const [copied, setCopied] = useState(false);
     const [zoomed, setZoomed] = useState(false);
     const donateHref = donateProgrammeSlug
@@ -149,26 +152,37 @@ export default function GalleryShow({
                                         </span>
                                     </div>
 
-                                    <button
-                                        type="button"
-                                        onClick={() => setZoomed(true)}
-                                        className="relative block w-full cursor-zoom-in text-left"
-                                        aria-label="View full image"
-                                    >
-                                        <img
+                                    {isVideo ? (
+                                        <video
                                             src={image.src}
-                                            alt={image.alt}
-                                            className="aspect-[4/5] max-h-[420px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                                            controls
+                                            playsInline
+                                            preload="metadata"
+                                            className="aspect-video max-h-[420px] w-full bg-black object-contain"
+                                            aria-label={image.alt}
                                         />
-                                        <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-dark/50 via-transparent to-navy-dark/20 opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-                                        <span className="pointer-events-none absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold text-navy-dark opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                                            <Maximize2
-                                                className="size-3.5"
-                                                aria-hidden
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            onClick={() => setZoomed(true)}
+                                            className="relative block w-full cursor-zoom-in text-left"
+                                            aria-label="View full image"
+                                        >
+                                            <img
+                                                src={image.src}
+                                                alt={image.alt}
+                                                className="aspect-[4/5] max-h-[420px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                                             />
-                                            Expand
-                                        </span>
-                                    </button>
+                                            <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-dark/50 via-transparent to-navy-dark/20 opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+                                            <span className="pointer-events-none absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold text-navy-dark opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                                <Maximize2
+                                                    className="size-3.5"
+                                                    aria-hidden
+                                                />
+                                                Expand
+                                            </span>
+                                        </button>
+                                    )}
 
                                     <div className="pointer-events-none absolute inset-y-0 right-0 left-0 z-10 flex items-center justify-between px-2">
                                         {previous ? (
@@ -178,7 +192,7 @@ export default function GalleryShow({
                                                 )}
                                                 prefetch
                                                 className="pointer-events-auto flex size-8 items-center justify-center rounded-full bg-white/90 text-navy-dark opacity-0 shadow-md transition-all group-hover:opacity-100 hover:scale-105"
-                                                aria-label="Previous image"
+                                                aria-label="Previous"
                                             >
                                                 <ChevronLeft className="size-4" />
                                             </Link>
@@ -190,7 +204,7 @@ export default function GalleryShow({
                                                 href={galleryShow.url(next.id)}
                                                 prefetch
                                                 className="pointer-events-auto flex size-8 items-center justify-center rounded-full bg-white/90 text-navy-dark opacity-0 shadow-md transition-all group-hover:opacity-100 hover:scale-105"
-                                                aria-label="Next image"
+                                                aria-label="Next"
                                             >
                                                 <ChevronRight className="size-4" />
                                             </Link>
@@ -226,8 +240,8 @@ export default function GalleryShow({
                                                     className="flex items-center gap-1 rounded-full px-2 py-1.5 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                                                     aria-label={
                                                         liked
-                                                            ? 'Unlike image'
-                                                            : 'Like image'
+                                                            ? 'Unlike'
+                                                            : 'Like'
                                                     }
                                                     aria-pressed={liked}
                                                 >
@@ -437,7 +451,7 @@ export default function GalleryShow({
                 </div>
             </div>
 
-            {zoomed && (
+            {zoomed && !isVideo && (
                 <div
                     className="fixed inset-0 z-[60] flex animate-in items-center justify-center bg-navy-dark/95 p-4 backdrop-blur-sm duration-200 fade-in-0"
                     onClick={() => setZoomed(false)}

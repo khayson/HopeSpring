@@ -13,14 +13,14 @@ class GalleryController extends Controller
 {
     public function index(Request $request): Response
     {
-        $query = GalleryImage::query()->orderBy('sort_order');
+        $query = GalleryImage::query()->orderBy('sort_order')->orderBy('id');
 
         if ($request->filled('category')) {
             $query->where('category', $request->input('category'));
         }
 
         return Inertia::render('public/gallery/index', [
-            'images' => $query->get(['id', 'src', 'alt', 'caption', 'category']),
+            'images' => $query->get()->map->toPublicArray()->values(),
             'categories' => GalleryImage::query()->distinct()->whereNotNull('category')->pluck('category'),
             'currentCategory' => $request->input('category'),
         ]);
@@ -31,7 +31,7 @@ class GalleryController extends Controller
         $ordered = GalleryImage::query()
             ->orderBy('sort_order')
             ->orderBy('id')
-            ->get(['id', 'src', 'alt', 'caption', 'category', 'sort_order']);
+            ->get();
 
         $index = $ordered->search(fn (GalleryImage $image): bool => $image->id === $galleryImage->id);
         $previous = $index !== false && $index > 0 ? $ordered[$index - 1] : null;
@@ -47,15 +47,17 @@ class GalleryController extends Controller
         $related = $relatedQuery
             ->orderBy('sort_order')
             ->take(20)
-            ->get(['id', 'src', 'alt', 'caption', 'category']);
+            ->get()
+            ->map->toPublicArray()
+            ->values();
 
         $visitorToken = GalleryVisitor::token($request);
 
         return Inertia::render('public/gallery/show', [
-            'image' => $galleryImage->only(['id', 'src', 'alt', 'caption', 'category']),
+            'image' => $galleryImage->toPublicArray(),
             'related' => $related,
-            'previous' => $previous?->only(['id', 'src', 'alt', 'caption', 'category']),
-            'next' => $next?->only(['id', 'src', 'alt', 'caption', 'category']),
+            'previous' => $previous?->toPublicArray(),
+            'next' => $next?->toPublicArray(),
             'position' => $index === false ? 1 : $index + 1,
             'total' => $ordered->count(),
             'likesCount' => $galleryImage->likes()->count(),

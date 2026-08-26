@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DonationController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\GalleryImageController;
 use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\NewsletterSubscriberController;
 use App\Http\Controllers\Admin\PartnerController;
@@ -21,6 +22,9 @@ Route::middleware(['auth', 'verified', 'role:admin,editor,finance'])->prefix('ad
         Route::resource('events', EventController::class)->except('show');
         Route::resource('posts', PostController::class)->except('show');
         Route::resource('partners', PartnerController::class)->except('show');
+        Route::resource('gallery', GalleryImageController::class)
+            ->parameters(['gallery' => 'galleryImage'])
+            ->except('show');
     });
 
     Route::middleware('role:admin')->group(function () {

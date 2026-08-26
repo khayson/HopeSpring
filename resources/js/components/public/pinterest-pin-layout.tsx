@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { useLayoutEffect, useRef, useState } from 'react';
+import { GalleryMediaThumb } from '@/components/public/gallery-media-thumb';
 import { show as galleryShow } from '@/routes/gallery';
 
 type RelatedImage = {
@@ -8,6 +9,7 @@ type RelatedImage = {
     alt: string;
     caption: string | null;
     category: string | null;
+    media_type?: 'image' | 'video' | null;
 };
 
 type Position = {
@@ -263,12 +265,10 @@ export function PinterestPinLayout({
                                 <div
                                     className={`overflow-hidden rounded-2xl bg-navy ${ASPECTS[index % ASPECTS.length]}`}
                                 >
-                                    <img
-                                        src={item.src}
-                                        alt={item.alt}
-                                        className="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                                        loading="eager"
-                                        decoding="async"
+                                    <GalleryMediaThumb
+                                        item={item}
+                                        className="size-full bg-navy"
+                                        mediaClassName="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                                     />
                                 </div>
                                 <figcaption className="mt-1.5 px-0.5">

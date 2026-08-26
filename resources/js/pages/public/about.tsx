@@ -29,32 +29,74 @@ type Partner = {
     logo: string | null;
     url: string | null;
 };
+type Programme = {
+    id: number;
+    title: string;
+    slug: string;
+    description: string;
+    icon: string;
+};
 
 type AboutProps = {
     team: TeamMember[];
     milestones: Milestone[];
     stats: Stat[];
     partners: Partner[];
+    programmes: Programme[];
     settings: Record<string, string | null | undefined>;
 };
+
+const fallbackProgrammes = [
+    {
+        title: 'Clean Water',
+        slug: 'clean-water-initiative',
+        icon: 'Droplets',
+    },
+    {
+        title: 'Education Support',
+        slug: 'education-for-all',
+        icon: 'GraduationCap',
+    },
+    {
+        title: 'Healthcare Outreach',
+        slug: 'healthcare-outreach',
+        icon: 'HeartPulse',
+    },
+    {
+        title: 'Community Development',
+        slug: 'community-development',
+        icon: 'Users',
+    },
+    {
+        title: 'Youth & Women Empowerment',
+        slug: 'youth-women-empowerment',
+        icon: 'Venus',
+    },
+    {
+        title: 'Emergency Relief',
+        slug: 'emergency-relief',
+        icon: 'Package',
+    },
+] as const;
 
 export default function About({
     team,
     milestones,
     stats,
     partners,
+    programmes = [],
     settings,
 }: AboutProps) {
     const leadership = team.filter((m) => m.type === 'leadership');
     const staff = team.filter((m) => m.type === 'staff');
     const board = team.filter((m) => m.type === 'board');
     const story =
-        settings.home_about_body?.trim() ||
+        settings.about_founder_story?.trim() ||
         'HopeSpring Foundation was born from a moment that could not be ignored. One day, Melina Diamond encountered a woman and her three children on her way back from town. Moved by compassion, she offered them a ride to school. During the ride, she noticed the youngest child holding a torn rubber bag tightly to his chest. Inside were his books. Despite its condition, he held it with pride and said, "This is my school bag." That moment revealed resilience, dignity, and need in its purest form. The next day, Melina returned with a proper school bag. The joy and gratitude the child expressed became a defining moment. It was then she realized: even the smallest act of kindness can transform a life. From that moment, HopeSpring Foundation was born.';
     const whoWeAre =
         settings.about_who_we_are?.trim() ||
         'A purpose-driven organization committed to empowering individuals and transforming communities through sustainable, people-centered solutions.';
-    const values = [1, 2, 3, 4, 5]
+    const values = [1, 2, 3, 4]
         .map((index) => ({
             title: settings[`home_value_${index}_title`]?.trim() ?? '',
             description:
@@ -65,36 +107,36 @@ export default function About({
     const fallbackValues = [
         {
             title: 'Compassion',
-            description:
-                'We lead with empathy and genuine care for every person we serve.',
+            description: 'We serve with love and empathy for every person.',
             icon: getIcon('Heart'),
         },
         {
             title: 'Integrity',
-            description:
-                'We uphold honesty, transparency, and accountability in all we do.',
+            description: 'We uphold transparency, honesty and accountability.',
             icon: getIcon('Shield'),
         },
         {
             title: 'Empowerment',
             description:
-                'We equip individuals and communities to shape their own futures.',
-            icon: getIcon('Sparkles'),
-        },
-        {
-            title: 'Sustainability',
-            description:
-                'We build lasting, people-centered solutions communities can sustain.',
-            icon: getIcon('Leaf'),
+                'We equip people to build better and sustainable lives.',
+            icon: getIcon('Users'),
         },
         {
             title: 'Excellence',
             description:
                 'We are committed to quality and continuous improvement.',
-            icon: getIcon('Award'),
+            icon: getIcon('Star'),
         },
     ];
     const displayedValues = values.length > 0 ? values : fallbackValues;
+    const displayedProgrammes =
+        programmes.length > 0
+            ? programmes
+            : fallbackProgrammes.map((programme) => ({
+                  ...programme,
+                  id: 0,
+                  description: '',
+              }));
 
     return (
         <PublicLayout currentPath="/about">
@@ -141,7 +183,6 @@ export default function About({
                 </div>
             </section>
 
-            {/* Mission & Vision */}
             <section className="px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
                     <div>
@@ -159,19 +200,18 @@ export default function About({
                         </h2>
                         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                             {settings.about_mission ||
-                                'To impact lives globally through empowerment, support, and sustainable development.'}
+                                'To empower communities through sustainable solutions in education, health, clean water and humanitarian support.'}
                         </p>
                     </div>
                 </div>
             </section>
 
-            {/* Core Values */}
             <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-7xl">
                     <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
                         Core Values
                     </h2>
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {displayedValues.map((v, i) => (
                             <ScrollReveal key={v.title} delay={i * 50}>
                                 <ValueCard
@@ -188,52 +228,32 @@ export default function About({
             <section className="px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-7xl">
                     <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
-                        Areas of Focus
+                        Areas We Focus On
                     </h2>
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {(
-                            [
-                                {
-                                    title: 'Community Outreach',
-                                    href: '/programmes/clean-water-initiative',
-                                    icon: getIcon('Users'),
-                                },
-                                {
-                                    title: 'Youth Empowerment',
-                                    href: '/programmes/community-development',
-                                    icon: getIcon('Sparkles'),
-                                },
-                                {
-                                    title: 'Health & Wellness',
-                                    href: '/programmes/healthcare-outreach',
-                                    icon: getIcon('HeartPulse'),
-                                },
-                                {
-                                    title: 'Education & Development',
-                                    href: '/programmes/education-for-all',
-                                    icon: getIcon('GraduationCap'),
-                                },
-                            ] as const
-                        ).map((area, i) => (
-                            <ScrollReveal key={area.title} delay={i * 50}>
-                                <Link
-                                    href={area.href}
-                                    className="flex flex-col items-center rounded-xl border border-border bg-white p-6 text-center transition-shadow hover:shadow-lg"
-                                >
-                                    <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-brand-green/10">
-                                        <area.icon className="size-6 text-brand-green" />
-                                    </div>
-                                    <h3 className="font-serif text-base font-semibold text-navy">
-                                        {area.title}
-                                    </h3>
-                                </Link>
-                            </ScrollReveal>
-                        ))}
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {displayedProgrammes.map((area, i) => {
+                            const Icon = getIcon(area.icon);
+
+                            return (
+                                <ScrollReveal key={area.slug} delay={i * 50}>
+                                    <Link
+                                        href={`/programmes/${area.slug}`}
+                                        className="flex flex-col items-center rounded-xl border border-border bg-white p-6 text-center transition-shadow hover:shadow-lg"
+                                    >
+                                        <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-brand-green/10">
+                                            <Icon className="size-6 text-brand-green" />
+                                        </div>
+                                        <h3 className="font-serif text-base font-semibold text-navy">
+                                            {area.title}
+                                        </h3>
+                                    </Link>
+                                </ScrollReveal>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
 
-            {/* Our Story / Timeline */}
             {milestones.length > 0 && (
                 <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
                     <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy">
@@ -253,7 +273,6 @@ export default function About({
                 </section>
             )}
 
-            {/* Leadership */}
             {leadership.length > 0 && (
                 <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">
                     <div className="mx-auto max-w-7xl">
@@ -282,7 +301,6 @@ export default function About({
                 </section>
             )}
 
-            {/* Staff */}
             {staff.length > 0 && (
                 <section className="mx-auto max-w-7xl px-4 py-16 md:px-6">
                     <h2 className="mb-10 text-center font-serif text-2xl font-bold text-navy">
@@ -301,7 +319,6 @@ export default function About({
                 </section>
             )}
 
-            {/* Board */}
             {board.length > 0 && (
                 <section className="bg-secondary/50 px-4 py-12 md:px-6">
                     <div className="mx-auto max-w-7xl">

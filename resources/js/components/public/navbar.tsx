@@ -12,7 +12,7 @@ type NavLink = {
 const navLinks: NavLink[] = [
     { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
-    { label: 'Our Programmes', href: '/programmes' },
+    { label: 'Our Programs', href: '/programmes' },
     { label: 'Projects', href: '/projects' },
     { label: 'Get Involved', href: '/get-involved' },
     { label: 'News & Stories', href: '/news' },
@@ -35,8 +35,13 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
                     <div className="flex size-8 items-center justify-center rounded-full bg-brand-green">
                         <Heart className="size-4 text-white" fill="white" />
                     </div>
-                    <span className="font-serif text-lg font-bold text-white">
-                        HopeSpring
+                    <span className="flex flex-col leading-tight">
+                        <span className="font-serif text-lg font-bold text-white">
+                            HopeSpring
+                        </span>
+                        <span className="text-[9px] font-bold tracking-[0.14em] text-white/65 uppercase">
+                            Foundation — Transforming Lives
+                        </span>
                     </span>
                 </Link>
 

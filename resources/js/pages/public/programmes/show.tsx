@@ -50,7 +50,7 @@ export default function ProgrammeShow({ programme }: Props) {
                 image={pageHeroes.programmes}
                 breadcrumbs={[
                     { label: 'Home', href: '/' },
-                    { label: 'Programmes', href: '/programmes' },
+                    { label: 'Our Programs', href: '/programmes' },
                     { label: programme.title },
                 ]}
             />
@@ -95,7 +95,7 @@ export default function ProgrammeShow({ programme }: Props) {
 
             <DonationBand
                 title={`Support ${programme.title}`}
-                description={`Your gift is directed to ${programme.title}, helping us impact lives globally through this focus area.`}
+                description="Your support brings hope, restores dignity, and creates brighter futures."
                 donateHref={donateHref}
             />
         </PublicLayout>

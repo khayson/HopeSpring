@@ -78,10 +78,12 @@ class DatabaseSeeder extends Seeder
     private function seedProgrammes(): array
     {
         $data = [
-            'water' => ['title' => 'Community Outreach', 'slug' => 'clean-water-initiative', 'description' => 'Engaging communities with people-centered support that meets real needs where they are.', 'long_description' => "Community Outreach is how HopeSpring meets people where they are. We listen first, then deliver practical support that strengthens families and neighbourhoods through sustainable, people-centered solutions.\n\nFrom local engagement and needs assessment to hands-on service delivery, this focus area turns compassion into action that communities can feel and sustain.", 'icon' => 'Users', 'photo' => '/images/home-programme-water.jpg', 'sort_order' => 1],
-            'education' => ['title' => 'Education & Development', 'slug' => 'education-for-all', 'description' => 'Expanding access to learning and development so opportunity is available to all.', 'long_description' => "Education & Development expands access to learning so opportunity is available to all. We support students, educators, and learning spaces with tools that help people grow and thrive.\n\nOur work opens doors through scholarships, learning materials, skills development, and stronger educational environments.", 'icon' => 'GraduationCap', 'photo' => '/images/home-programme-education.jpg', 'sort_order' => 4],
-            'healthcare' => ['title' => 'Health & Wellness', 'slug' => 'healthcare-outreach', 'description' => 'Promoting wellbeing through accessible health support and wellness initiatives.', 'long_description' => "Health & Wellness promotes wellbeing through accessible support and practical care. We help communities stay healthy with outreach, education, and wellness initiatives that put people first.\n\nBy bringing support closer to those who need it, we strengthen dignity, resilience, and long-term wellbeing.", 'icon' => 'HeartPulse', 'photo' => '/images/home-programme-healthcare.jpg', 'sort_order' => 3],
-            'community' => ['title' => 'Youth Empowerment', 'slug' => 'community-development', 'description' => 'Equipping young people with skills, confidence, and opportunity to shape their futures.', 'long_description' => "Youth Empowerment equips young people with skills, confidence, and opportunity to shape their own futures. We invest in the next generation through mentoring, skills training, and pathways to meaningful participation.\n\nWhen young people are empowered, families and communities grow stronger with them.", 'icon' => 'Sparkles', 'photo' => '/images/home-programme-community.jpg', 'sort_order' => 2],
+            'water' => ['title' => 'Clean Water', 'slug' => 'clean-water-initiative', 'description' => 'Providing clean and safe water to underserved communities.', 'long_description' => 'Providing clean and safe water to underserved communities.', 'icon' => 'Droplets', 'photo' => '/images/home-programme-water.jpg', 'sort_order' => 1],
+            'education' => ['title' => 'Education Support', 'slug' => 'education-for-all', 'description' => 'Empowering children through access to quality education.', 'long_description' => 'Empowering children through access to quality education.', 'icon' => 'GraduationCap', 'photo' => '/images/home-programme-education.jpg', 'sort_order' => 2],
+            'healthcare' => ['title' => 'Healthcare Outreach', 'slug' => 'healthcare-outreach', 'description' => 'Improving health and well-being through medical support.', 'long_description' => 'Improving health and well-being through medical support.', 'icon' => 'HeartPulse', 'photo' => '/images/home-programme-healthcare.jpg', 'sort_order' => 3],
+            'community' => ['title' => 'Community Development', 'slug' => 'community-development', 'description' => 'Building stronger communities through sustainable projects.', 'long_description' => 'Building stronger communities through sustainable projects.', 'icon' => 'Users', 'photo' => '/images/home-programme-community.jpg', 'sort_order' => 4],
+            'youth' => ['title' => 'Youth & Women Empowerment', 'slug' => 'youth-women-empowerment', 'description' => 'Equipping youth and women with skills and opportunities.', 'long_description' => 'Equipping youth and women with skills and opportunities.', 'icon' => 'Venus', 'photo' => '/images/home-programme-community.jpg', 'sort_order' => 5],
+            'emergency' => ['title' => 'Emergency Relief', 'slug' => 'emergency-relief', 'description' => 'Providing urgent support in times of crisis and disasters.', 'long_description' => 'Providing urgent support in times of crisis and disasters.', 'icon' => 'Package', 'photo' => '/images/home-programme-healthcare.jpg', 'sort_order' => 6],
         ];
 
         $programmes = [];
@@ -555,11 +557,11 @@ class DatabaseSeeder extends Seeder
     {
         $settings = [
             ['key' => 'site_name', 'value' => 'HopeSpring Foundation', 'group' => 'general'],
-            ['key' => 'site_tagline', 'value' => 'Impacting Lives Globally', 'group' => 'general'],
+            ['key' => 'site_tagline', 'value' => 'Transforming Lives', 'group' => 'general'],
             ['key' => 'contact_email', 'value' => 'info@hopespringfoundation.org', 'group' => 'contact'],
             ['key' => 'contact_phone', 'value' => '+233 24 123 4567', 'group' => 'contact'],
-            ['key' => 'contact_address', 'value' => '14 Maseru Road, East Legon, Accra, Ghana', 'group' => 'contact'],
-            ['key' => 'about_mission', 'value' => 'To impact lives globally through empowerment, support, and sustainable development.', 'group' => 'about'],
+            ['key' => 'contact_address', 'value' => 'East Legon, Accra Ghana', 'group' => 'contact'],
+            ['key' => 'about_mission', 'value' => 'To empower communities through sustainable solutions in education, health, clean water and humanitarian support.', 'group' => 'about'],
             ['key' => 'about_vision', 'value' => 'To create a world where access to opportunity is available to all.', 'group' => 'about'],
             ['key' => 'social_facebook', 'value' => 'https://facebook.com/hopespringfoundation', 'group' => 'social'],
             ['key' => 'social_twitter', 'value' => 'https://twitter.com/hopespringgh', 'group' => 'social'],

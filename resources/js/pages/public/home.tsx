@@ -2,6 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import {
     Droplets,
     GraduationCap,
+    Handshake,
     HandHeart,
     Heart,
     MapPin,
@@ -45,10 +46,10 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
     const mission = setting(
         settings,
         'about_mission',
-        'To impact lives globally through empowerment, support, and sustainable development.',
+        'To empower communities through sustainable solutions in education, health, clean water and humanitarian support.',
     );
 
-    const values = [1, 2, 3, 4, 5]
+    const values = [1, 2, 3, 4]
         .map((index) => ({
             title: setting(settings, `home_value_${index}_title`),
             description: setting(settings, `home_value_${index}_description`),
@@ -115,7 +116,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             {setting(
                                 settings,
                                 'home_hero_title_highlight',
-                                'impact lives globally',
+                                'Transforming Lives',
                             )}
                         </span>
                     </h1>
@@ -123,7 +124,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                         {setting(
                             settings,
                             'home_hero_subtitle',
-                            'Impacting Lives Globally',
+                            'We bring hope, restore dignity, and create opportunities for a better tomorrow.',
                         )}
                     </p>
                     <div className="mt-8 flex animate-in flex-col gap-3 duration-1000 fade-in-0 sm:flex-row sm:flex-wrap">
@@ -163,6 +164,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             className="border-white/40 font-bold text-white hover:bg-white/10 hover:text-white"
                         >
                             <Link href="/get-involved/partner">
+                                <Handshake className="size-4" />
                                 {setting(
                                     settings,
                                     'home_cta_partner_label',
@@ -252,14 +254,14 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 {setting(
                                     settings,
                                     'home_about_title',
-                                    "Founder's Story",
+                                    'Our Story, Our Why',
                                 )}
                             </h2>
                             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                                 {setting(
                                     settings,
                                     'home_about_body',
-                                    'HopeSpring Foundation was born from a moment that could not be ignored. One day, Melina Diamond encountered a woman and her three children on her way back from town. Moved by compassion, she offered them a ride to school. During the ride, she noticed the youngest child holding a torn rubber bag tightly to his chest. Inside were his books. Despite its condition, he held it with pride and said, "This is my school bag." That moment revealed resilience, dignity, and need in its purest form. The next day, Melina returned with a proper school bag. The joy and gratitude the child expressed became a defining moment. It was then she realized: even the smallest act of kindness can transform a life. From that moment, HopeSpring Foundation was born.',
+                                    "HopeSpring Foundation was born out of a simple act of compassion that revealed a deep need. What started with one child's joy has grown into a mission to bring lasting change to many lives.",
                                 )}
                             </p>
 
@@ -315,19 +317,26 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             {setting(
                                 settings,
                                 'home_programmes_eyebrow',
-                                'Focus Areas',
+                                'Our Programs',
                             )}
                         </p>
                         <h2 className="mt-3 font-serif text-3xl font-bold text-white md:text-4xl">
                             {setting(
                                 settings,
                                 'home_programmes_title',
-                                'Areas of Focus',
+                                'Areas We Focus On',
                             )}
                         </h2>
+                        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
+                            {setting(
+                                settings,
+                                'home_programmes_intro',
+                                'We implement sustainable initiatives that address critical needs and create long-term impact.',
+                            )}
+                        </p>
                     </div>
 
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {programmes.map((programme, index) => {
                             const Icon = getIcon(programme.icon);
                             const image =
@@ -380,7 +389,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 {setting(
                                     settings,
                                     'home_programmes_cta_label',
-                                    'View All Programmes',
+                                    'View All Programs',
                                 )}
                             </Link>
                         </Button>
@@ -403,12 +412,19 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             'linear-gradient(90deg, oklch(0.45 0.13 145 / 0.92) 0%, oklch(0.56 0.15 145 / 0.88) 55%, oklch(0.56 0.15 145 / 0.8) 100%)',
                     }}
                 />
-                <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-6 text-center md:flex-row md:text-left">
+                <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-6 text-center md:flex-row md:items-center md:gap-10 md:text-left">
                     <p className="flex-1 font-serif text-2xl leading-snug font-bold text-white md:text-3xl">
                         {setting(
                             settings,
+                            'home_banner_headline',
+                            "Be the reason someone's life changes today.",
+                        )}
+                    </p>
+                    <p className="max-w-sm flex-1 text-sm leading-relaxed text-white/85 md:text-base">
+                        {setting(
+                            settings,
                             'home_banner_text',
-                            "Be the reason someone's life changes today. Your support brings hope, restores dignity, and creates brighter futures.",
+                            'Your support brings hope, restores dignity, and creates brighter futures.',
                         )}
                     </p>
                     <Button

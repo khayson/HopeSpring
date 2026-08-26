@@ -113,7 +113,7 @@ export default function Styleguide() {
                                 Heading 2 — Lora
                             </p>
                             <h2 className="font-serif text-3xl font-semibold">
-                                Our Programmes
+                                Our Programs
                             </h2>
                         </div>
                         <div>

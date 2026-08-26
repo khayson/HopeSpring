@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ImpactStat;
 use App\Models\Milestone;
 use App\Models\Partner;
+use App\Models\Programme;
 use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use App\Support\AboutPageSettings;
@@ -32,6 +33,10 @@ class AboutController extends Controller
                 ->where('is_active', true)
                 ->orderBy('sort_order')
                 ->get(['id', 'name', 'logo', 'url']),
+            'programmes' => Programme::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get(['id', 'title', 'slug', 'description', 'icon']),
             'settings' => SiteSetting::whereIn('key', [
                 'about_mission',
                 'about_vision',

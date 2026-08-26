@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import { ArrowRight, Check } from 'lucide-react';
+import { Check, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function NewsletterForm() {
@@ -27,7 +27,7 @@ export function NewsletterForm() {
         return (
             <div className="flex items-center gap-2 text-sm text-brand-green-light">
                 <Check className="size-4" />
-                <span>Thank you for subscribing!</span>
+                <span>Thank you for being part of the change!</span>
             </div>
         );
     }
@@ -51,7 +51,7 @@ export function NewsletterForm() {
                     aria-label="Subscribe to newsletter"
                     className="size-10 shrink-0 bg-brand-green hover:bg-brand-green-dark"
                 >
-                    <ArrowRight className="size-4" />
+                    <Send className="size-4" />
                 </Button>
             </div>
             {errors.email && (

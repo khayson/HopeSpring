@@ -1,29 +1,36 @@
 import { Link, usePage } from '@inertiajs/react';
 import {
+    Clock,
     Facebook,
     Heart,
     Instagram,
+    Linkedin,
     Mail,
     MapPin,
     Phone,
     Twitter,
+    Youtube,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { NewsletterForm } from './newsletter-form';
 
 const quickLinks = [
+    { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
-    { label: 'Our Programmes', href: '/programmes' },
+    { label: 'Our Programs', href: '/programmes' },
     { label: 'Projects', href: '/projects' },
     { label: 'Get Involved', href: '/get-involved' },
     { label: 'News & Stories', href: '/news' },
+    { label: 'Gallery', href: '/gallery' },
     { label: 'Contact', href: '/contact' },
 ];
 
 const socialLinks = [
     { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
     { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Twitter, href: '#', label: 'Twitter' },
+    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Youtube, href: '#', label: 'YouTube' },
 ];
 
 type FooterProps = {
@@ -34,9 +41,7 @@ export function Footer({ className }: FooterProps) {
     const { contact } = usePage().props;
     const email = contact.email?.trim() || 'info@hopespringfoundation.org';
     const phone = contact.phone?.trim() || '+233 24 123 4567';
-    const address =
-        contact.address?.trim() ||
-        '14 Maseru Road, East Legon, Accra, Ghana';
+    const address = contact.address?.trim() || 'East Legon, Accra Ghana';
     const telHref = `tel:${phone.replace(/[^\d+]/g, '')}`;
 
     return (
@@ -46,7 +51,6 @@ export function Footer({ className }: FooterProps) {
         >
             <div className="mx-auto max-w-7xl px-4 py-16 md:px-6">
                 <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
-                    {/* Brand */}
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center gap-2">
                             <div className="flex size-8 items-center justify-center rounded-full bg-brand-green">
@@ -60,9 +64,9 @@ export function Footer({ className }: FooterProps) {
                             </span>
                         </Link>
                         <p className="text-sm leading-relaxed text-white/60">
-                            A purpose-driven organization committed to empowering
-                            individuals and transforming communities through
-                            sustainable, people-centered solutions.
+                            We are committed to transforming lives and building
+                            better communities through compassion, partnership
+                            and sustainable solutions.
                         </p>
                         <div className="flex gap-3">
                             {socialLinks.map((social) => (
@@ -78,7 +82,6 @@ export function Footer({ className }: FooterProps) {
                         </div>
                     </div>
 
-                    {/* Quick Links */}
                     <div>
                         <h3 className="mb-4 font-serif text-base font-semibold">
                             Quick Links
@@ -97,10 +100,9 @@ export function Footer({ className }: FooterProps) {
                         </ul>
                     </div>
 
-                    {/* Contact */}
                     <div>
                         <h3 className="mb-4 font-serif text-base font-semibold">
-                            Contact Us
+                            Get In Touch
                         </h3>
                         <ul className="space-y-3">
                             <li className="flex items-start gap-2.5 text-sm text-white/60">
@@ -125,28 +127,34 @@ export function Footer({ className }: FooterProps) {
                                     {phone}
                                 </a>
                             </li>
+                            <li className="flex items-start gap-2.5 text-sm text-white/60">
+                                <Clock className="mt-0.5 size-4 shrink-0 text-brand-green-light" />
+                                Mon - Fri: 8:00 AM - 5:00 PM
+                            </li>
                         </ul>
                     </div>
 
-                    {/* Newsletter */}
                     <div>
                         <h3 className="mb-4 font-serif text-base font-semibold">
                             Newsletter
                         </h3>
                         <p className="mb-4 text-sm text-white/60">
-                            Stay updated on our impact and upcoming events.
+                            Subscribe to our newsletter to get the latest
+                            updates and inspiring stories.
                         </p>
                         <NewsletterForm />
+                        <p className="mt-4 font-serif text-sm text-brand-gold-light italic">
+                            Thank you for being part of the change!
+                        </p>
                     </div>
                 </div>
             </div>
 
-            {/* Bottom bar */}
             <div className="border-t border-white/10">
                 <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-white/40 md:flex-row md:px-6">
                     <p>
                         &copy; {new Date().getFullYear()} HopeSpring Foundation.
-                        All rights reserved.
+                        All Right Reserved.
                     </p>
                     <div className="flex gap-4">
                         <Link
@@ -159,7 +167,7 @@ export function Footer({ className }: FooterProps) {
                             href="/terms"
                             className="transition-colors hover:text-white/60"
                         >
-                            Terms of Service
+                            Terms of Use
                         </Link>
                         <Link
                             href="/login"

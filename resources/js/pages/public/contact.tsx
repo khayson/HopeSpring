@@ -25,7 +25,7 @@ export default function Contact({ settings }: Props) {
                     {/* Contact Info */}
                     <div className="lg:col-span-2">
                         <h2 className="font-serif text-2xl font-bold text-navy">
-                            Get in Touch
+                            Get In Touch
                         </h2>
                         <p className="mt-3 text-muted-foreground">
                             Have a question, want to volunteer, or interested in
@@ -43,7 +43,7 @@ export default function Contact({ settings }: Props) {
                                     </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
                                         {settings.contact_address ||
-                                            'East Legon, Accra, Ghana'}
+                                            'East Legon, Accra Ghana'}
                                     </p>
                                 </div>
                             </div>

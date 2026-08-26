@@ -105,7 +105,7 @@ export function PartnerShowcase({ partners, settings }: PartnerShowcaseProps) {
     const ctaLabel = setting(
         settings,
         'about_partners_cta_label',
-        'Explore Partnership Opportunities',
+        'Partner With Us',
     );
 
     return (

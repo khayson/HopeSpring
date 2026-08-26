@@ -781,12 +781,12 @@ export default function Donate({
                                     Why give
                                 </p>
                                 <h2 className="mt-3 font-serif text-2xl leading-snug font-bold md:text-3xl">
-                                    Join us in impacting lives globally
+                                    Be the reason someone&apos;s life changes
+                                    today.
                                 </h2>
                                 <p className="mt-4 text-sm leading-relaxed text-white/70">
-                                    Partner with us, support the mission, and
-                                    help transform lives through empowerment,
-                                    support, and sustainable development.
+                                    Your support brings hope, restores dignity,
+                                    and creates brighter futures.
                                 </p>
 
                                 <div className="mt-8 space-y-8 border-t border-white/10 pt-8">
@@ -805,30 +805,29 @@ export default function Donate({
                                     <ul className="space-y-5">
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Community Outreach
+                                                Clean Water
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                People-centered support that
-                                                meets real needs where they are.
+                                                Providing clean and safe water
+                                                to underserved communities.
                                             </p>
                                         </li>
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Youth Empowerment
+                                                Education Support
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Skills, confidence, and
-                                                opportunity for the next
-                                                generation.
+                                                Empowering children through
+                                                access to quality education.
                                             </p>
                                         </li>
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Health & Education
+                                                Healthcare Outreach
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Wellness and learning pathways
-                                                that open access to opportunity.
+                                                Improving health and well-being
+                                                through medical support.
                                             </p>
                                         </li>
                                     </ul>

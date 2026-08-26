@@ -61,7 +61,7 @@ export default function GetInvolved({ upcomingEvents }: Props) {
                         title="Volunteer"
                         description="Join our team of dedicated volunteers and directly impact the communities we serve."
                         href="/get-involved/volunteer"
-                        buttonLabel="Sign Up"
+                        buttonLabel="Become a Volunteer"
                     />
                     <EngagementCard
                         icon={Users}

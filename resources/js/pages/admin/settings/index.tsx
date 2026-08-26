@@ -1,4 +1,6 @@
 import { Head, useForm } from '@inertiajs/react';
+import { useEffect, useMemo, useState } from 'react';
+import { ImageUpload } from '@/components/admin/image-upload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -43,7 +45,9 @@ const groupHints: Record<string, string> = {
 const textareaKeys = new Set([
     'home_hero_subtitle',
     'home_about_body',
+    'home_banner_headline',
     'home_banner_text',
+    'home_programmes_intro',
     'about_mission',
     'about_vision',
     'about_partners_intro',
@@ -52,8 +56,8 @@ const textareaKeys = new Set([
     'home_value_2_description',
     'home_value_3_description',
     'home_value_4_description',
-    'home_value_5_description',
     'about_who_we_are',
+    'about_founder_story',
     'contact_address',
 ]);
 
@@ -66,11 +70,17 @@ function labelFor(key: string): string {
 }
 
 function isImageKey(key: string): boolean {
-    return key.includes('image') || key.includes('photo') || key.includes('logo');
+    return (
+        key.endsWith('_image') ||
+        key.endsWith('_photo') ||
+        key.endsWith('_logo')
+    );
 }
 
-export default function SettingsIndex({ settings, impactStats }: Props) {
-    const flat = Object.values(settings).reduce<Record<string, string>>(
+function flattenSettings(
+    settings: Props['settings'],
+): Record<string, string> {
+    return Object.values(settings).reduce<Record<string, string>>(
         (acc, group) => {
             for (const [key, value] of Object.entries(group)) {
                 acc[key] = value ?? '';
@@ -80,28 +90,106 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
         },
         {},
     );
+}
 
-    const { data, setData, put, processing, recentlySuccessful } = useForm<{
-        settings: Record<string, string>;
-        impact_stats: Array<{
-            id: number;
-            label: string;
-            value: number;
-            suffix: string;
-        }>;
-    }>({
-        settings: flat,
-        impact_stats: impactStats.map((stat) => ({
-            id: stat.id,
-            label: stat.label,
-            value: stat.value,
-            suffix: stat.suffix ?? '',
-        })),
+function emptyImageMap(keys: string[]): Record<string, File | null> {
+    return Object.fromEntries(keys.map((key) => [key, null]));
+}
+
+function emptyRemoveMap(keys: string[]): Record<string, boolean> {
+    return Object.fromEntries(keys.map((key) => [key, false]));
+}
+
+export default function SettingsIndex({ settings, impactStats }: Props) {
+    const flat = useMemo(() => flattenSettings(settings), [settings]);
+    const imageKeys = useMemo(
+        () => Object.keys(flat).filter((key) => isImageKey(key)),
+        [flat],
+    );
+    const [existingImages, setExistingImages] = useState<
+        Record<string, string | null>
+    >(() =>
+        Object.fromEntries(
+            imageKeys.map((key) => [key, flat[key] || null]),
+        ),
+    );
+
+    const { data, setData, put, processing, recentlySuccessful, errors, transform } =
+        useForm<{
+            settings: Record<string, string>;
+            images: Record<string, File | null>;
+            remove_images: Record<string, boolean>;
+            impact_stats: Array<{
+                id: number;
+                label: string;
+                value: number;
+                suffix: string;
+            }>;
+        }>({
+            settings: flat,
+            images: emptyImageMap(imageKeys),
+            remove_images: emptyRemoveMap(imageKeys),
+            impact_stats: impactStats.map((stat) => ({
+                id: stat.id,
+                label: stat.label,
+                value: stat.value,
+                suffix: stat.suffix ?? '',
+            })),
+        });
+
+    useEffect(() => {
+        setExistingImages(
+            Object.fromEntries(
+                imageKeys.map((key) => [key, flat[key] || null]),
+            ),
+        );
+    }, [flat, imageKeys]);
+
+    transform((form) => {
+        const images: Record<string, File> = {};
+
+        for (const [key, file] of Object.entries(form.images)) {
+            if (file instanceof File) {
+                images[key] = file;
+            }
+        }
+
+        const remove_images: Record<string, number> = {};
+
+        for (const [key, shouldRemove] of Object.entries(form.remove_images)) {
+            if (shouldRemove) {
+                remove_images[key] = 1;
+            }
+        }
+
+        const textSettings: Record<string, string> = {};
+
+        for (const [key, value] of Object.entries(form.settings)) {
+            if (!isImageKey(key)) {
+                textSettings[key] = value;
+            }
+        }
+
+        return {
+            settings: textSettings,
+            images,
+            remove_images,
+            impact_stats: form.impact_stats,
+        };
     });
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        put(settingsUpdate.url());
+        put(settingsUpdate.url(), {
+            forceFormData: true,
+            onSuccess: () => {
+                setData((current) => ({
+                    ...current,
+                    images: emptyImageMap(imageKeys),
+                    remove_images: emptyRemoveMap(imageKeys),
+                }));
+            },
+        });
     }
 
     function updateSetting(key: string, value: string) {
@@ -198,6 +286,70 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
                                     textareaKeys.has(key) || isImageKey(key);
                                 const value = data.settings[key] ?? '';
 
+                                if (isImageKey(key)) {
+                                    return (
+                                        <div
+                                            key={key}
+                                            className="space-y-2 sm:col-span-2"
+                                        >
+                                            <ImageUpload
+                                                label={labelFor(key)}
+                                                value={data.images[key] ?? null}
+                                                existingUrl={
+                                                    existingImages[key]
+                                                }
+                                                removeExisting={
+                                                    data.remove_images[key] ??
+                                                    false
+                                                }
+                                                onChange={(file) => {
+                                                    setData((current) => ({
+                                                        ...current,
+                                                        images: {
+                                                            ...current.images,
+                                                            [key]: file,
+                                                        },
+                                                        remove_images: {
+                                                            ...current.remove_images,
+                                                            [key]: false,
+                                                        },
+                                                    }));
+                                                    if (file) {
+                                                        setExistingImages(
+                                                            (current) => ({
+                                                                ...current,
+                                                                [key]: null,
+                                                            }),
+                                                        );
+                                                    }
+                                                }}
+                                                onRemoveExisting={() => {
+                                                    setData((current) => ({
+                                                        ...current,
+                                                        images: {
+                                                            ...current.images,
+                                                            [key]: null,
+                                                        },
+                                                        remove_images: {
+                                                            ...current.remove_images,
+                                                            [key]: true,
+                                                        },
+                                                    }));
+                                                    setExistingImages(
+                                                        (current) => ({
+                                                            ...current,
+                                                            [key]: null,
+                                                        }),
+                                                    );
+                                                }}
+                                                error={
+                                                    errors[`images.${key}`]
+                                                }
+                                            />
+                                        </div>
+                                    );
+                                }
+
                                 return (
                                     <div
                                         key={key}
@@ -229,21 +381,7 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
                                                         e.target.value,
                                                     )
                                                 }
-                                                placeholder={
-                                                    isImageKey(key)
-                                                        ? '/storage/... or https://...'
-                                                        : undefined
-                                                }
                                             />
-                                        )}
-                                        {isImageKey(key) && value && (
-                                            <div className="overflow-hidden rounded-xl border border-sidebar-border/70 bg-muted/30">
-                                                <img
-                                                    src={value}
-                                                    alt={`${labelFor(key)} preview`}
-                                                    className="max-h-48 w-full object-cover"
-                                                />
-                                            </div>
                                         )}
                                     </div>
                                 );

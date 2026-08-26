@@ -23,9 +23,18 @@ class AboutController extends Controller
         ));
 
         return Inertia::render('public/about', [
-            'team' => TeamMember::where('is_active', true)
+            'team' => TeamMember::query()
+                ->where('is_active', true)
                 ->orderBy('sort_order')
-                ->get(['id', 'name', 'role', 'photo', 'bio', 'type']),
+                ->get(['id', 'name', 'role', 'photo', 'bio', 'type'])
+                ->map(fn (TeamMember $member): array => [
+                    'id' => $member->id,
+                    'name' => $member->name,
+                    'role' => $member->role,
+                    'photo' => $member->photo,
+                    'bio' => $member->bio,
+                    'type' => $member->type->value,
+                ]),
             'milestones' => Milestone::orderBy('sort_order')
                 ->get(['year', 'title', 'description']),
             'stats' => ImpactStat::orderBy('sort_order')->get(['label', 'value', 'suffix']),

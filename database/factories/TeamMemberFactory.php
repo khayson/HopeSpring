@@ -34,4 +34,9 @@ class TeamMemberFactory extends Factory
     {
         return $this->state(fn () => ['type' => 'board']);
     }
+
+    public function staff(): static
+    {
+        return $this->state(fn () => ['type' => 'staff']);
+    }
 }

@@ -38,6 +38,7 @@ test('editors can manage events and posts but not donations, messages, or users'
     $this->actingAs($editor)->get('/admin/posts')->assertOk();
     $this->actingAs($editor)->get('/admin/partners')->assertOk();
     $this->actingAs($editor)->get('/admin/gallery')->assertOk();
+    $this->actingAs($editor)->get('/admin/team')->assertOk();
     $this->actingAs($editor)->get('/admin/donations')->assertForbidden();
     $this->actingAs($editor)->get('/admin/messages')->assertForbidden();
     $this->actingAs($editor)->get('/admin/users')->assertForbidden();
@@ -49,6 +50,7 @@ test('finance can view donations but not events, posts, or users', function () {
     $this->actingAs($finance)->get('/admin/donations')->assertOk();
     $this->actingAs($finance)->get('/admin/events')->assertForbidden();
     $this->actingAs($finance)->get('/admin/gallery')->assertForbidden();
+    $this->actingAs($finance)->get('/admin/team')->assertForbidden();
     $this->actingAs($finance)->get('/admin/users')->assertForbidden();
 });
 
@@ -60,6 +62,7 @@ test('admin can access everything', function () {
     $this->actingAs($admin)->get('/admin/posts')->assertOk();
     $this->actingAs($admin)->get('/admin/partners')->assertOk();
     $this->actingAs($admin)->get('/admin/gallery')->assertOk();
+    $this->actingAs($admin)->get('/admin/team')->assertOk();
     $this->actingAs($admin)->get('/admin/messages')->assertOk();
     $this->actingAs($admin)->get('/admin/newsletter')->assertOk();
     $this->actingAs($admin)->get('/admin/users')->assertOk();

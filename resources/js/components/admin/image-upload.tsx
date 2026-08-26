@@ -12,6 +12,7 @@ type ImageUploadProps = {
     removeExisting?: boolean;
     error?: string;
     hint?: string;
+    aspectClassName?: string;
 };
 
 export function ImageUpload({
@@ -23,6 +24,7 @@ export function ImageUpload({
     removeExisting = false,
     error,
     hint = 'JPG, PNG, WEBP, or GIF up to 5MB.',
+    aspectClassName = 'aspect-[16/10]',
 }: ImageUploadProps) {
     const inputId = useId();
     const inputRef = useRef<HTMLInputElement>(null);
@@ -107,7 +109,8 @@ export function ImageUpload({
                     pickFile(e.dataTransfer.files?.[0] ?? null);
                 }}
                 className={cn(
-                    'relative flex aspect-[16/10] cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-dashed transition',
+                    'relative flex cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-dashed transition',
+                    aspectClassName,
                     isDragging
                         ? 'border-brand-green bg-brand-green/5'
                         : 'border-sidebar-border/80 bg-muted/30 hover:border-brand-green/50 hover:bg-muted/50',

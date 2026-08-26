@@ -10,6 +10,7 @@ import {
     Megaphone,
     Newspaper,
     Settings,
+    UserRound,
     Users,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
@@ -34,6 +35,7 @@ import { index as newsletterIndex } from '@/routes/admin/newsletter';
 import { index as partnersIndex } from '@/routes/admin/partners';
 import { index as postsIndex } from '@/routes/admin/posts';
 import { edit as settingsEdit } from '@/routes/admin/settings';
+import { index as teamIndex } from '@/routes/admin/team';
 import { index as usersIndex } from '@/routes/admin/users';
 import type { NavItem } from '@/types';
 
@@ -49,6 +51,7 @@ export function AppSidebar() {
         mainNavItems.push(
             { title: 'Events', href: eventsIndex.url(), icon: CalendarDays },
             { title: 'Gallery', href: galleryIndex.url(), icon: Images },
+            { title: 'Team', href: teamIndex.url(), icon: UserRound },
             { title: 'Blog Posts', href: postsIndex.url(), icon: Newspaper },
             { title: 'Partners', href: partnersIndex.url(), icon: Building2 },
         );

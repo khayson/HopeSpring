@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\NewsletterSubscriberController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,9 @@ Route::middleware(['auth', 'verified', 'role:admin,editor,finance'])->prefix('ad
         Route::resource('events', EventController::class)->except('show');
         Route::resource('posts', PostController::class)->except('show');
         Route::resource('partners', PartnerController::class)->except('show');
+        Route::resource('team', TeamMemberController::class)
+            ->parameters(['team' => 'teamMember'])
+            ->except('show');
         Route::delete('gallery/bulk', [GalleryImageController::class, 'bulkDestroy'])
             ->name('gallery.bulk-destroy');
         Route::resource('gallery', GalleryImageController::class)

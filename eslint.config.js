@@ -110,6 +110,7 @@ export default [
             'bootstrap/ssr',
             'tailwind.config.js',
             'vite.config.ts',
+            'Hope Hope Spring Foundation-handoff/**',
             'resources/js/actions/**',
             'resources/js/components/ui/*',
             'resources/js/routes/**',

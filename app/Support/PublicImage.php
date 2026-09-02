@@ -24,7 +24,7 @@ class PublicImage
 
         $path = parse_url($url, PHP_URL_PATH) ?: $url;
 
-        if (! is_string($path) || ! str_starts_with($path, '/storage/')) {
+        if (! str_starts_with($path, '/storage/')) {
             return;
         }
 

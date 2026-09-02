@@ -97,7 +97,10 @@ export function RichTextEditor({
         const current = editor.getHTML();
         const next = value || '';
 
-        if (next !== current && next !== (current === '<p></p>' ? '' : current)) {
+        if (
+            next !== current &&
+            next !== (current === '<p></p>' ? '' : current)
+        ) {
             editor.commands.setContent(next, { emitUpdate: false });
         }
     }, [editor, value]);
@@ -115,8 +118,7 @@ export function RichTextEditor({
 
     function setLink() {
         const previous = editor?.getAttributes('link').href as
-            | string
-            | undefined;
+            string | undefined;
         const url = window.prompt('Link URL', previous ?? 'https://');
 
         if (url === null) {

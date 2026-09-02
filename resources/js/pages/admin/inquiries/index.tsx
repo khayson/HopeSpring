@@ -1,7 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { Handshake, Search } from 'lucide-react';
-import { AdminStatCard } from '@/components/admin/stat-card';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -89,7 +89,8 @@ export default function InquiriesIndex({ inquiries, filters, stats }: Props) {
                         Volunteer & Partner Inquiries
                     </h1>
                     <p className="mt-1 text-sm text-muted-foreground">
-                        Review interest forms and convert applicants to accounts.
+                        Review interest forms and convert applicants to
+                        accounts.
                     </p>
                 </div>
 
@@ -98,9 +99,7 @@ export default function InquiriesIndex({ inquiries, filters, stats }: Props) {
                         label="All inquiries"
                         value={stats.total}
                         hint="Volunteer and partner"
-                        active={
-                            activeStatus === ALL && activeType === ALL
-                        }
+                        active={activeStatus === ALL && activeType === ALL}
                         onClick={() => filter({ status: '', type: '' })}
                     />
                     <AdminStatCard
@@ -210,8 +209,9 @@ export default function InquiriesIndex({ inquiries, filters, stats }: Props) {
                                             <span
                                                 className={cn(
                                                     'shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase',
-                                                    statusColors[inquiry.status] ??
-                                                        'bg-secondary',
+                                                    statusColors[
+                                                        inquiry.status
+                                                    ] ?? 'bg-secondary',
                                                 )}
                                             >
                                                 {inquiry.status}

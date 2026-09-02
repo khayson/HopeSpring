@@ -208,7 +208,7 @@ export default function NewsShow({ post, relatedPosts, shareUrl }: Props) {
                                 <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                                     Keep reading
                                 </p>
-                                <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground md:text-4xl">
+                                <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl dark:text-foreground">
                                     Related stories
                                 </h2>
                                 <p className="mt-3 text-base leading-relaxed text-muted-foreground">

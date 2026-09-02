@@ -276,6 +276,7 @@ export function TeamForm({
                                     photo: file,
                                     remove_photo: false,
                                 }));
+
                                 if (file) {
                                     setExistingPhoto(null);
                                 }

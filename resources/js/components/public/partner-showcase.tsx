@@ -11,11 +11,11 @@ type Partner = {
 
 type PartnerShowcaseProps = {
     partners: Partner[];
-    settings: Record<string, string | undefined>;
+    settings: Record<string, string | null | undefined>;
 };
 
 function setting(
-    settings: Record<string, string | undefined>,
+    settings: Record<string, string | null | undefined>,
     key: string,
     fallback: string,
 ): string {

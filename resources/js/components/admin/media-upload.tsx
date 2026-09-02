@@ -1,5 +1,5 @@
 import { ImagePlus, Play, Trash2 } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -30,17 +30,18 @@ export function MediaUpload({
 }: MediaUploadProps) {
     const inputId = useId();
     const inputRef = useRef<HTMLInputElement>(null);
-    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
     const [isDragging, setIsDragging] = useState(false);
 
-    useEffect(() => {
-        const urls = files.map((file) => URL.createObjectURL(file));
-        setPreviewUrls(urls);
+    const previewUrls = useMemo(
+        () => files.map((file) => URL.createObjectURL(file)),
+        [files],
+    );
 
+    useEffect(() => {
         return () => {
-            urls.forEach((url) => URL.revokeObjectURL(url));
+            previewUrls.forEach((url) => URL.revokeObjectURL(url));
         };
-    }, [files]);
+    }, [previewUrls]);
 
     function pickFiles(list: FileList | File[] | null) {
         if (!list) {

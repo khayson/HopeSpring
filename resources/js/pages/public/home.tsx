@@ -250,7 +250,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                     'About Us',
                                 )}
                             </p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground md:text-4xl">
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl dark:text-foreground">
                                 {setting(
                                     settings,
                                     'home_about_title',

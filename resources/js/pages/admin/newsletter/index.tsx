@@ -2,8 +2,8 @@ import { Head, router } from '@inertiajs/react';
 import { Mail, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
-import { AdminStatCard } from '@/components/admin/stat-card';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -158,8 +158,8 @@ export default function NewsletterIndex({
                                 No subscribers match
                             </h2>
                             <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                                Adjust filters or wait for new sign-ups from
-                                the public site.
+                                Adjust filters or wait for new sign-ups from the
+                                public site.
                             </p>
                         </div>
                     ) : (
@@ -199,9 +199,7 @@ export default function NewsletterIndex({
                                     </div>
                                     <button
                                         type="button"
-                                        onClick={() =>
-                                            setPendingDelete(sub.id)
-                                        }
+                                        onClick={() => setPendingDelete(sub.id)}
                                         className="rounded-md p-1.5 text-rose-600 transition hover:bg-rose-50 hover:text-rose-800"
                                         aria-label={`Remove ${sub.email}`}
                                     >

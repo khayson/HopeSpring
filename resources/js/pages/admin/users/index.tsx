@@ -2,8 +2,8 @@ import { Head, Link, router } from '@inertiajs/react';
 import { Mail, Plus, Search, Trash2, Users } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
-import { AdminStatCard } from '@/components/admin/stat-card';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -121,12 +121,8 @@ export default function UsersIndex({ users, filters, stats, roles }: Props) {
                         label="All users"
                         value={stats.total}
                         hint="Every account"
-                        active={
-                            activeStatus === ALL && activeRole === ALL
-                        }
-                        onClick={() =>
-                            filter({ status: '', role: '' })
-                        }
+                        active={activeStatus === ALL && activeRole === ALL}
+                        onClick={() => filter({ status: '', role: '' })}
                     />
                     <AdminStatCard
                         label="Active"

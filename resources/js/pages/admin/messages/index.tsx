@@ -1,7 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { Mail, Search } from 'lucide-react';
-import { AdminStatCard } from '@/components/admin/stat-card';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -173,7 +173,9 @@ export default function MessagesIndex({ messages, filters, stats }: Props) {
                                                         : 'bg-blue-100 text-blue-800',
                                                 )}
                                             >
-                                                {msg.is_read ? 'Read' : 'Unread'}
+                                                {msg.is_read
+                                                    ? 'Read'
+                                                    : 'Unread'}
                                             </span>
                                         </div>
                                         <p className="mt-1 truncate text-xs text-muted-foreground">

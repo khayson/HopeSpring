@@ -172,6 +172,7 @@ export function PartnerForm({
                                     logo: file,
                                     remove_logo: false,
                                 }));
+
                                 if (file) {
                                     setExistingLogo(null);
                                 }

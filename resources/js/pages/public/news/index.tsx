@@ -89,7 +89,7 @@ export default function NewsIndex({
                             <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
                                 From the field
                             </p>
-                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground md:text-4xl">
+                            <h2 className="mt-3 font-serif text-3xl font-bold text-navy md:text-4xl dark:text-foreground">
                                 {listHeading}
                             </h2>
                             <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">

@@ -141,7 +141,7 @@ export function EventForm({
                                     </Label>
                                     <span
                                         className={cn(
-                                            'text-[11px] tabular-nums text-muted-foreground',
+                                            'text-[11px] text-muted-foreground tabular-nums',
                                             data.description.length > 900 &&
                                                 'text-amber-600',
                                         )}
@@ -176,9 +176,7 @@ export function EventForm({
                                     }
                                     placeholder="Agenda, speakers, what attendees should expect…"
                                 />
-                                <FieldError
-                                    message={errors.long_description}
-                                />
+                                <FieldError message={errors.long_description} />
                             </div>
                         </div>
                     </section>
@@ -220,10 +218,7 @@ export function EventForm({
                                         type="datetime-local"
                                         value={data.starts_at}
                                         onChange={(e) =>
-                                            setData(
-                                                'starts_at',
-                                                e.target.value,
-                                            )
+                                            setData('starts_at', e.target.value)
                                         }
                                         required
                                     />
@@ -263,6 +258,7 @@ export function EventForm({
                                     photo: file,
                                     remove_photo: false,
                                 }));
+
                                 if (file) {
                                     setExistingPhoto(null);
                                 }

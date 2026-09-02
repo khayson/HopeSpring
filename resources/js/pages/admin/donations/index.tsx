@@ -1,7 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { Heart, Search } from 'lucide-react';
-import { AdminStatCard } from '@/components/admin/stat-card';
 import { Pagination } from '@/components/admin/pagination';
+import { AdminStatCard } from '@/components/admin/stat-card';
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -182,8 +182,9 @@ export default function DonationsIndex({ donations, filters, stats }: Props) {
                                             <span
                                                 className={cn(
                                                     'shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase',
-                                                    statusColors[donation.status] ??
-                                                        'bg-secondary',
+                                                    statusColors[
+                                                        donation.status
+                                                    ] ?? 'bg-secondary',
                                                 )}
                                             >
                                                 {donation.status}
@@ -191,7 +192,8 @@ export default function DonationsIndex({ donations, filters, stats }: Props) {
                                         </div>
                                         <p className="mt-1 truncate text-xs text-muted-foreground">
                                             {donation.donor_email} ·{' '}
-                                            {donation.programme || 'General Fund'}
+                                            {donation.programme ||
+                                                'General Fund'}
                                         </p>
                                     </div>
                                     <div className="flex shrink-0 items-center gap-4 sm:self-center">

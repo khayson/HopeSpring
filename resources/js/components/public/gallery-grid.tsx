@@ -1,8 +1,6 @@
 import { Link } from '@inertiajs/react';
-import {
-    GalleryMediaThumb,
-    type GalleryMediaItem,
-} from '@/components/public/gallery-media-thumb';
+import type { GalleryMediaItem } from '@/components/public/gallery-media-thumb';
+import { GalleryMediaThumb } from '@/components/public/gallery-media-thumb';
 import { cn } from '@/lib/utils';
 import { show as galleryShow } from '@/routes/gallery';
 

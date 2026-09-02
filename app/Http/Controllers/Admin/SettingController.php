@@ -95,12 +95,13 @@ class SettingController extends Controller
      */
     private function imageSettingKeys(): array
     {
-        return SiteSetting::query()
-            ->pluck('key')
-            ->filter(fn (string $key): bool => str_ends_with($key, '_image')
-                || str_ends_with($key, '_photo')
-                || str_ends_with($key, '_logo'))
-            ->values()
-            ->all();
+        return array_values(
+            SiteSetting::query()
+                ->pluck('key')
+                ->filter(fn (string $key): bool => str_ends_with($key, '_image')
+                    || str_ends_with($key, '_photo')
+                    || str_ends_with($key, '_logo'))
+                ->all(),
+        );
     }
 }

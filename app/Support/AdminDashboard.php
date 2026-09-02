@@ -191,21 +191,24 @@ class AdminDashboard
      */
     private static function topProgrammes(): array
     {
-        return Donation::query()
-            ->where('status', 'success')
-            ->whereNotNull('programme')
-            ->where('programme', '!=', '')
-            ->selectRaw('programme as name, SUM(amount) as amount, COUNT(*) as count')
-            ->groupBy('programme')
-            ->orderByDesc('amount')
-            ->take(5)
-            ->get()
-            ->map(fn ($row): array => [
-                'name' => (string) $row->name,
-                'amount' => (int) $row->amount,
-                'count' => (int) $row->count,
-            ])
-            ->all();
+        return array_values(
+            Donation::query()
+                ->where('status', 'success')
+                ->whereNotNull('programme')
+                ->where('programme', '!=', '')
+                ->selectRaw('programme as name, SUM(amount) as amount, COUNT(*) as count')
+                ->groupBy('programme')
+                ->orderByDesc('amount')
+                ->take(5)
+                ->toBase()
+                ->get()
+                ->map(fn ($row): array => [
+                    'name' => (string) $row->name,
+                    'amount' => (int) $row->amount,
+                    'count' => (int) $row->count,
+                ])
+                ->all(),
+        );
     }
 
     /**
@@ -266,18 +269,20 @@ class AdminDashboard
      */
     private static function upcomingEvents(): array
     {
-        return Event::query()
-            ->upcoming()
-            ->take(5)
-            ->get(['id', 'title', 'slug', 'location', 'starts_at'])
-            ->map(fn (Event $event): array => [
-                'id' => $event->id,
-                'title' => $event->title,
-                'slug' => $event->slug,
-                'location' => $event->location,
-                'starts_at' => $event->starts_at->toIso8601String(),
-            ])
-            ->all();
+        return array_values(
+            Event::query()
+                ->upcoming()
+                ->take(5)
+                ->get(['id', 'title', 'slug', 'location', 'starts_at'])
+                ->map(fn (Event $event): array => [
+                    'id' => $event->id,
+                    'title' => $event->title,
+                    'slug' => $event->slug,
+                    'location' => $event->location,
+                    'starts_at' => $event->starts_at->toIso8601String(),
+                ])
+                ->all(),
+        );
     }
 
     /**
@@ -398,11 +403,12 @@ class AdminDashboard
                 });
         }
 
-        return $items
-            ->sortByDesc('at')
-            ->take(12)
-            ->values()
-            ->all();
+        return array_values(
+            $items
+                ->sortByDesc('at')
+                ->take(12)
+                ->all(),
+        );
     }
 
     private static function money(int $pesewas): string

@@ -1,11 +1,5 @@
 import { Head, Link, router } from '@inertiajs/react';
-import {
-    Building2,
-    ExternalLink,
-    Plus,
-    Search,
-    Trash2,
-} from 'lucide-react';
+import { Building2, ExternalLink, Plus, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { Pagination } from '@/components/admin/pagination';

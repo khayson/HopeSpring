@@ -17,7 +17,7 @@ class ImportGalleryMedia extends Command
     {
         $directory = $this->argument('directory');
 
-        if (! is_string($directory) || ! is_dir($directory)) {
+        if (! is_dir($directory)) {
             $this->error('The directory does not exist.');
 
             return self::FAILURE;

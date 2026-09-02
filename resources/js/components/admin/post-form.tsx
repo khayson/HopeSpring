@@ -146,7 +146,7 @@ export function PostForm({
                                     <Label htmlFor="excerpt">Excerpt</Label>
                                     <span
                                         className={cn(
-                                            'text-[11px] tabular-nums text-muted-foreground',
+                                            'text-[11px] text-muted-foreground tabular-nums',
                                             data.excerpt.length > 450 &&
                                                 'text-amber-600',
                                         )}
@@ -174,9 +174,7 @@ export function PostForm({
                                 <RichTextEditor
                                     id="body"
                                     value={data.body}
-                                    onChange={(value) =>
-                                        setData('body', value)
-                                    }
+                                    onChange={(value) => setData('body', value)}
                                     placeholder="Write the full story…"
                                 />
                                 <FieldError message={errors.body} />
@@ -198,6 +196,7 @@ export function PostForm({
                                     featured_image: file,
                                     remove_featured_image: false,
                                 }));
+
                                 if (file) {
                                     setExistingImage(null);
                                 }
@@ -263,10 +262,7 @@ export function PostForm({
                                     type="datetime-local"
                                     value={data.published_at}
                                     onChange={(e) =>
-                                        setData(
-                                            'published_at',
-                                            e.target.value,
-                                        )
+                                        setData('published_at', e.target.value)
                                     }
                                 />
                                 <p className="text-xs text-muted-foreground">
@@ -283,10 +279,7 @@ export function PostForm({
                                     id="is_featured"
                                     checked={data.is_featured}
                                     onCheckedChange={(checked) =>
-                                        setData(
-                                            'is_featured',
-                                            checked === true,
-                                        )
+                                        setData('is_featured', checked === true)
                                     }
                                     className="mt-0.5"
                                 />

@@ -1,5 +1,5 @@
 import { CalendarDays, ImagePlus, Trash2 } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -28,21 +28,23 @@ export function ImageUpload({
 }: ImageUploadProps) {
     const inputId = useId();
     const inputRef = useRef<HTMLInputElement>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
 
-    useEffect(() => {
+    const previewUrl = useMemo(() => {
         if (!value) {
-            setPreviewUrl(null);
+            return null;
+        }
 
+        return URL.createObjectURL(value);
+    }, [value]);
+
+    useEffect(() => {
+        if (!previewUrl) {
             return;
         }
 
-        const objectUrl = URL.createObjectURL(value);
-        setPreviewUrl(objectUrl);
-
-        return () => URL.revokeObjectURL(objectUrl);
-    }, [value]);
+        return () => URL.revokeObjectURL(previewUrl);
+    }, [previewUrl]);
 
     const shownUrl =
         previewUrl ?? (!removeExisting && existingUrl ? existingUrl : null);

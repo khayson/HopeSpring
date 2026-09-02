@@ -1,5 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ImageUpload } from '@/components/admin/image-upload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -77,9 +77,7 @@ function isImageKey(key: string): boolean {
     );
 }
 
-function flattenSettings(
-    settings: Props['settings'],
-): Record<string, string> {
+function flattenSettings(settings: Props['settings']): Record<string, string> {
     return Object.values(settings).reduce<Record<string, string>>(
         (acc, group) => {
             for (const [key, value] of Object.entries(group)) {
@@ -106,44 +104,61 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
         () => Object.keys(flat).filter((key) => isImageKey(key)),
         [flat],
     );
-    const [existingImages, setExistingImages] = useState<
-        Record<string, string | null>
-    >(() =>
-        Object.fromEntries(
-            imageKeys.map((key) => [key, flat[key] || null]),
-        ),
-    );
-
-    const { data, setData, put, processing, recentlySuccessful, errors, transform } =
-        useForm<{
-            settings: Record<string, string>;
-            images: Record<string, File | null>;
-            remove_images: Record<string, boolean>;
-            impact_stats: Array<{
-                id: number;
-                label: string;
-                value: number;
-                suffix: string;
-            }>;
-        }>({
-            settings: flat,
-            images: emptyImageMap(imageKeys),
-            remove_images: emptyRemoveMap(imageKeys),
-            impact_stats: impactStats.map((stat) => ({
-                id: stat.id,
-                label: stat.label,
-                value: stat.value,
-                suffix: stat.suffix ?? '',
-            })),
-        });
-
-    useEffect(() => {
-        setExistingImages(
+    const serverImages = useMemo(
+        () =>
             Object.fromEntries(
                 imageKeys.map((key) => [key, flat[key] || null]),
             ),
-        );
-    }, [flat, imageKeys]);
+        [flat, imageKeys],
+    );
+    const [hiddenImageKeys, setHiddenImageKeys] = useState<string[]>([]);
+    const [settingsSnapshot, setSettingsSnapshot] = useState(flat);
+
+    if (flat !== settingsSnapshot) {
+        setSettingsSnapshot(flat);
+        setHiddenImageKeys([]);
+    }
+
+    const existingImages = useMemo(
+        () =>
+            Object.fromEntries(
+                imageKeys.map((key) => [
+                    key,
+                    hiddenImageKeys.includes(key) ? null : serverImages[key],
+                ]),
+            ),
+        [imageKeys, hiddenImageKeys, serverImages],
+    );
+
+    const {
+        data,
+        setData,
+        put,
+        processing,
+        recentlySuccessful,
+        errors,
+        transform,
+    } = useForm<{
+        settings: Record<string, string>;
+        images: Record<string, File | null>;
+        remove_images: Record<string, boolean>;
+        impact_stats: Array<{
+            id: number;
+            label: string;
+            value: number;
+            suffix: string;
+        }>;
+    }>({
+        settings: flat,
+        images: emptyImageMap(imageKeys),
+        remove_images: emptyRemoveMap(imageKeys),
+        impact_stats: impactStats.map((stat) => ({
+            id: stat.id,
+            label: stat.label,
+            value: stat.value,
+            suffix: stat.suffix ?? '',
+        })),
+    });
 
     transform((form) => {
         const images: Record<string, File> = {};
@@ -314,12 +329,18 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
                                                             [key]: false,
                                                         },
                                                     }));
+
                                                     if (file) {
-                                                        setExistingImages(
-                                                            (current) => ({
-                                                                ...current,
-                                                                [key]: null,
-                                                            }),
+                                                        setHiddenImageKeys(
+                                                            (current) =>
+                                                                current.includes(
+                                                                    key,
+                                                                )
+                                                                    ? current
+                                                                    : [
+                                                                          ...current,
+                                                                          key,
+                                                                      ],
                                                         );
                                                     }
                                                 }}
@@ -335,16 +356,19 @@ export default function SettingsIndex({ settings, impactStats }: Props) {
                                                             [key]: true,
                                                         },
                                                     }));
-                                                    setExistingImages(
-                                                        (current) => ({
-                                                            ...current,
-                                                            [key]: null,
-                                                        }),
+                                                    setHiddenImageKeys(
+                                                        (current) =>
+                                                            current.includes(
+                                                                key,
+                                                            )
+                                                                ? current
+                                                                : [
+                                                                      ...current,
+                                                                      key,
+                                                                  ],
                                                     );
                                                 }}
-                                                error={
-                                                    errors[`images.${key}`]
-                                                }
+                                                error={errors[`images.${key}`]}
                                             />
                                         </div>
                                     );

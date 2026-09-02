@@ -458,7 +458,7 @@ export default function Donate({
                             <div>
                                 <div className="flex items-end justify-between gap-4">
                                     <div>
-                                        <h2 className="font-serif text-2xl font-bold text-navy dark:text-foreground md:text-3xl">
+                                        <h2 className="font-serif text-2xl font-bold text-navy md:text-3xl dark:text-foreground">
                                             Choose an amount
                                         </h2>
                                         <p className="mt-1 text-sm text-muted-foreground">

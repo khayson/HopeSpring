@@ -2,9 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { dashboard } from '@/routes';
-import {
-    index as donationsIndex,
-} from '@/routes/admin/donations';
+import { index as donationsIndex } from '@/routes/admin/donations';
 
 type Donation = {
     id: number;

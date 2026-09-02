@@ -62,7 +62,9 @@ export function ProgrammeCard({
                 <h3
                     className={cn(
                         'font-serif text-lg font-semibold',
-                        variant === 'dark' ? 'text-white' : 'text-navy dark:text-foreground',
+                        variant === 'dark'
+                            ? 'text-white'
+                            : 'text-navy dark:text-foreground',
                     )}
                 >
                     {title}

@@ -361,7 +361,8 @@
     }
 
     .rich-text-editor :where(blockquote) {
-        border-left: 3px solid color-mix(in oklab, var(--brand-green, #5fa93d) 70%, transparent);
+        border-left: 3px solid
+            color-mix(in oklab, var(--brand-green, #5fa93d) 70%, transparent);
         padding-left: 0.9rem;
         color: var(--muted-foreground);
     }
@@ -395,7 +396,8 @@
     }
 
     .rich-content :where(blockquote) {
-        border-left: 3px solid color-mix(in oklab, var(--brand-green, #5fa93d) 70%, transparent);
+        border-left: 3px solid
+            color-mix(in oklab, var(--brand-green, #5fa93d) 70%, transparent);
         padding-left: 1rem;
         color: var(--muted-foreground);
     }

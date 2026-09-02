@@ -39,6 +39,11 @@ function ProgrammeIcon({ name }: { name: string }) {
 
 export default function ProgrammeShow({ programme }: Props) {
     const donateHref = donate.url({ query: { programme: programme.slug } });
+    const programmeDetail =
+        programme.long_description?.trim() &&
+        programme.long_description.trim() !== programme.description.trim()
+            ? programme.long_description.trim()
+            : null;
 
     return (
         <PublicLayout currentPath="/programmes">
@@ -55,21 +60,18 @@ export default function ProgrammeShow({ programme }: Props) {
                 ]}
             />
 
-            <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
-                <div className="mx-auto max-w-3xl">
-                    <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-brand-green">
-                        <ProgrammeIcon name={programme.icon} />
-                    </div>
-                    <p className="text-lg leading-relaxed text-muted-foreground">
-                        {programme.description}
-                    </p>
-                    {programme.long_description && (
-                        <div className="mt-6 text-base leading-relaxed text-muted-foreground">
-                            {programme.long_description}
+            {programmeDetail && (
+                <section className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24">
+                    <div className="mx-auto max-w-3xl">
+                        <div className="mb-6 flex size-14 items-center justify-center rounded-full bg-brand-green">
+                            <ProgrammeIcon name={programme.icon} />
                         </div>
-                    )}
-                </div>
-            </section>
+                        <p className="text-lg leading-relaxed text-muted-foreground">
+                            {programmeDetail}
+                        </p>
+                    </div>
+                </section>
+            )}
 
             {programme.projects.length > 0 && (
                 <section className="bg-secondary/50 px-4 py-16 md:px-6 md:py-24">

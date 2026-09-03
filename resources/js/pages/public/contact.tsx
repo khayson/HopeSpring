@@ -43,7 +43,7 @@ export default function Contact({ settings }: Props) {
                                     </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
                                         {settings.contact_address ||
-                                            'East Legon, Accra Ghana'}
+                                            'Tema Golf City, Samuel Narh Street'}
                                     </p>
                                 </div>
                             </div>
@@ -72,8 +72,24 @@ export default function Contact({ settings }: Props) {
                                         Phone
                                     </h3>
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        {settings.contact_phone ||
-                                            '+233 24 123 4567'}
+                                        {(
+                                            settings.contact_phone ||
+                                            '0501265688 / 0208664519'
+                                        )
+                                            .split('/')
+                                            .map((value) => value.trim())
+                                            .filter(Boolean)
+                                            .map((number, index) => (
+                                                <span key={number}>
+                                                    {index > 0 && ' / '}
+                                                    <a
+                                                        href={`tel:${number.replace(/[^\d+]/g, '')}`}
+                                                        className="hover:text-brand-green"
+                                                    >
+                                                        {number}
+                                                    </a>
+                                                </span>
+                                            ))}
                                     </p>
                                 </div>
                             </div>

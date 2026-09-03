@@ -40,9 +40,13 @@ type FooterProps = {
 export function Footer({ className }: FooterProps) {
     const { contact } = usePage().props;
     const email = contact.email?.trim() || 'info@hopespringfoundation.org';
-    const phone = contact.phone?.trim() || '+233 24 123 4567';
-    const address = contact.address?.trim() || 'East Legon, Accra Ghana';
-    const telHref = `tel:${phone.replace(/[^\d+]/g, '')}`;
+    const phone = contact.phone?.trim() || '0501265688 / 0208664519';
+    const address =
+        contact.address?.trim() || 'Tema Golf City, Samuel Narh Street';
+    const phones = phone
+        .split('/')
+        .map((value) => value.trim())
+        .filter(Boolean);
 
     return (
         <footer
@@ -118,14 +122,24 @@ export function Footer({ className }: FooterProps) {
                                     {email}
                                 </a>
                             </li>
-                            <li>
-                                <a
-                                    href={telHref}
-                                    className="flex items-center gap-2.5 text-sm text-white/60 transition-colors hover:text-brand-green-light"
-                                >
-                                    <Phone className="size-4 shrink-0 text-brand-green-light" />
-                                    {phone}
-                                </a>
+                            <li className="flex items-start gap-2.5 text-sm text-white/60">
+                                <Phone className="mt-0.5 size-4 shrink-0 text-brand-green-light" />
+                                <span className="flex flex-wrap items-center gap-x-1">
+                                    {phones.map((number, index) => (
+                                        <span
+                                            key={number}
+                                            className="inline-flex items-center gap-x-1"
+                                        >
+                                            {index > 0 && <span>/</span>}
+                                            <a
+                                                href={`tel:${number.replace(/[^\d+]/g, '')}`}
+                                                className="transition-colors hover:text-brand-green-light"
+                                            >
+                                                {number}
+                                            </a>
+                                        </span>
+                                    ))}
+                                </span>
                             </li>
                             <li className="flex items-start gap-2.5 text-sm text-white/60">
                                 <Clock className="mt-0.5 size-4 shrink-0 text-brand-green-light" />

@@ -228,6 +228,13 @@ copy("{$brand}/icon-512.png", "{$public}/android-chrome-512x512.png");
 copy("{$brand}/icon-32.png", "{$public}/favicon.png");
 copy("{$brand}/icon-32.png", "{$public}/favicon.ico");
 
+// Drop the Laravel starter-kit SVG so browsers stop preferring the red mark.
+$legacySvg = "{$public}/favicon.svg";
+
+if (is_file($legacySvg)) {
+    unlink($legacySvg);
+}
+
 file_put_contents("{$public}/site.webmanifest", json_encode([
     'name' => 'HopeSpring Foundation',
     'short_name' => 'HopeSpring',

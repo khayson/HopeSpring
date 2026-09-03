@@ -26,10 +26,16 @@ test('public brand logo variants are available', function () {
 test('html shell references the brand favicon and boot loader', function () {
     $this->get(route('home'))
         ->assertOk()
-        ->assertSee('/favicon-32x32.png', false)
-        ->assertSee('/apple-touch-icon.png', false)
-        ->assertSee('/site.webmanifest', false)
+        ->assertSee('/favicon-32x32.png?v=20260903', false)
+        ->assertSee('/apple-touch-icon.png?v=20260903', false)
+        ->assertSee('/site.webmanifest?v=20260903', false)
         ->assertSee('/images/brand/mark.png', false)
         ->assertSee('id="app-boot-loader"', false)
-        ->assertSee('brand-boot-loader', false);
+        ->assertSee('brand-boot-loader', false)
+        ->assertDontSee('favicon.svg', false)
+        ->assertDontSee('#FF2D20', false);
+});
+
+test('laravel starter favicon svg is not published', function () {
+    expect(public_path('favicon.svg'))->not->toBeFile();
 });

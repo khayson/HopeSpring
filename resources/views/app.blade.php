@@ -86,11 +86,11 @@
             }
         </style>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="manifest" href="/site.webmanifest">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20260903">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20260903">
+        <link rel="shortcut icon" href="/favicon.ico?v=20260903">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260903">
+        <link rel="manifest" href="/site.webmanifest?v=20260903">
         <meta name="theme-color" content="#0B1F3A">
         <meta name="msapplication-TileColor" content="#0B1F3A">
         <link rel="preload" as="image" href="/images/brand/mark.png">

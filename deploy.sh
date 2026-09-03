@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# First-time / bootstrap deploy for HopeSpring on Hestia.
+# For recurring production updates use scripts/remote-deploy.sh.
+# Do not db:seed on updates.
+
 # ─── Configuration ───────────────────────────────────────────────
 REMOTE_USER="root"
 REMOTE_HOST="gekymedia.com"
@@ -12,9 +16,9 @@ BRANCH="main"
 PHP="/usr/bin/php8.4"
 SSH="${REMOTE_USER}@${REMOTE_HOST}"
 
-DB_NAME="hopespringfoundation"
-DB_USER="hopespringfoundation"
-DB_PASS="hopespringfoundation"
+DB_NAME="${DB_NAME:-hopespringfoundation}"
+DB_USER="${DB_USER:-hopespringfoundation}"
+DB_PASS="${DB_PASS:?Set DB_PASS in the environment before first-time deploy}"
 
 # ─── Colors ──────────────────────────────────────────────────────
 GREEN='\033[0;32m'

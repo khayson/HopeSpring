@@ -21,3 +21,24 @@ test('programme show page includes a distinct long description for clean water',
                     && str_contains($value, 'streams')
             ));
 });
+
+test('programme long descriptions differ from short descriptions for all seeded programmes', function () {
+    $this->seed();
+
+    $checks = [
+        'clean-water-initiative' => 'walk long distances',
+        'education-for-all' => 'scholarships',
+        'healthcare-outreach' => 'malaria',
+        'community-development' => 'savings groups',
+        'youth-women-empowerment' => 'mentorship',
+        'emergency-relief' => 'Floods',
+    ];
+
+    foreach ($checks as $slug => $needle) {
+        $programme = Programme::query()->where('slug', $slug)->firstOrFail();
+
+        expect($programme->long_description)
+            ->not->toBe($programme->description)
+            ->and($programme->long_description)->toContain($needle);
+    }
+});

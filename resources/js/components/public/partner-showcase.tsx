@@ -81,16 +81,28 @@ function PartnerMarquee({ partners }: { partners: Partner[] }) {
 }
 
 export function PartnerShowcase({ partners, settings }: PartnerShowcaseProps) {
-    const eyebrow = setting(settings, 'about_partners_eyebrow', 'Our Partners');
+    const eyebrow = setting(settings, 'about_partners_eyebrow', 'Partnership');
     const heading = setting(
         settings,
         'about_partners_heading',
-        'Building partnerships that last',
+        'Why Partner With Us?',
     );
     const intro = setting(
         settings,
         'about_partners_intro',
-        'HopeSpring works best alongside institutions, foundations, and mission-aligned organisations that share our commitment to empowering individuals and transforming communities.',
+        'We believe meaningful change happens through collaboration. By partnering with HopeSpring Foundation, organizations can:',
+    );
+    const points = (
+        settings.about_partners_points ||
+        'Reach underserved communities through trusted local engagement.\nSupport initiatives that address real, identified community needs.\nContribute to transparent, accountable, and sustainable impact.\nJoin a shared commitment to improving lives and creating opportunities.'
+    )
+        .split('\n')
+        .map((point) => point.trim())
+        .filter(Boolean);
+    const quote = setting(
+        settings,
+        'about_partners_quote',
+        'Together, we can bring hope where it is needed most.',
     );
     const emptyTitle = setting(
         settings,
@@ -100,7 +112,7 @@ export function PartnerShowcase({ partners, settings }: PartnerShowcaseProps) {
     const emptyMessage = setting(
         settings,
         'about_partners_empty_message',
-        'We do not have formal partner listings yet. We are building relationships with organisations that align with our work in clean water, education, healthcare, and community development.',
+        'We are building relationships with organisations that share our commitment to improving lives through education, healthcare, empowerment, and community support.',
     );
     const ctaLabel = setting(
         settings,
@@ -120,6 +132,19 @@ export function PartnerShowcase({ partners, settings }: PartnerShowcaseProps) {
                     </h2>
                     <p className="mt-4 text-base leading-relaxed text-white/75">
                         {intro}
+                    </p>
+                    {points.length > 0 && (
+                        <ul className="mx-auto mt-6 max-w-2xl space-y-3 text-left text-sm leading-relaxed text-white/75">
+                            {points.map((point) => (
+                                <li key={point} className="flex gap-3">
+                                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-green-light" />
+                                    <span>{point}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                    <p className="mt-8 font-serif text-lg text-brand-green-light italic md:text-xl">
+                        &ldquo;{quote}&rdquo;
                     </p>
                 </div>
 

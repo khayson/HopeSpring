@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { BrushEdge } from '@/components/public/brush-edge';
 import { DonationBand } from '@/components/public/donation-band';
 import { PageHero } from '@/components/public/page-hero';
@@ -29,12 +29,11 @@ type Partner = {
     logo: string | null;
     url: string | null;
 };
-type Programme = {
-    id: number;
+
+type FocusArea = {
     title: string;
-    slug: string;
-    description: string;
     icon: string;
+    items: string[];
 };
 
 type AboutProps = {
@@ -42,60 +41,120 @@ type AboutProps = {
     milestones: Milestone[];
     stats: Stat[];
     partners: Partner[];
-    programmes: Programme[];
     settings: Record<string, string | null | undefined>;
 };
 
-const fallbackProgrammes = [
+const defaultFocusAreas: FocusArea[] = [
     {
-        title: 'Clean Water',
-        slug: 'clean-water-initiative',
-        icon: 'Droplets',
-    },
-    {
-        title: 'Education Support',
-        slug: 'education-for-all',
+        title: 'Education',
         icon: 'GraduationCap',
+        items: ['School support', 'Learning materials', 'Educational advocacy'],
     },
     {
-        title: 'Healthcare Outreach',
-        slug: 'healthcare-outreach',
-        icon: 'HeartPulse',
+        title: "Children's Welfare",
+        icon: 'Baby',
+        items: [
+            'Child protection',
+            'Essential needs support',
+            'Well-being initiatives',
+        ],
     },
     {
-        title: 'Community Development',
-        slug: 'community-development',
-        icon: 'Users',
-    },
-    {
-        title: 'Youth & Women Empowerment',
-        slug: 'youth-women-empowerment',
+        title: "Women's Empowerment",
         icon: 'Venus',
+        items: [
+            'Skills development',
+            'Employment opportunities',
+            'Entrepreneurship support',
+        ],
     },
     {
-        title: 'Emergency Relief',
-        slug: 'emergency-relief',
-        icon: 'Package',
+        title: 'Youth Development',
+        icon: 'Sparkles',
+        items: [
+            'Leadership development',
+            'Mentorship',
+            'Vocational and life-skills training',
+        ],
     },
-] as const;
+    {
+        title: 'Healthcare',
+        icon: 'HeartPulse',
+        items: [
+            'Health education',
+            'Community outreach',
+            'Access to basic healthcare support',
+        ],
+    },
+    {
+        title: 'Community & Humanitarian Support',
+        icon: 'Handshake',
+        items: [
+            'Relief initiatives',
+            'Partnerships',
+            'Community development projects',
+        ],
+    },
+];
+
+function paragraphs(text: string): string[] {
+    return text
+        .split(/\n\n+/)
+        .map((part) => part.trim())
+        .filter(Boolean);
+}
+
+function lines(text: string): string[] {
+    return text
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+}
+
+function parseFocusAreas(raw: string | null | undefined): FocusArea[] {
+    if (!raw?.trim()) {
+        return defaultFocusAreas;
+    }
+
+    try {
+        const parsed = JSON.parse(raw) as FocusArea[];
+
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+            return defaultFocusAreas;
+        }
+
+        return parsed;
+    } catch {
+        return defaultFocusAreas;
+    }
+}
 
 export default function About({
     team,
     milestones,
     stats,
     partners,
-    programmes = [],
     settings,
 }: AboutProps) {
     const leadership = team.filter((m) => m.type === 'leadership');
     const staff = team.filter((m) => m.type === 'staff');
     const board = team.filter((m) => m.type === 'board');
-    const story =
+    const founderStory =
         settings.about_founder_story?.trim() ||
-        'HopeSpring Foundation was born from a moment that could not be ignored. One day, Melina Diamond encountered a woman and her three children on her way back from town. Moved by compassion, she offered them a ride to school. During the ride, she noticed the youngest child holding a torn rubber bag tightly to his chest. Inside were his books. Despite its condition, he held it with pride and said, "This is my school bag." That moment revealed resilience, dignity, and need in its purest form. The next day, Melina returned with a proper school bag. The joy and gratitude the child expressed became a defining moment. It was then she realized: even the smallest act of kindness can transform a life. From that moment, HopeSpring Foundation was born.';
+        'HopeSpring Foundation was not born in a boardroom or from strategy, it was born from a moment.\n\nAnd from that moment, HopeSpring Foundation was born.';
+    const founderAttribution =
+        settings.about_founder_attribution?.trim() || 'By Melina Diamond';
     const whoWeAre =
         settings.about_who_we_are?.trim() ||
-        'A purpose-driven organization committed to empowering individuals and transforming communities through sustainable, people-centered solutions.';
+        'HopeSpring Foundation is a nonprofit organization committed to improving the lives of vulnerable children, women, youth, and underserved communities.';
+    const communityIntro =
+        settings.about_community_intro?.trim() ||
+        'HopeSpring Foundation has begun engaging with underserved communities to identify pressing needs and build relationships with local leaders.';
+    const communityList = lines(
+        settings.about_community_list ??
+            'Anweem community in the Komenda District\nBonponsu Community in the Ashanti Akyem District',
+    );
+    const focusAreas = parseFocusAreas(settings.about_focus_areas);
     const values = [1, 2, 3, 4]
         .map((index) => ({
             title: settings[`home_value_${index}_title`]?.trim() ?? '',
@@ -129,14 +188,6 @@ export default function About({
         },
     ];
     const displayedValues = values.length > 0 ? values : fallbackValues;
-    const displayedProgrammes =
-        programmes.length > 0
-            ? programmes
-            : fallbackProgrammes.map((programme) => ({
-                  ...programme,
-                  id: 0,
-                  description: '',
-              }));
 
     return (
         <PublicLayout currentPath="/about">
@@ -144,7 +195,7 @@ export default function About({
 
             <PageHero
                 title="About Us"
-                subtitle="Impacting Lives Globally"
+                subtitle="Transforming Lives"
                 image={pageHeroes.about}
             />
             <BrushEdge className="h-8 text-background md:h-12" />
@@ -164,11 +215,16 @@ export default function About({
                         About Us
                     </p>
                     <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
-                        Founder&apos;s Story
+                        The Founder&apos;s Story
                     </h2>
-                    <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-                        {story}
+                    <p className="mt-2 text-sm font-medium text-brand-green">
+                        {founderAttribution}
                     </p>
+                    <div className="mt-5 space-y-4 text-left text-base leading-relaxed text-muted-foreground md:text-center">
+                        {paragraphs(founderStory).map((part) => (
+                            <p key={part.slice(0, 48)}>{part}</p>
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -180,9 +236,11 @@ export default function About({
                     <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
                         Who We Are
                     </h2>
-                    <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-                        {whoWeAre}
-                    </p>
+                    <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
+                        {paragraphs(whoWeAre).map((part) => (
+                            <p key={part.slice(0, 48)}>{part}</p>
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -190,20 +248,20 @@ export default function About({
                 <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
                     <div>
                         <h2 className="font-serif text-3xl font-bold text-navy dark:text-foreground">
-                            Vision
+                            Our Vision
                         </h2>
                         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                             {settings.about_vision ||
-                                'To create a world where access to opportunity is available to all.'}
+                                'A society where every child, woman, and young person has equal opportunities to learn, grow, and live with dignity.'}
                         </p>
                     </div>
                     <div>
                         <h2 className="font-serif text-3xl font-bold text-navy dark:text-foreground">
-                            Mission
+                            Our Mission
                         </h2>
                         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                             {settings.about_mission ||
-                                'To empower communities through sustainable solutions in education, health, clean water and humanitarian support.'}
+                                'To improve lives by providing access to education, healthcare, economic empowerment, humanitarian support, and community development through collaboration, innovation, and compassion.'}
                         </p>
                     </div>
                 </div>
@@ -235,30 +293,77 @@ export default function About({
 
             <section className="px-4 py-16 md:px-6 md:py-24">
                 <div className="mx-auto max-w-7xl">
-                    <h2 className="mb-10 text-center font-serif text-3xl font-bold text-navy dark:text-foreground">
-                        Areas We Focus On
-                    </h2>
+                    <div className="mb-10 text-center">
+                        <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                            What We Do
+                        </p>
+                        <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
+                            Our Program Areas
+                        </h2>
+                    </div>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {displayedProgrammes.map((area, i) => {
+                        {focusAreas.map((area, i) => {
                             const Icon = getIcon(area.icon);
 
                             return (
-                                <ScrollReveal key={area.slug} delay={i * 50}>
-                                    <Link
-                                        href={`/programmes/${area.slug}`}
-                                        className="flex flex-col items-center rounded-xl border border-border bg-card p-6 text-center transition-shadow hover:shadow-lg"
-                                    >
+                                <ScrollReveal key={area.title} delay={i * 50}>
+                                    <div className="flex h-full flex-col rounded-xl border border-border bg-card p-6">
                                         <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-brand-green/10">
                                             <Icon className="size-6 text-brand-green" />
                                         </div>
-                                        <h3 className="font-serif text-base font-semibold text-navy dark:text-foreground">
+                                        <h3 className="font-serif text-lg font-semibold text-navy dark:text-foreground">
                                             {area.title}
                                         </h3>
-                                    </Link>
+                                        <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                                            {area.items.map((item) => (
+                                                <li
+                                                    key={item}
+                                                    className="flex gap-2"
+                                                >
+                                                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-green" />
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </ScrollReveal>
                             );
                         })}
                     </div>
+                </div>
+            </section>
+
+            <section className="bg-card px-4 py-16 md:px-6 md:py-24">
+                <div className="mx-auto max-w-3xl">
+                    <div className="text-center">
+                        <p className="text-xs font-bold tracking-[0.18em] text-brand-green uppercase">
+                            On the Ground
+                        </p>
+                        <h2 className="mt-3 font-serif text-3xl font-bold text-navy dark:text-foreground">
+                            Community Engagement
+                        </h2>
+                        <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+                            {communityIntro}
+                        </p>
+                    </div>
+                    {communityList.length > 0 && (
+                        <div className="mt-8">
+                            <p className="text-sm font-semibold text-navy dark:text-foreground">
+                                Communities identified include:
+                            </p>
+                            <ul className="mt-4 space-y-3">
+                                {communityList.map((community) => (
+                                    <li
+                                        key={community}
+                                        className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
+                                    >
+                                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-green" />
+                                        <span>{community}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
             </section>
 

@@ -52,12 +52,17 @@ const textareaKeys = new Set([
     'about_vision',
     'about_partners_intro',
     'about_partners_empty_message',
+    'about_partners_points',
+    'about_partners_quote',
     'home_value_1_description',
     'home_value_2_description',
     'home_value_3_description',
     'home_value_4_description',
     'about_who_we_are',
     'about_founder_story',
+    'about_community_intro',
+    'about_community_list',
+    'about_focus_areas',
     'contact_address',
 ]);
 

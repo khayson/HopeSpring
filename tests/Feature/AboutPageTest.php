@@ -18,12 +18,12 @@ test('about page shows empty partners section with editable copy', function () {
 
     SiteSetting::query()->updateOrCreate(
         ['key' => 'about_mission'],
-        ['value' => 'Mission statement.', 'group' => 'about'],
+        ['value' => AboutPageSettings::mission(), 'group' => 'about'],
     );
 
     SiteSetting::query()->updateOrCreate(
         ['key' => 'about_vision'],
-        ['value' => 'Vision statement.', 'group' => 'about'],
+        ['value' => AboutPageSettings::vision(), 'group' => 'about'],
     );
 
     ImpactStat::factory()->create([
@@ -53,14 +53,30 @@ test('about page shows empty partners section with editable copy', function () {
         ->assertInertia(fn ($page) => $page
             ->component('public/about')
             ->where('partners', [])
-            ->where('programmes', [])
-            ->where('settings.about_partners_heading', 'Building partnerships that last')
+            ->where('settings.about_partners_heading', 'Why Partner With Us?')
             ->where('settings.about_partners_empty_title', 'Partnerships in progress')
+            ->where('settings.about_founder_attribution', 'By Melina Diamond')
             ->where('settings.home_value_1_title', 'Compassion')
             ->where('settings.home_value_3_title', 'Empowerment')
             ->where('settings.home_value_4_title', 'Excellence')
-            ->where('settings.about_who_we_are', 'A purpose-driven organization committed to empowering individuals and transforming communities through sustainable, people-centered solutions.')
-            ->where('settings.about_founder_story', 'HopeSpring Foundation was born from a moment that could not be ignored. One day, Melina Diamond encountered a woman and her three children on her way back from town. Moved by compassion, she offered them a ride to school. During the ride, she noticed the youngest child holding a torn rubber bag tightly to his chest. Inside were his books. Despite its condition, he held it with pride and said, "This is my school bag." That moment revealed resilience, dignity, and need in its purest form. The next day, Melina returned with a proper school bag. The joy and gratitude the child expressed became a defining moment. It was then she realized: even the smallest act of kindness can transform a life. From that moment, HopeSpring Foundation was born.')
+            ->where(
+                'settings.about_who_we_are',
+                fn (string $value) => str_contains($value, 'vulnerable children, women, youth')
+                    && str_contains($value, 'strategic partnerships'),
+            )
+            ->where(
+                'settings.about_founder_story',
+                fn (string $value) => str_contains($value, 'not born in a boardroom')
+                    && str_contains($value, 'This is my school bag.')
+                    && str_contains($value, 'HopeSpring Foundation was born.'),
+            )
+            ->where('settings.about_mission', AboutPageSettings::mission())
+            ->where('settings.about_vision', AboutPageSettings::vision())
+            ->where(
+                'settings.about_community_list',
+                fn (string $value) => str_contains($value, 'Anweem')
+                    && str_contains($value, 'Bonponsu'),
+            )
             ->where('settings.home_about_body', 'HopeSpring Foundation was born out of a simple act of compassion that revealed a deep need. What started with one child\'s joy has grown into a mission to bring lasting change to many lives.'));
 });
 

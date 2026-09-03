@@ -1,7 +1,9 @@
 import {
     Award,
+    Baby,
     Droplets,
     GraduationCap,
+    Handshake,
     Heart,
     HeartPulse,
     Leaf,
@@ -17,8 +19,10 @@ import type { LucideIcon } from 'lucide-react';
 
 const icons: Record<string, LucideIcon> = {
     Award,
+    Baby,
     Droplets,
     GraduationCap,
+    Handshake,
     Heart,
     HeartPulse,
     Leaf,

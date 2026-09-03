@@ -413,4 +413,41 @@
     .dark .text-navy {
         color: var(--foreground);
     }
+
+    .brand-loader-ripple {
+        border: 2px solid
+            color-mix(in oklab, var(--brand-green, #5fa93d) 55%, transparent);
+        animation: brand-ripple 1.6s ease-out infinite;
+    }
+
+    .brand-loader-ripple-delay {
+        animation-delay: 0.55s;
+    }
+
+    .brand-loader-mark {
+        animation: brand-mark-pulse 1.6s ease-in-out infinite;
+    }
+}
+
+@keyframes brand-ripple {
+    0% {
+        transform: scale(0.72);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1.35);
+        opacity: 0;
+    }
+}
+
+@keyframes brand-mark-pulse {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(1px) scale(1.04);
+    }
 }

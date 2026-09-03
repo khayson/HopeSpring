@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import { Heart } from 'lucide-react';
+import { BrandLogo } from '@/components/brand-logo';
 
 type Props = {
     name: string;
@@ -12,8 +12,8 @@ export default function PortalIndex({ name, roleLabel }: Props) {
             <Head title="Your HopeSpring Portal" />
 
             <div className="text-center">
-                <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-brand-green/10">
-                    <Heart className="size-8 text-brand-green" />
+                <div className="mx-auto mb-6 flex size-20 items-center justify-center">
+                    <BrandLogo variant="mark" className="h-16 w-16" />
                 </div>
                 <h1 className="font-serif text-3xl font-bold text-navy dark:text-foreground">
                     Welcome, {name}

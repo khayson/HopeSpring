@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { Heart } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { BrandLogo } from '@/components/brand-logo';
 import { Button } from '@/components/ui/button';
 import { logout } from '@/routes';
 
@@ -9,13 +9,15 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
         <div className="flex min-h-screen flex-col bg-background">
             <header className="border-b border-border bg-navy-dark">
                 <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
-                    <Link href="/" className="flex items-center gap-2">
-                        <div className="flex size-8 items-center justify-center rounded-full bg-brand-green">
-                            <Heart className="size-4 text-white" fill="white" />
-                        </div>
-                        <span className="font-serif text-lg font-bold text-white">
-                            HopeSpring
-                        </span>
+                    <Link
+                        href="/"
+                        className="inline-flex"
+                        aria-label="HopeSpring Foundation home"
+                    >
+                        <BrandLogo
+                            variant="mono"
+                            className="h-10 w-auto max-w-[220px]"
+                        />
                     </Link>
                     <Button
                         asChild

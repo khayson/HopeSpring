@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
-import AppLogoIcon from '@/components/app-logo-icon';
+import { BrandLogo } from '@/components/brand-logo';
 import {
     Card,
     CardContent,
@@ -25,10 +25,12 @@ export default function AuthCardLayout({
                 <Link
                     href={home()}
                     className="flex items-center gap-2 self-center font-medium"
+                    aria-label="HopeSpring Foundation home"
                 >
-                    <div className="flex h-9 w-9 items-center justify-center">
-                        <AppLogoIcon className="size-9 fill-current text-black dark:text-white" />
-                    </div>
+                    <BrandLogo
+                        variant="primary"
+                        className="h-12 w-auto max-w-[240px]"
+                    />
                 </Link>
 
                 <div className="flex flex-col gap-6">

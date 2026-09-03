@@ -2,7 +2,6 @@ import { Link, usePage } from '@inertiajs/react';
 import {
     Clock,
     Facebook,
-    Heart,
     Instagram,
     Linkedin,
     Mail,
@@ -11,6 +10,7 @@ import {
     Twitter,
     Youtube,
 } from 'lucide-react';
+import { BrandLogo } from '@/components/brand-logo';
 import { cn } from '@/lib/utils';
 import { NewsletterForm } from './newsletter-form';
 
@@ -56,16 +56,15 @@ export function Footer({ className }: FooterProps) {
             <div className="mx-auto max-w-7xl px-4 py-16 md:px-6">
                 <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
                     <div className="space-y-4">
-                        <Link href="/" className="flex items-center gap-2">
-                            <div className="flex size-8 items-center justify-center rounded-full bg-brand-green">
-                                <Heart
-                                    className="size-4 text-white"
-                                    fill="white"
-                                />
-                            </div>
-                            <span className="font-serif text-lg font-bold">
-                                HopeSpring
-                            </span>
+                        <Link
+                            href="/"
+                            className="inline-flex"
+                            aria-label="HopeSpring Foundation home"
+                        >
+                            <BrandLogo
+                                variant="mono"
+                                className="h-12 w-auto max-w-[240px]"
+                            />
                         </Link>
                         <p className="text-sm leading-relaxed text-white/60">
                             We are committed to transforming lives and building

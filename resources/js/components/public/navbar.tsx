@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
-import { Heart, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { BrandLogo } from '@/components/brand-logo';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 
@@ -31,18 +32,15 @@ export function Navbar({ currentPath = '/' }: NavbarProps) {
         <header className="sticky top-0 z-50 border-b border-white/10 bg-navy-dark/95 backdrop-blur-sm">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2">
-                    <div className="flex size-8 items-center justify-center rounded-full bg-brand-green">
-                        <Heart className="size-4 text-white" fill="white" />
-                    </div>
-                    <span className="flex flex-col leading-tight">
-                        <span className="font-serif text-lg font-bold text-white">
-                            HopeSpring
-                        </span>
-                        <span className="text-[9px] font-bold tracking-[0.14em] text-white/65 uppercase">
-                            Foundation — Transforming Lives
-                        </span>
-                    </span>
+                <Link
+                    href="/"
+                    className="flex items-center"
+                    aria-label="HopeSpring Foundation home"
+                >
+                    <BrandLogo
+                        variant="mono"
+                        className="h-10 w-auto max-w-[220px] sm:h-11 sm:max-w-[260px]"
+                    />
                 </Link>
 
                 {/* Desktop Nav */}

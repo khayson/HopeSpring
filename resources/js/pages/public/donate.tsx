@@ -682,7 +682,7 @@ export default function Donate({
                                             onChange={(e) =>
                                                 setDonorPhone(e.target.value)
                                             }
-                                            placeholder="+233 24 123 4567"
+                                            placeholder="0501265688"
                                             className="h-11 border-0 bg-secondary/70 shadow-none focus-visible:ring-brand-green"
                                         />
                                         {fieldErrors.donor_phone && (
@@ -805,29 +805,33 @@ export default function Donate({
                                     <ul className="space-y-5">
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Clean Water
+                                                Education
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Providing clean and safe water
-                                                to underserved communities.
+                                                School support, learning
+                                                materials, and educational
+                                                advocacy.
                                             </p>
                                         </li>
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Education Support
+                                                Healthcare
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Empowering children through
-                                                access to quality education.
+                                                Health education, community
+                                                outreach, and basic healthcare
+                                                support.
                                             </p>
                                         </li>
                                         <li>
                                             <p className="font-serif text-lg font-semibold text-brand-green-light">
-                                                Healthcare Outreach
+                                                Community &amp; Humanitarian
+                                                Support
                                             </p>
                                             <p className="mt-1 text-sm text-white/60">
-                                                Improving health and well-being
-                                                through medical support.
+                                                Relief initiatives,
+                                                partnerships, and community
+                                                development projects.
                                             </p>
                                         </li>
                                     </ul>

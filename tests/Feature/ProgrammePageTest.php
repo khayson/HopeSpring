@@ -30,8 +30,9 @@ test('programme long descriptions differ from short descriptions for all seeded 
         'education-for-all' => 'scholarships',
         'healthcare-outreach' => 'malaria',
         'community-development' => 'savings groups',
-        'youth-women-empowerment' => 'mentorship',
-        'emergency-relief' => 'Floods',
+        'womens-empowerment' => 'enterprises',
+        'youth-development' => 'leadership',
+        'childrens-welfare' => 'protection',
     ];
 
     foreach ($checks as $slug => $needle) {

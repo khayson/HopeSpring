@@ -100,7 +100,7 @@ export function InquiryForm({ type, className }: InquiryFormProps) {
                     id="inquiry-phone"
                     value={data.phone}
                     onChange={(e) => setData('phone', e.target.value)}
-                    placeholder="+233 24 123 4567"
+                    placeholder="0501265688"
                 />
                 {errors.phone && (
                     <p className="text-xs text-destructive">{errors.phone}</p>

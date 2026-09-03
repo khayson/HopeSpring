@@ -26,9 +26,11 @@ test('home page content comes from site settings and programmes', function () {
         'value' => 'Custom Welcome Line',
     ]);
 
+    Programme::query()->update(['is_active' => false]);
+
     $programme = Programme::factory()->create([
         'title' => 'Clean Water Initiative',
-        'slug' => 'clean-water-initiative',
+        'slug' => 'clean-water-initiative-home-test',
         'description' => 'Water for communities.',
         'photo' => '/images/home-programme-water.jpg',
         'is_active' => true,
@@ -50,7 +52,7 @@ test('home page content comes from site settings and programmes', function () {
             ->where('settings.about_mission', 'Mission from database.')
             ->where('settings.home_programmes_eyebrow', 'Our Programs')
             ->where('settings.home_programmes_cta_label', 'View All Programs')
-            ->where('settings.home_programmes_intro', 'We implement sustainable initiatives that address critical needs and create long-term impact.')
+            ->where('settings.home_programmes_intro', 'We work across education, children’s welfare, women’s empowerment, youth development, healthcare, and community support — addressing immediate needs while building long-term opportunity.')
             ->where('settings.home_value_4_title', 'Excellence')
             ->where('settings.home_banner_headline', "Be the reason someone's life changes today.")
             ->where('settings.home_banner_text', 'Your support brings hope, restores dignity, and creates brighter futures.')

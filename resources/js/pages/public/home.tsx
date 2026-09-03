@@ -46,7 +46,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
     const mission = setting(
         settings,
         'about_mission',
-        'To empower communities through sustainable solutions in education, health, clean water and humanitarian support.',
+        'To improve lives by providing access to education, healthcare, economic empowerment, humanitarian support, and community development through collaboration, innovation, and compassion.',
     );
 
     const values = [1, 2, 3, 4]
@@ -110,7 +110,7 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                         {setting(
                             settings,
                             'home_hero_title_prefix',
-                            'We exist to',
+                            'HopeSpring Foundation',
                         )}{' '}
                         <span className="text-brand-green-light">
                             {setting(
@@ -254,16 +254,22 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                                 {setting(
                                     settings,
                                     'home_about_title',
-                                    'Our Story, Our Why',
+                                    'Who We Are',
                                 )}
                             </h2>
-                            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+                            <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
                                 {setting(
                                     settings,
                                     'home_about_body',
-                                    "HopeSpring Foundation was born out of a simple act of compassion that revealed a deep need. What started with one child's joy has grown into a mission to bring lasting change to many lives.",
-                                )}
-                            </p>
+                                    'HopeSpring Foundation is a nonprofit organization committed to improving the lives of vulnerable children, women, youth, and underserved communities. We believe that every individual deserves access to opportunities that promote dignity, well-being, and sustainable development.\n\nThrough strategic partnerships and community-driven initiatives, we work to address immediate needs while creating long-term solutions that empower people to thrive.',
+                                )
+                                    .split(/\n\n+/)
+                                    .map((part) => part.trim())
+                                    .filter(Boolean)
+                                    .map((part) => (
+                                        <p key={part.slice(0, 48)}>{part}</p>
+                                    ))}
+                            </div>
 
                             {values.length > 0 && (
                                 <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -324,14 +330,14 @@ export default function Home({ programmes, stats, settings }: HomeProps) {
                             {setting(
                                 settings,
                                 'home_programmes_title',
-                                'Areas We Focus On',
+                                'Our Program Areas',
                             )}
                         </h2>
                         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
                             {setting(
                                 settings,
                                 'home_programmes_intro',
-                                'We implement sustainable initiatives that address critical needs and create long-term impact.',
+                                'We work across education, children’s welfare, women’s empowerment, youth development, healthcare, and community support — addressing immediate needs while building long-term opportunity.',
                             )}
                         </p>
                     </div>

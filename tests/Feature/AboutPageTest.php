@@ -77,7 +77,11 @@ test('about page shows empty partners section with editable copy', function () {
                 fn (string $value) => str_contains($value, 'Anweem')
                     && str_contains($value, 'Bonponsu'),
             )
-            ->where('settings.home_about_body', 'HopeSpring Foundation was born out of a simple act of compassion that revealed a deep need. What started with one child\'s joy has grown into a mission to bring lasting change to many lives.'));
+            ->where(
+                'settings.home_about_body',
+                fn (string $value) => str_contains($value, 'vulnerable children, women, youth')
+                    && str_contains($value, 'strategic partnerships'),
+            ));
 });
 
 test('about page includes active partners with logos and urls', function () {
